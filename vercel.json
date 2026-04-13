@@ -1,13 +1,3 @@
 {
-  "functions": {
-    "api/transcribe.js": {
-      "maxDuration": 60
-    }
-  },
-  "rewrites": [
-    { "source": "/api/transcribe/upload", "destination": "/api/transcribe" },
-    { "source": "/api/transcribe/transcript", "destination": "/api/transcribe" },
-    { "source": "/api/transcribe/transcript/:id", "destination": "/api/transcribe" }
-  ]
+  "framework": "nextjs"
 }
-
