@@ -28,6 +28,10 @@ export default function RootLayout({
             __html: `(function(){var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.classList.add('dark');})()`,
           }}
         />
+        <link
+          href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet"
+        />
       </head>
       <body className="font-sans bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 antialiased">
         {children}

@@ -23,7 +23,9 @@ export function DarkModeToggle() {
       aria-label="Alternar tema escuro/claro"
       className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition px-3 py-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
     >
-      <span className="text-lg leading-none">{isDark ? '🌙' : '☀️'}</span>
+      <span className="material-icons text-lg leading-none">
+        {isDark ? 'dark_mode' : 'light_mode'}
+      </span>
       <span>{isDark ? 'Modo escuro' : 'Modo claro'}</span>
     </button>
   )
