@@ -1,63 +1,107 @@
 import type { ResumeData } from '@/lib/types'
+import { DarkModeToggle } from './DarkModeToggle'
 
 interface Props {
   data: ResumeData
-  /** When true, removes interactive UI chrome (dark-mode toggle, etc.) */
   isPrint?: boolean
 }
 
 export function CVTemplate({ data, isPrint = false }: Props) {
   const { profile, experiences, skills, education } = data
 
-  if (!profile) {
-    return (
-      <div className="max-w-3xl mx-auto my-10 px-6 text-gray-500">
-        Currículo sem perfil cadastrado.
-      </div>
-    )
-  }
+  if (!profile) return null
+
+  // Split "Designer de Produto | UX/UI | Inovação" into header tags
+  const headerTags = profile.title
+    ? profile.title.split('|').map((t) => t.trim()).filter(Boolean)
+    : []
+
+  // First paragraph of summary shown in header as bio
+  const summaryParagraphs = profile.summary
+    ? profile.summary.split('\n').map((p) => p.trim()).filter(Boolean)
+    : []
+  const heroBio = summaryParagraphs[0] ?? ''
+  const summaryRest = summaryParagraphs.slice(1)
 
   return (
-    <div className="cv-print-wrapper max-w-3xl mx-auto my-10 px-4 sm:px-6 lg:px-10 py-10">
-      {/* ── Header ─────────────────────────────────────────────────────── */}
-      <header className="mb-10">
-        <h1 className="text-4xl font-bold mb-1">{profile.name}</h1>
-        <p className="text-lg text-blue-600 font-medium mb-4">{profile.title}</p>
+    <div className="max-w-3xl mx-auto my-10 px-4 sm:px-6 lg:px-10 py-10">
 
-        {/* Contact row */}
-        <div className="flex flex-wrap gap-x-5 gap-y-1 text-sm text-gray-500">
-          {profile.location && (
-            <span>{profile.location}</span>
+      {/* ── Dark mode toggle ──────────────────────────────────────────── */}
+      {!isPrint && (
+        <div className="mb-6">
+          <DarkModeToggle />
+        </div>
+      )}
+
+      {/* ── Header ───────────────────────────────────────────────────── */}
+      <header className="text-left mb-10">
+        <div className="flex flex-col items-start gap-3">
+          <h1 className="text-4xl font-bold mb-2">{profile.name}</h1>
+
+          {heroBio && (
+            <p className="text-base text-gray-700 dark:text-gray-300">{heroBio}</p>
           )}
-          {profile.email && (
-            <a
-              href={`mailto:${profile.email}`}
-              className="hover:text-gray-800 transition-colors"
-            >
-              {profile.email}
-            </a>
-          )}
-          {profile.phone && <span>{profile.phone}</span>}
-          {profile.linkedin && (
-            <a
-              href={profile.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-gray-800 transition-colors"
-            >
-              LinkedIn
-            </a>
+
+          {headerTags.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-1">
+              {headerTags.map((tag, i) => (
+                <span key={i} className="pill">{tag}</span>
+              ))}
+            </div>
           )}
         </div>
       </header>
 
-      {/* ── Summary ────────────────────────────────────────────────────── */}
-      {profile.summary && (
+      {/* ── Contato ──────────────────────────────────────────────────── */}
+      {(profile.email || profile.phone || profile.linkedin || profile.location) && (
+        <section className="mb-10">
+          <SectionTitle>Contato</SectionTitle>
+          <div className="space-y-2">
+            {profile.location && (
+              <p className="text-sm text-gray-600 dark:text-gray-300">{profile.location}</p>
+            )}
+            {profile.email && (
+              <a href={`mailto:${profile.email}`} className="contact-link block">
+                {profile.email}
+              </a>
+            )}
+            {profile.phone && (
+              <p className="text-sm text-gray-600 dark:text-gray-300">{profile.phone}</p>
+            )}
+            {profile.linkedin && (
+              <a
+                href={profile.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contact-link inline-flex items-center gap-1"
+              >
+                <span className="font-medium hover:underline">LinkedIn</span>
+                <span className="text-blue-600 dark:text-blue-400 text-sm">→</span>
+              </a>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* ── Skills ───────────────────────────────────────────────────── */}
+      {skills.map((group) => (
+        <section key={group.id} className="mb-10">
+          <SectionTitle>{group.category}</SectionTitle>
+          <ul className="flex flex-wrap gap-2 p-0 list-none">
+            {group.items.map((item, i) => (
+              <li key={i} className="pill">{item}</li>
+            ))}
+          </ul>
+        </section>
+      ))}
+
+      {/* ── Resumo ───────────────────────────────────────────────────── */}
+      {summaryRest.length > 0 && (
         <section className="mb-10">
           <SectionTitle>Resumo</SectionTitle>
           <div className="space-y-3">
-            {profile.summary.split('\n').filter(Boolean).map((p, i) => (
-              <p key={i} className="text-sm sm:text-base text-gray-600 leading-relaxed">
+            {summaryRest.map((p, i) => (
+              <p key={i} className="text-sm sm:text-base text-gray-500 dark:text-gray-300">
                 {p}
               </p>
             ))}
@@ -65,87 +109,51 @@ export function CVTemplate({ data, isPrint = false }: Props) {
         </section>
       )}
 
-      {/* ── Experience ─────────────────────────────────────────────────── */}
+      {/* ── Experiência ──────────────────────────────────────────────── */}
       {experiences.length > 0 && (
         <section className="mb-10">
           <SectionTitle>Experiência</SectionTitle>
-          <div className="space-y-8">
+          <div className="grid gap-5 sm:grid-cols-2">
             {experiences.map((exp) => (
-              <article key={exp.id}>
-                <div className="flex flex-wrap items-baseline justify-between gap-2 mb-1">
-                  <h3 className="font-bold text-base">
+              <div key={exp.id} className="p-5">
+                <article>
+                  <h3 className="text-base font-bold mb-2">
                     {exp.role} — {exp.company}
                   </h3>
-                  <span className="text-sm text-gray-400 shrink-0">
+                  <p className="text-sm text-gray-500 dark:text-gray-300 mb-3">
                     {exp.start_date}
-                    {exp.is_current
-                      ? ' — Presente'
-                      : exp.end_date
-                      ? ` — ${exp.end_date}`
-                      : ''}
-                  </span>
-                </div>
-                {exp.description && (
-                  <ul className="list-disc pl-5 space-y-1 mt-2">
-                    {exp.description
-                      .split('\n')
-                      .filter(Boolean)
-                      .map((line, i) => (
-                        <li key={i} className="text-sm text-gray-600 leading-relaxed">
-                          {line.replace(/^[-•]\s*/, '')}
-                        </li>
-                      ))}
-                  </ul>
-                )}
-              </article>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* ── Skills ─────────────────────────────────────────────────────── */}
-      {skills.length > 0 && (
-        <section className="mb-10">
-          <SectionTitle>Habilidades</SectionTitle>
-          <div className="space-y-4">
-            {skills.map((skillGroup) => (
-              <div key={skillGroup.id}>
-                <p className="text-sm font-semibold text-gray-500 mb-2">
-                  {skillGroup.category}
-                </p>
-                <ul className="flex flex-wrap gap-2">
-                  {skillGroup.items.map((item, i) => (
-                    <li
-                      key={i}
-                      className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm font-medium"
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+                    {exp.is_current ? ' - Presente' : exp.end_date ? ` - ${exp.end_date}` : ''}
+                  </p>
+                  {exp.description && (
+                    <ul className="list-disc sm:pl-5 pl-4">
+                      {exp.description
+                        .split('\n')
+                        .filter(Boolean)
+                        .map((line, i) => (
+                          <li key={i} className="mb-2 text-sm text-gray-600 dark:text-gray-300">
+                            {line.replace(/^[-•]\s*/, '')}
+                          </li>
+                        ))}
+                    </ul>
+                  )}
+                </article>
               </div>
             ))}
           </div>
         </section>
       )}
 
-      {/* ── Education ──────────────────────────────────────────────────── */}
+      {/* ── Educação ─────────────────────────────────────────────────── */}
       {education.length > 0 && (
         <section className="mb-10">
           <SectionTitle>Educação</SectionTitle>
-          <ul className="space-y-3">
+          <ul className="list-disc sm:pl-5 pl-4 space-y-1">
             {education.map((edu) => (
-              <li key={edu.id}>
-                <p className="font-medium text-sm">
-                  {edu.title}
-                  {edu.institution && (
-                    <span className="text-gray-400 font-normal">
-                      {' '}— {edu.institution}
-                    </span>
-                  )}
-                </p>
+              <li key={edu.id} className="text-sm text-gray-700 dark:text-gray-300">
+                {edu.title}
+                {edu.institution && ` — ${edu.institution}`}
                 {edu.description && (
-                  <p className="text-sm text-gray-500 mt-0.5">{edu.description}</p>
+                  <span className="text-gray-500 dark:text-gray-400"> · {edu.description}</span>
                 )}
               </li>
             ))}
@@ -154,7 +162,7 @@ export function CVTemplate({ data, isPrint = false }: Props) {
       )}
 
       {!isPrint && (
-        <footer className="text-center pt-6 text-xs text-gray-400 border-t border-gray-100">
+        <footer className="text-center py-6 text-xs text-gray-500 dark:text-gray-400">
           © {new Date().getFullYear()} {profile.name}. Todos os direitos reservados.
         </footer>
       )}
@@ -164,7 +172,7 @@ export function CVTemplate({ data, isPrint = false }: Props) {
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="text-xl font-semibold border-b border-gray-200 pb-2 mb-6 text-gray-700">
+    <h2 className="text-xl font-semibold border-b border-gray-300 dark:border-gray-700 pb-2 mb-6 text-gray-700 dark:text-gray-200">
       {children}
     </h2>
   )

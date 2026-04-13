@@ -21,7 +21,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR" className={manrope.variable}>
-      <body className="font-sans bg-gray-50 text-gray-800 antialiased">
+      {/* Anti-FOUC: apply saved theme before React hydrates */}
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.classList.add('dark');})()`,
+          }}
+        />
+      </head>
+      <body className="font-sans bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 antialiased">
         {children}
       </body>
     </html>
