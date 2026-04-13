@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="pt-BR" className={manrope.variable}>
+    <html lang="pt-BR" className={manrope.variable} suppressHydrationWarning>
       {/* Anti-FOUC: apply saved theme before React hydrates */}
       <head>
         <script

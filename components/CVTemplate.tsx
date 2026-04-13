@@ -125,16 +125,16 @@ export function CVTemplate({ data, isPrint = false }: Props) {
                     {exp.is_current ? ' - Presente' : exp.end_date ? ` - ${exp.end_date}` : ''}
                   </p>
                   {exp.description && (
-                    <ul className="list-disc sm:pl-5 pl-4">
+                    <div className="space-y-1">
                       {exp.description
                         .split('\n')
                         .filter(Boolean)
                         .map((line, i) => (
-                          <li key={i} className="mb-2 text-sm text-gray-600 dark:text-gray-300">
+                          <p key={i} className="text-sm text-gray-600 dark:text-gray-300">
                             {line.replace(/^[-•]\s*/, '')}
-                          </li>
+                          </p>
                         ))}
-                    </ul>
+                    </div>
                   )}
                 </article>
               </div>
