@@ -17,30 +17,60 @@ async function computeToken(password: string, secret: string): Promise<string> {
     .join('')
 }
 
-export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
+interface AuthGate {
+  password: string
+  secret: string
+  cookieName: string
+  loginPath: string
+}
 
-  // Login page is public
-  if (pathname === '/cvmkr/login') {
+async function requireAuth(request: NextRequest, gate: AuthGate): Promise<NextResponse> {
+  const expectedToken = await computeToken(gate.password, gate.secret)
+  const sessionToken = request.cookies.get(gate.cookieName)?.value
+  if (sessionToken === expectedToken) {
     return NextResponse.next()
   }
 
-  const password = process.env.CVMKR_PASSWORD ?? 'admin'
-  const secret = process.env.CVMKR_SECRET ?? 'cvmkr-secret'
-  const expectedToken = await computeToken(password, secret)
+  const url = request.nextUrl.clone()
+  url.pathname = gate.loginPath
+  url.searchParams.set('from', request.nextUrl.pathname)
+  return NextResponse.redirect(url)
+}
 
-  const sessionToken = request.cookies.get('cvmkr_session')?.value
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
 
-  if (sessionToken !== expectedToken) {
-    const url = request.nextUrl.clone()
-    url.pathname = '/cvmkr/login'
-    url.searchParams.set('from', pathname)
-    return NextResponse.redirect(url)
+  // Cutover: /homolog → rotas definitivas
+  if (pathname === '/homolog' || pathname.startsWith('/homolog/')) {
+    const dest = pathname.replace(/^\/homolog/, '') || '/'
+    return NextResponse.redirect(new URL(dest, request.url), 308)
+  }
+
+  if (pathname.startsWith('/cvmkr')) {
+    if (pathname === '/cvmkr/login') {
+      return NextResponse.next()
+    }
+
+    return requireAuth(request, {
+      password: process.env.CVMKR_PASSWORD ?? 'admin',
+      secret: process.env.CVMKR_SECRET ?? 'cvmkr-secret',
+      cookieName: 'cvmkr_session',
+      loginPath: '/cvmkr/login',
+    })
+  }
+
+  if (pathname.startsWith('/cases')) {
+    return requireAuth(request, {
+      password: process.env.PORTFOLIO_PASSWORD ?? 'portfolio',
+      secret: process.env.PORTFOLIO_SECRET ?? 'portfolio-secret',
+      cookieName: 'portfolio_session',
+      loginPath: '/login',
+    })
   }
 
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: '/cvmkr/:path*',
+  matcher: ['/homolog/:path*', '/cvmkr/:path*', '/cases/:path*'],
 }

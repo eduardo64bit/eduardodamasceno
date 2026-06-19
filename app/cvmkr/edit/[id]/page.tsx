@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getResumeById } from '@/lib/db'
+
+export const dynamic = 'force-dynamic'
 import { ResumeEditor } from '@/components/cvmkr/editor/ResumeEditor'
 
 interface Props {
@@ -18,7 +20,7 @@ export default async function EditPage({ params }: Props) {
   const title = data ? `Editando: ${data.resume.name}` : 'Novo currículo'
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 text-gray-900">
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 flex items-center justify-between h-14">

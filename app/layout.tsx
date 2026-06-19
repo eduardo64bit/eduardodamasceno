@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Manrope } from 'next/font/google'
 import './globals.css'
 
@@ -12,6 +12,13 @@ export const metadata: Metadata = {
   title: 'Eduardo Damasceno — Designer de Produto',
   description:
     'Designer de Produto especializado em UX/UI, inovação e estratégia.',
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  interactiveWidget: 'resizes-content',
 }
 
 export default function RootLayout({

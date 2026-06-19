@@ -14,6 +14,386 @@
   .contact-link {
     @apply text-sm text-gray-800 dark:text-gray-200 transition-all duration-200;
   }
+
+  /* Admin CVMKR: campos sempre legíveis (html pode ter .dark do site público) */
+  .cvmkr-field {
+    color-scheme: light;
+    color: #111827;
+    -webkit-text-fill-color: #111827;
+    caret-color: #111827;
+  }
+
+  .cvmkr-field::placeholder {
+    color: #9ca3af;
+    -webkit-text-fill-color: #9ca3af;
+    opacity: 1;
+  }
+
+  .cvmkr-field:disabled {
+    color: #9ca3af;
+    -webkit-text-fill-color: #9ca3af;
+  }
+
+  /* Portfolio — tokens (dark = padrão) */
+  .portfolio-theme {
+    --pf-nav-offset: 0px;
+    --pf-bg: #1a1a1a;
+    --pf-text: #ffffff;
+    --pf-muted: #c7c7c7;
+    --pf-muted-2: rgba(255, 255, 255, 0.65);
+    --pf-muted-3: rgba(255, 255, 255, 0.4);
+    --pf-border: rgba(255, 255, 255, 0.1);
+    --pf-border-strong: rgba(255, 255, 255, 0.35);
+    --pf-surface: #191919;
+    --pf-surface-2: #252525;
+    --pf-sticky-bg: rgba(26, 26, 26, 0.92);
+    --pf-btn-hover-bg: #ffffff;
+    --pf-btn-hover-text: #1a1a1a;
+    --pf-blob: rgba(255, 255, 255, 0.045);
+    --pf-overlay: rgba(0, 0, 0, 0.62);
+    --pf-body-text: rgba(255, 255, 255, 0.88);
+    --pf-body-heading: #ffffff;
+    --pf-body-link: #ffffff;
+    --pf-body-quote-border: rgba(255, 255, 255, 0.2);
+    --pf-glass-bg: rgba(26, 26, 26, 0.68);
+    --pf-glass-fallback: rgba(26, 26, 26, 0.94);
+    --pf-glass-border: rgba(255, 255, 255, 0.1);
+    --pf-glass-highlight: rgba(255, 255, 255, 0.07);
+    --pf-glass-shadow: rgba(0, 0, 0, 0.18);
+    --pf-chat-overlay: rgba(0, 0, 0, 0.82);
+    --pf-chat-bg: #1a1524;
+    --pf-chat-surface: rgba(255, 255, 255, 0.07);
+    --pf-chat-user: rgba(255, 255, 255, 0.11);
+    --pf-chat-input: rgba(255, 255, 255, 0.08);
+    --pf-chat-send: rgba(255, 255, 255, 0.14);
+    --pf-chat-send-hover: rgba(255, 255, 255, 0.22);
+    --pf-chat-send-text: #ffffff;
+    --pf-chat-muted: rgba(255, 255, 255, 0.42);
+    --pf-chat-text: rgba(255, 255, 255, 0.92);
+  }
+
+  .portfolio-theme[data-theme='light'] {
+    --pf-bg: #f4f4f5;
+    --pf-text: #111111;
+    --pf-muted: #52525b;
+    --pf-muted-2: rgba(17, 17, 17, 0.65);
+    --pf-muted-3: rgba(17, 17, 17, 0.45);
+    --pf-border: rgba(17, 17, 17, 0.1);
+    --pf-border-strong: rgba(17, 17, 17, 0.25);
+    --pf-surface: #ffffff;
+    --pf-surface-2: #e4e4e7;
+    --pf-sticky-bg: rgba(244, 244, 245, 0.92);
+    --pf-btn-hover-bg: #111111;
+    --pf-btn-hover-text: #ffffff;
+    --pf-blob: rgba(17, 17, 17, 0.04);
+    --pf-overlay: rgba(0, 0, 0, 0.55);
+    --pf-body-text: rgba(17, 17, 17, 0.85);
+    --pf-body-heading: #111111;
+    --pf-body-link: #111111;
+    --pf-body-quote-border: rgba(17, 17, 17, 0.15);
+    --pf-glass-bg: rgba(244, 244, 245, 0.68);
+    --pf-glass-fallback: rgba(244, 244, 245, 0.94);
+    --pf-glass-border: rgba(17, 17, 17, 0.08);
+    --pf-glass-highlight: rgba(255, 255, 255, 0.55);
+    --pf-glass-shadow: rgba(0, 0, 0, 0.06);
+    --pf-chat-overlay: rgba(12, 8, 20, 0.62);
+    --pf-chat-bg: #f7f4fb;
+    --pf-chat-surface: rgba(26, 21, 36, 0.05);
+    --pf-chat-user: #ebe4f4;
+    --pf-chat-input: rgba(26, 21, 36, 0.05);
+    --pf-chat-send: #2a2038;
+    --pf-chat-send-hover: #1a1524;
+    --pf-chat-send-text: #ffffff;
+    --pf-chat-muted: rgba(26, 21, 36, 0.48);
+    --pf-chat-text: rgba(26, 21, 36, 0.9);
+  }
+
+  .portfolio-theme .case-body {
+    color: var(--pf-body-text);
+    @apply font-light leading-relaxed;
+  }
+
+  .portfolio-theme .case-body :is(h1, h2, h3, h4) {
+    color: var(--pf-body-heading);
+    @apply font-semibold tracking-tight mt-10 mb-4 first:mt-0;
+  }
+
+  .portfolio-theme .case-body h1 {
+    @apply text-2xl sm:text-3xl;
+  }
+
+  .portfolio-theme .case-body h2 {
+    @apply text-xl sm:text-2xl;
+  }
+
+  .portfolio-theme .case-body p {
+    @apply mb-4 text-base sm:text-lg;
+  }
+
+  .portfolio-theme .case-body a {
+    color: var(--pf-body-link);
+    @apply underline underline-offset-4 opacity-80 hover:opacity-100 transition;
+  }
+
+  .portfolio-theme .case-body img {
+    @apply w-full rounded-xl my-8;
+  }
+
+  .portfolio-theme .case-body ul,
+  .portfolio-theme .case-body ol {
+    @apply mb-4 pl-5 space-y-2;
+  }
+
+  .portfolio-theme .case-body li {
+    @apply text-base sm:text-lg;
+  }
+
+  .portfolio-theme .case-body blockquote {
+    border-color: var(--pf-body-quote-border);
+    @apply border-l-2 pl-4 italic opacity-70 my-6;
+  }
+
+  .portfolio-theme .case-body .entry-header,
+  .portfolio-theme .case-body .entry-title {
+    @apply hidden;
+  }
+
+  .portfolio-theme .char {
+    display: inline-block;
+    will-change: transform, opacity;
+  }
+
+  /* SplitType: quebra só entre palavras, nunca no meio delas */
+  .portfolio-theme .pf-split-text .word {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  .portfolio-theme .word {
+    display: inline-block;
+  }
+
+  .portfolio-theme .pf-no-break,
+  .portfolio-theme .hero-role,
+  .portfolio-theme .pf-split-text {
+    hyphens: none;
+    -webkit-hyphens: none;
+    word-break: normal;
+    overflow-wrap: normal;
+  }
+
+  /* Inter 800 parece mais pesado que Larsseit — hero usa 700 */
+  .portfolio-theme .hero-name {
+    font-weight: 700;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-synthesis: none;
+  }
+
+  /* Glass sutil (blur + saturação + reflexo) — nav, sticky titles */
+  .portfolio-theme .pf-glass {
+    background: var(--pf-glass-bg);
+    -webkit-backdrop-filter: blur(16px) saturate(1.35);
+    backdrop-filter: blur(16px) saturate(1.35);
+  }
+
+  @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+    .portfolio-theme .pf-glass {
+      background: var(--pf-glass-fallback);
+    }
+  }
+
+  @keyframes pf-scroll-chevron {
+    0%,
+    100% {
+      transform: translateY(0);
+      opacity: 0.3;
+    }
+    50% {
+      transform: translateY(5px);
+      opacity: 1;
+    }
+  }
+
+  @keyframes pf-chat-sheet-in {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes pf-chat-overlay-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes pf-chat-sheet-out {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes pf-chat-overlay-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  .pf-chat-overlay {
+    animation: pf-chat-overlay-in 0.28s ease-out both;
+  }
+
+  .pf-chat-overlay-out {
+    animation: pf-chat-overlay-out 0.28s ease-in both;
+  }
+
+  .pf-chat-sheet {
+    animation: pf-chat-sheet-in 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .pf-chat-sheet-out {
+    animation: pf-chat-sheet-out 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes pf-modal-panel-in {
+    from {
+      opacity: 0;
+      transform: scale(0.96) translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  @keyframes pf-modal-panel-out {
+    from {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.96) translateY(8px);
+    }
+  }
+
+  @keyframes pf-modal-overlay-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes pf-modal-overlay-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  .pf-modal-panel-in {
+    animation: pf-modal-panel-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .pf-modal-panel-out {
+    animation: pf-modal-panel-out 0.28s ease-in both;
+  }
+
+  .pf-modal-overlay-in {
+    animation: pf-modal-overlay-in 0.28s ease-out both;
+  }
+
+  .pf-modal-overlay-out {
+    animation: pf-modal-overlay-out 0.28s ease-in both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pf-chat-overlay,
+    .pf-chat-overlay-out,
+    .pf-chat-sheet,
+    .pf-chat-sheet-out,
+    .pf-modal-panel-in,
+    .pf-modal-panel-out,
+    .pf-modal-overlay-in,
+    .pf-modal-overlay-out {
+      animation-duration: 0.01ms;
+    }
+  }
+
+  @keyframes pf-chat-typing-dot {
+    0%,
+    60%,
+    100% {
+      opacity: 0.28;
+      transform: translateY(0);
+    }
+    30% {
+      opacity: 1;
+      transform: translateY(-3px);
+    }
+  }
+
+  .pf-chat-typing-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background: var(--pf-chat-muted);
+    animation: pf-chat-typing-dot 1.2s ease-in-out infinite;
+  }
+
+  .pf-chat-typing-dot:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+
+  .pf-chat-typing-dot:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pf-chat-typing-dot {
+      animation: none;
+      opacity: 0.65;
+    }
+  }
+
+  .portfolio-theme .pf-scroll-chevron {
+    animation: pf-scroll-chevron 1.6s ease-in-out infinite;
+  }
+
+  .portfolio-theme .pf-scroll-chevron:nth-child(1) {
+    animation-delay: 0s;
+  }
+
+  .portfolio-theme .pf-scroll-chevron:nth-child(2) {
+    animation-delay: 0.18s;
+  }
+
+  .portfolio-theme .pf-scroll-chevron:nth-child(3) {
+    animation-delay: 0.36s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .portfolio-theme .pf-scroll-chevron {
+      animation: none;
+      opacity: 0.65;
+    }
+  }
 }
 
 /* ── Print styles ─────────────────────────────────────────────────────────── */

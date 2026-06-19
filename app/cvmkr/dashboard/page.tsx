@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import { getAllResumes } from '@/lib/db'
+
+export const dynamic = 'force-dynamic'
 import { ResumeCard } from '@/components/cvmkr/ResumeCard'
 import { logoutAction } from './actions'
 
@@ -22,7 +24,13 @@ export default async function DashboardPage() {
               href="/"
               className="text-sm text-gray-500 hover:text-gray-800 transition"
             >
-              Ver CV público
+              Portfolio
+            </Link>
+            <Link
+              href="/cv"
+              className="text-sm text-gray-500 hover:text-gray-800 transition"
+            >
+              Ver CV
             </Link>
             <form action={logoutAction}>
               <button
@@ -42,7 +50,15 @@ export default async function DashboardPage() {
           <h1 className="text-xl font-semibold text-gray-900">
             Currículos ({resumes.length})
           </h1>
-          <NewResumeButton />
+          <div className="flex items-center gap-3">
+            <Link
+              href="/cvmkr/cases"
+              className="text-sm text-gray-500 hover:text-gray-800 transition"
+            >
+              Cases
+            </Link>
+            <NewResumeButton />
+          </div>
         </div>
 
         {resumes.length === 0 ? (

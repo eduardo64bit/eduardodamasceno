@@ -1,0 +1,24 @@
+# Exemplo de ~/.cloudflared/config.yml — vários hostnames no MESMO tunnel.
+#
+# DNS (uma vez por hostname):
+#   cloudflared tunnel route dns lda-processos eduardodamasceno.com.br
+#   cloudflared tunnel route dns lda-processos www.eduardodamasceno.com.br
+#   cloudflared tunnel route dns lda-processos edu.xdstudio.com.br
+#
+# Depois: sudo systemctl restart lda-cloudflared
+
+tunnel: lda-processos
+credentials-file: /home/eduardo/.cloudflared/<TUNNEL_ID>.json
+
+ingress:
+  - hostname: lda.xdstudio.com.br
+    service: http://127.0.0.1:8080
+  - hostname: ilm.xdstudio.com.br
+    service: http://127.0.0.1:9080
+  - hostname: eduardodamasceno.com.br
+    service: http://127.0.0.1:9090
+  - hostname: www.eduardodamasceno.com.br
+    service: http://127.0.0.1:9090
+  - hostname: edu.xdstudio.com.br
+    service: http://127.0.0.1:9090
+  - service: http_status:404

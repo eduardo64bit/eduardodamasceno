@@ -17,6 +17,7 @@ export interface Profile {
   email: string
   phone: string
   linkedin: string
+  portfolio: string
   summary: string
 }
 

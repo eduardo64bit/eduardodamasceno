@@ -1,11 +1,14 @@
 'use server'
 
-import { createHmac } from 'crypto'
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
+import {
+  CVMKR_SESSION_COOKIE,
+  getCvmkrSessionToken,
+} from '@/lib/domains/auth/cvmkr'
 
 export interface LoginState {
   error?: string
+  redirectTo?: string
 }
 
 export async function loginAction(
@@ -21,11 +24,10 @@ export async function loginAction(
     return { error: 'Senha incorreta. Tente novamente.' }
   }
 
-  const secret = process.env.CVMKR_SECRET ?? 'cvmkr-secret'
-  const token = createHmac('sha256', secret).update(password).digest('hex')
+  const token = getCvmkrSessionToken(password)
 
   const cookieStore = await cookies()
-  cookieStore.set('cvmkr_session', token, {
+  cookieStore.set(CVMKR_SESSION_COOKIE, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
@@ -33,5 +35,6 @@ export async function loginAction(
     maxAge: 60 * 60 * 24 * 7, // 7 days
   })
 
-  redirect(from.startsWith('/') ? from : '/cvmkr/dashboard')
+  const redirectTo = from.startsWith('/') ? from : '/cvmkr/dashboard'
+  return { redirectTo }
 }

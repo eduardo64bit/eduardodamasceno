@@ -1,15 +1,13 @@
 import { getActiveResume } from '@/lib/db'
 import { CVTemplate } from '@/components/CVTemplate'
 
-export const revalidate = 60 // ISR: revalidate every 60 s
-
-export default async function HomePage() {
+export async function CVPageContent() {
   let data = null
 
   try {
     data = await getActiveResume()
   } catch {
-    // Supabase not configured or DB not ready yet
+    // DB not ready yet
   }
 
   if (!data) {

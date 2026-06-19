@@ -8,7 +8,7 @@ export default async function LoginPage({ searchParams }: Props) {
   const { from } = await searchParams
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+    <main className="min-h-screen flex items-center justify-center bg-gray-50 text-gray-900 px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-gray-900">CVMKR</h1>

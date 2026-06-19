@@ -20,8 +20,6 @@ export function CVTemplate({ data, isPrint = false }: Props) {
   const summaryParagraphs = profile.summary
     ? profile.summary.split('\n').map((p) => p.trim()).filter(Boolean)
     : []
-  const heroBio = summaryParagraphs[0] ?? ''
-  const summaryRest = summaryParagraphs.slice(1)
 
   return (
     <div className="max-w-3xl mx-auto my-10 px-4 sm:px-6 lg:px-10 py-10">
@@ -38,10 +36,6 @@ export function CVTemplate({ data, isPrint = false }: Props) {
         <div className="flex flex-col items-start gap-3">
           <h1 className="text-4xl font-bold mb-2">{profile.name}</h1>
 
-          {heroBio && (
-            <p className="text-base text-gray-700 dark:text-gray-300">{heroBio}</p>
-          )}
-
           {headerTags.length > 0 && (
             <div className="flex flex-wrap gap-2 mt-1">
               {headerTags.map((tag, i) => (
@@ -53,7 +47,11 @@ export function CVTemplate({ data, isPrint = false }: Props) {
       </header>
 
       {/* ── Contato ──────────────────────────────────────────────────── */}
-      {(profile.email || profile.phone || profile.linkedin || profile.location) && (
+      {(profile.email ||
+        profile.phone ||
+        profile.linkedin ||
+        profile.portfolio ||
+        profile.location) && (
         <section className="mb-10">
           <SectionTitle>Contato</SectionTitle>
           <div className="space-y-2">
@@ -73,12 +71,37 @@ export function CVTemplate({ data, isPrint = false }: Props) {
                 href={profile.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="contact-link inline-flex items-center gap-1"
+                className="contact-link flex items-center gap-1 w-fit"
               >
                 <span className="font-medium hover:underline">LinkedIn</span>
                 <span className="text-blue-600 dark:text-blue-400 text-sm">→</span>
               </a>
             )}
+            {profile.portfolio && (
+              <a
+                href={profile.portfolio}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contact-link flex items-center gap-1 w-fit"
+              >
+                <span className="font-medium hover:underline">Portfólio</span>
+                <span className="text-blue-600 dark:text-blue-400 text-sm">→</span>
+              </a>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* ── Resumo ───────────────────────────────────────────────────── */}
+      {summaryParagraphs.length > 0 && (
+        <section className="mb-10">
+          <SectionTitle>Resumo</SectionTitle>
+          <div className="space-y-3">
+            {summaryParagraphs.map((p, i) => (
+              <p key={i} className="text-sm sm:text-base text-gray-500 dark:text-gray-300">
+                {p}
+              </p>
+            ))}
           </div>
         </section>
       )}
@@ -94,20 +117,6 @@ export function CVTemplate({ data, isPrint = false }: Props) {
           </ul>
         </section>
       ))}
-
-      {/* ── Resumo ───────────────────────────────────────────────────── */}
-      {summaryRest.length > 0 && (
-        <section className="mb-10">
-          <SectionTitle>Resumo</SectionTitle>
-          <div className="space-y-3">
-            {summaryRest.map((p, i) => (
-              <p key={i} className="text-sm sm:text-base text-gray-500 dark:text-gray-300">
-                {p}
-              </p>
-            ))}
-          </div>
-        </section>
-      )}
 
       {/* ── Experiência ──────────────────────────────────────────────── */}
       {experiences.length > 0 && (

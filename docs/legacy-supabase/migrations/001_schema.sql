@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS profile (
   email       TEXT  NOT NULL DEFAULT '',
   phone       TEXT  NOT NULL DEFAULT '',
   linkedin    TEXT  NOT NULL DEFAULT '',
+  portfolio   TEXT  NOT NULL DEFAULT '',
   summary     TEXT  NOT NULL DEFAULT ''
 );
 

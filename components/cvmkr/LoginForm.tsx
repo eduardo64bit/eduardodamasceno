@@ -1,13 +1,19 @@
 'use client'
 
-import { useActionState } from 'react'
+import { useActionState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { loginAction, type LoginState } from '@/app/cvmkr/login/actions'
 
 export function LoginForm({ from }: { from?: string }) {
+  const router = useRouter()
   const [state, action, pending] = useActionState<LoginState, FormData>(
     loginAction,
     {}
   )
+
+  useEffect(() => {
+    if (state.redirectTo) router.replace(state.redirectTo)
+  }, [state.redirectTo, router])
 
   return (
     <form action={action} className="space-y-4">
@@ -27,7 +33,7 @@ export function LoginForm({ from }: { from?: string }) {
           required
           autoFocus
           autoComplete="current-password"
-          className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+          className="cvmkr-field w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
           placeholder="••••••••"
         />
       </div>

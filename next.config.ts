@@ -1,7 +1,8 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  // Allow Vercel deployment without ESLint/TS build errors blocking CI
+  output: 'standalone',
+  serverExternalPackages: ['better-sqlite3'],
   eslint: { ignoreDuringBuilds: false },
   typescript: { ignoreBuildErrors: false },
 }

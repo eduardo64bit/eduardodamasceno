@@ -24,6 +24,7 @@ const defaultProfile: ProfileInput = {
   email: '',
   phone: '',
   linkedin: '',
+  portfolio: '',
   summary: '',
 }
 
@@ -67,6 +68,7 @@ export function ResumeEditor({ id, initial }: Props) {
           email: initial.profile.email,
           phone: initial.profile.phone,
           linkedin: initial.profile.linkedin,
+          portfolio: initial.profile.portfolio ?? '',
           summary: initial.profile.summary,
         }
       : defaultProfile
@@ -177,6 +179,13 @@ export function ResumeEditor({ id, initial }: Props) {
             />
           </Field>
         </div>
+        <Field label="Portfólio (URL)">
+          <Input
+            value={profile.portfolio}
+            onChange={(v) => setProfile((p) => ({ ...p, portfolio: v }))}
+            placeholder="https://seu-portfolio.com"
+          />
+        </Field>
         <Field label="Resumo profissional">
           <Textarea
             value={profile.summary}
@@ -370,6 +379,10 @@ export function ResumeEditor({ id, initial }: Props) {
   )
 }
 
+// Campos com fundo claro: cores explícitas para não herdar text-gray-100 do dark mode no body.
+const fieldClass =
+  'cvmkr-field w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition disabled:bg-gray-50 disabled:text-gray-400'
+
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
 function updateList<T>(
@@ -439,7 +452,7 @@ function Input({
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       disabled={disabled}
-      className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition disabled:bg-gray-50 disabled:text-gray-400"
+      className={fieldClass}
     />
   )
 }
@@ -461,7 +474,7 @@ function Textarea({
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       rows={rows}
-      className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-y"
+      className={`${fieldClass} resize-y`}
     />
   )
 }

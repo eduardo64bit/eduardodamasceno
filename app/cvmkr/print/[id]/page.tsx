@@ -2,6 +2,8 @@ import { getResumeById } from '@/lib/db'
 import { CVTemplate } from '@/components/CVTemplate'
 import { notFound } from 'next/navigation'
 
+export const dynamic = 'force-dynamic'
+
 interface Props {
   params: Promise<{ id: string }>
 }
