@@ -9,6 +9,8 @@ import {
 } from 'react'
 import {
   PORTFOLIO_THEME_STORAGE_KEY,
+  PORTFOLIO_THEME_DARK_BG,
+  PORTFOLIO_THEME_LIGHT_BG,
   themeFromSystem,
   toggleManualTheme,
   type PortfolioThemeMode,
@@ -41,7 +43,6 @@ export function PortfolioThemeProvider({ children, className }: Props) {
   const [systemTheme, setSystemTheme] = useState<PortfolioThemeResolved>(() =>
     typeof window !== 'undefined' ? themeFromSystem() : 'dark'
   )
-  const [ready, setReady] = useState(false)
 
   const resolved: PortfolioThemeResolved = mode === 'auto' ? systemTheme : mode
 
@@ -54,7 +55,6 @@ export function PortfolioThemeProvider({ children, className }: Props) {
     } catch {
       /* ignore */
     }
-    setReady(true)
   }, [])
 
   useEffect(() => {
@@ -64,6 +64,15 @@ export function PortfolioThemeProvider({ children, className }: Props) {
     mq.addEventListener('change', syncSystem)
     return () => mq.removeEventListener('change', syncSystem)
   }, [])
+
+  useEffect(() => {
+    const root = document.documentElement
+    root.setAttribute('data-portfolio-theme', resolved)
+    root.style.colorScheme = resolved
+
+    const themeColor = resolved === 'dark' ? PORTFOLIO_THEME_DARK_BG : PORTFOLIO_THEME_LIGHT_BG
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', themeColor)
+  }, [resolved])
 
   const toggleTheme = useCallback(() => {
     setMode((current) => {
@@ -85,7 +94,6 @@ export function PortfolioThemeProvider({ children, className }: Props) {
         data-theme={resolved}
         lang="pt-BR"
         suppressHydrationWarning
-        style={ready ? undefined : { visibility: 'hidden' }}
       >
         {children}
       </div>

@@ -56,7 +56,7 @@ interface PortfolioSideSheetProps {
   open: boolean
   onClose: () => void
   title: string
-  subtitle?: string
+  subtitle?: React.ReactNode
   ariaLabel: string
   closeLabel: string
   children: React.ReactNode
@@ -134,7 +134,7 @@ export function PortfolioSideSheet({
           <div className="min-w-0 pr-3">
             <p className="text-sm font-medium text-[var(--pf-chat-text)]">{title}</p>
             {subtitle ? (
-              <p className="text-xs text-[var(--pf-chat-muted)]">{subtitle}</p>
+              <div className="mt-0.5">{subtitle}</div>
             ) : null}
           </div>
           <button

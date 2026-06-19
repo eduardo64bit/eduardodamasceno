@@ -58,6 +58,46 @@ function initSchema(database: Database.Database) {
   if (version < 4) {
     ensureProfilePortfolioColumn(database)
     database.pragma('user_version = 4')
+    version = 4
+  }
+
+  if (version < 5) {
+    const migrationPath = path.join(
+      process.cwd(),
+      'lib',
+      'db',
+      'migrations',
+      '004_chat.sql'
+    )
+    database.exec(fs.readFileSync(migrationPath, 'utf-8'))
+    database.pragma('user_version = 5')
+    version = 5
+  }
+
+  if (version < 6) {
+    const migrationPath = path.join(
+      process.cwd(),
+      'lib',
+      'db',
+      'migrations',
+      '005_chat_presence.sql'
+    )
+    database.exec(fs.readFileSync(migrationPath, 'utf-8'))
+    database.pragma('user_version = 6')
+    version = 6
+  }
+
+  ensureChatOwnerPresenceColumn(database)
+}
+
+function ensureChatOwnerPresenceColumn(database: Database.Database) {
+  const cols = database
+    .prepare('PRAGMA table_info(chat_sessions)')
+    .all() as { name: string }[]
+  if (!cols.some((c) => c.name === 'owner_presence_until')) {
+    database.exec('ALTER TABLE chat_sessions ADD COLUMN owner_presence_until TEXT')
+    database.exec("UPDATE chat_sessions SET status = 'offline' WHERE status IN ('auto', 'closed')")
+    database.exec("UPDATE chat_sessions SET status = 'online' WHERE status = 'live'")
   }
 }
 

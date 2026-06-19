@@ -17,11 +17,18 @@ docker_compose() {
   fi
 }
 
+compose_env_file() {
+  if [[ -f "$ROOT/.env" ]]; then
+    printf '%s\n' --env-file "$ROOT/.env"
+  fi
+}
+
 cmd="${1:-up}"
 
 case "$cmd" in
   build)
     shift || true
+    echo "Dica: se mudanças não aparecerem, use: docker compose build --no-cache web" >&2
     docker_compose build "$@"
     ;;
   up | start)
@@ -29,7 +36,8 @@ case "$cmd" in
       echo "Docker não está rodando. Ex.: sudo systemctl start docker" >&2
       exit 1
     fi
-    docker_compose up -d
+    # --force-recreate: garante que mudanças no .env (senhas etc.) entram no container
+    docker_compose $(compose_env_file) up -d --force-recreate
     host_port="$(docker_compose port web 3000 2>/dev/null | awk -F: '{print $NF}')"
     echo "eduardodamasceno: http://127.0.0.1:${host_port:-9090}"
     ;;

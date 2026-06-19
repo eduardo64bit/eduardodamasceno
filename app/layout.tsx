@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Manrope } from 'next/font/google'
+import { PORTFOLIO_THEME_BOOT_SCRIPT, PORTFOLIO_THEME_DARK_BG } from '@/lib/portfolio/theme'
 import './globals.css'
 
 const manrope = Manrope({
@@ -19,6 +20,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: 'cover',
   interactiveWidget: 'resizes-content',
+  themeColor: PORTFOLIO_THEME_DARK_BG,
 }
 
 export default function RootLayout({
@@ -32,7 +34,7 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.classList.add('dark');})()`,
+            __html: PORTFOLIO_THEME_BOOT_SCRIPT,
           }}
         />
         <link
@@ -40,7 +42,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-sans bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 antialiased">
+      <body className="font-sans text-gray-800 antialiased">
         {children}
       </body>
     </html>

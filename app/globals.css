@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    background-color: #1a1a1a;
+  }
+
+  html[data-portfolio-theme='light'] {
+    background-color: #f4f4f5;
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: inherit;
+  }
+}
+
 @layer components {
   .btn-ghost {
     @apply text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-100 dark:hover:bg-gray-800 px-2.5 py-1.5 rounded-lg transition-colors;
@@ -369,6 +384,30 @@
     .pf-chat-typing-dot {
       animation: none;
       opacity: 0.65;
+    }
+  }
+
+  @keyframes pf-chat-bubble-highlight {
+    0% {
+      box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.55);
+    }
+    20% {
+      box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.45);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(52, 211, 153, 0);
+    }
+  }
+
+  .pf-chat-bubble-highlight {
+    animation: pf-chat-bubble-highlight 2.2s ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pf-chat-bubble-highlight {
+      animation: none;
+      outline: 2px solid rgba(52, 211, 153, 0.45);
+      outline-offset: 2px;
     }
   }
 

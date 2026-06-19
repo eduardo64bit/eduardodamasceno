@@ -12,15 +12,17 @@ export async function CVPageContent() {
 
   if (!data) {
     return (
-      <main className="max-w-3xl mx-auto my-20 px-6 text-center text-gray-400">
-        <p className="text-lg font-semibold">Eduardo Damasceno</p>
-        <p className="text-sm mt-2">Currículo em breve.</p>
+      <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <div className="max-w-3xl mx-auto my-20 px-6 text-center text-gray-400">
+          <p className="text-lg font-semibold">Eduardo Damasceno</p>
+          <p className="text-sm mt-2">Currículo em breve.</p>
+        </div>
       </main>
     )
   }
 
   return (
-    <main>
+    <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <CVTemplate data={data} />
     </main>
   )
