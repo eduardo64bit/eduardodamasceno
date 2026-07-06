@@ -1,3 +1,5 @@
+import type { CaseSegmentId } from './segments'
+
 export type CaseStatus = 'draft' | 'published'
 
 /** Public grid — no body, no gallery paths. */
@@ -9,6 +11,7 @@ export interface CasePublic {
   cover_path: string
   sort_order: number
   status: CaseStatus
+  segments: CaseSegmentId[]
 }
 
 export interface CaseMedia {

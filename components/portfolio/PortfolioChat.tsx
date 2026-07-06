@@ -1,14 +1,14 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { portfolioLabels } from '@/lib/portfolio/copy'
 import { CHAT_MESSAGE_MAX_LENGTH, CHAT_OWNER_PRESENCE_MS } from '@/lib/domains/chat/constants'
 import type { ChatMessageRole, ChatSessionStatus } from '@/lib/domains/chat/types'
 import { PortfolioSideSheet } from './PortfolioSideSheet'
 
 const SCRIPT = [
-  'Oi, aqui é o Edu. Nem sempre estou on-line, mas leio todas as mensagens.',
-  'Deixe seu contato e uma mensagem, se quiser. Assim que possível, retorno para continuarmos a conversa.',
+  'Oi, tudo bem? Nem sempre estou online, mas acompanho todos os contatos.',
+  'Pode escrever por aqui. Se desejar um retorno, deixe também seu e-mail ou telefone.',
 ] as const
 
 const SCRIPT_PAUSE_MS = 320
@@ -29,7 +29,7 @@ function ChatBubble({ message, highlight }: { message: ChatMessage; highlight?: 
   return (
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
       <div
-        className={`max-w-[85%] rounded-[1.25rem] px-4 py-2.5 text-sm leading-relaxed ${
+        className={`max-w-[85%] break-words [overflow-wrap:anywhere] whitespace-pre-line rounded-[1.25rem] px-4 py-2.5 text-sm leading-relaxed ${
           isUser
             ? 'bg-[var(--pf-chat-user)] text-[var(--pf-chat-text)] rounded-br-md'
             : isOwner
@@ -280,14 +280,14 @@ function PortfolioChatPanel({
       ariaLabel={portfolioLabels.chatTitle}
       closeLabel={portfolioLabels.chatClose}
       footer={
-        <div className="space-y-2">
+        <div className="min-w-0 space-y-2">
           {sendError ? (
             <p className="px-2 text-center text-xs text-red-400/90" role="alert">
               {sendError}
             </p>
           ) : null}
-          <div className="flex items-end gap-2 rounded-[1.5rem] bg-[var(--pf-chat-input)] p-2">
-            <div className="min-w-0 flex-1">
+          <div className="flex min-w-0 items-end gap-2 rounded-[1.5rem] bg-[var(--pf-chat-input)] p-2">
+            <div className="min-w-0 flex-1 overflow-hidden">
               <textarea
                 ref={inputRef}
                 value={input}
@@ -348,7 +348,36 @@ function PortfolioChatPanel({
   )
 }
 
-export function PortfolioChatLauncher() {
+function ChatIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+    </svg>
+  )
+}
+
+const chatButtonClass =
+  'inline-flex items-center gap-2 rounded-full bg-[var(--pf-surface-2)] px-6 py-2.5 text-base text-[var(--pf-muted-2)] transition-colors duration-300 hover:bg-[var(--pf-btn-hover-bg)] hover:text-[var(--pf-btn-hover-text)] sm:text-lg'
+
+const PortfolioChatContext = createContext<{ openChat: () => void } | null>(null)
+
+function usePortfolioChat() {
+  const ctx = useContext(PortfolioChatContext)
+  if (!ctx) throw new Error('PortfolioChatButton must be used within PortfolioChatRoot')
+  return ctx
+}
+
+export function PortfolioChatButton({ className }: { className?: string }) {
+  const { openChat } = usePortfolioChat()
+  return (
+    <button type="button" onClick={openChat} className={className ?? chatButtonClass}>
+      <ChatIcon />
+      {portfolioLabels.chatOpen}
+    </button>
+  )
+}
+
+export function PortfolioChatRoot({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false)
   const [sessionId, setSessionId] = useState<string | null>(null)
   const [sessionReady, setSessionReady] = useState(false)
@@ -509,16 +538,8 @@ export function PortfolioChatLauncher() {
   }, [messages, scriptDone, scriptIndex])
 
   return (
-    <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-2 rounded-full bg-[var(--pf-surface-2)] px-6 py-2.5 text-base text-[var(--pf-muted-2)] transition-colors duration-300 hover:bg-[var(--pf-btn-hover-bg)] hover:text-[var(--pf-btn-hover-text)] sm:text-lg"
-      >
-        <ChatIcon />
-        {portfolioLabels.chatOpen}
-      </button>
-
+    <PortfolioChatContext.Provider value={{ openChat: () => setOpen(true) }}>
+      {children}
       <PortfolioChatPanel
         open={open}
         onClose={handleClose}
@@ -538,14 +559,11 @@ export function PortfolioChatLauncher() {
         highlightedIds={highlightedIds}
         setSessionStatus={setSessionStatus}
       />
-    </>
+    </PortfolioChatContext.Provider>
   )
 }
 
-function ChatIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
-      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-    </svg>
-  )
+/** @deprecated Use PortfolioChatRoot + PortfolioChatButton */
+export function PortfolioChatLauncher() {
+  return <PortfolioChatButton />
 }

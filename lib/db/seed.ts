@@ -4,7 +4,7 @@ import { BASE_RESUME_ID, baseResumePayload } from './base-resume-data'
 
 export function seedDatabase(database: Database.Database) {
   const now = new Date().toISOString()
-  const { resumeInfo, profile, experiences, skills, education } = baseResumePayload
+  const { resumeInfo, profile, experiences, authorProjects, skills, education } = baseResumePayload
 
   database
     .prepare(
@@ -45,6 +45,24 @@ export function seedDatabase(database: Database.Database) {
       exp.end_date,
       exp.is_current ? 1 : 0,
       exp.description,
+      i
+    )
+  })
+
+  const insertAuthorProject = database.prepare(
+    `INSERT INTO author_projects (id, resume_id, name, role, start_date, end_date, is_current, description, order_index)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
+  )
+  authorProjects.forEach((project, i) => {
+    insertAuthorProject.run(
+      randomUUID(),
+      BASE_RESUME_ID,
+      project.name,
+      project.role,
+      project.start_date,
+      project.end_date,
+      project.is_current ? 1 : 0,
+      project.description,
       i
     )
   })

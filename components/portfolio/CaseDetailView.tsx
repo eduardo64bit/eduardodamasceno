@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { CaseFull } from '@/lib/domains/cases/types'
-import { buildCaseSlides, stripImagesFromHtml } from '@/lib/portfolio/case-content'
+import { buildCaseSlides, splitCaseBodyAfterContext } from '@/lib/portfolio/case-content'
 import { portfolioLabels } from '@/lib/portfolio/copy'
 import { CaseImageCarousel } from './CaseImageCarousel'
 import { PortfolioNav } from './PortfolioNav'
@@ -29,7 +29,7 @@ interface Props {
 export function CaseDetailView({ data, contactName, contactEmail }: Props) {
   const embed = youtubeEmbedUrl(data.youtube_url)
   const slides = buildCaseSlides(data.cover_path, data.media, data.body_html)
-  const bodyHtml = stripImagesFromHtml(data.body_html)
+  const { leadHtml, restHtml } = splitCaseBodyAfterContext(data.body_html)
 
   return (
     <>
@@ -55,6 +55,10 @@ export function CaseDetailView({ data, contactName, contactEmail }: Props) {
             )}
           </header>
 
+          {leadHtml ? (
+            <div className="case-body" dangerouslySetInnerHTML={{ __html: leadHtml }} />
+          ) : null}
+
           {slides.length > 0 && <CaseImageCarousel slides={slides} title={data.title} />}
 
           {embed && (
@@ -69,9 +73,9 @@ export function CaseDetailView({ data, contactName, contactEmail }: Props) {
             </div>
           )}
 
-          {bodyHtml ? (
-            <div className="case-body" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
-          ) : !slides.length && !embed ? (
+          {restHtml ? (
+            <div className="case-body" dangerouslySetInnerHTML={{ __html: restHtml }} />
+          ) : !leadHtml && !slides.length && !embed ? (
             <p className="text-[var(--pf-muted-3)] text-sm">{portfolioLabels.contentMissing}</p>
           ) : null}
         </div>

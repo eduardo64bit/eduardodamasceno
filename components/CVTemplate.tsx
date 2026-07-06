@@ -7,7 +7,7 @@ interface Props {
 }
 
 export function CVTemplate({ data, isPrint = false }: Props) {
-  const { profile, experiences, skills, education } = data
+  const { profile, experiences, authorProjects, skills, education } = data
 
   if (!profile) return null
 
@@ -124,29 +124,33 @@ export function CVTemplate({ data, isPrint = false }: Props) {
           <SectionTitle>Experiência</SectionTitle>
           <div className="grid gap-5 sm:grid-cols-2">
             {experiences.map((exp) => (
-              <div key={exp.id} className="p-5">
-                <article>
-                  <h3 className="text-base font-bold mb-2">
-                    {exp.role} — {exp.company}
-                  </h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-300 mb-3">
-                    {exp.start_date}
-                    {exp.is_current ? ' - Presente' : exp.end_date ? ` - ${exp.end_date}` : ''}
-                  </p>
-                  {exp.description && (
-                    <div className="space-y-1">
-                      {exp.description
-                        .split('\n')
-                        .filter(Boolean)
-                        .map((line, i) => (
-                          <p key={i} className="text-sm text-gray-600 dark:text-gray-300">
-                            {line.replace(/^[-•]\s*/, '')}
-                          </p>
-                        ))}
-                    </div>
-                  )}
-                </article>
-              </div>
+              <TimelineEntry
+                key={exp.id}
+                title={`${exp.role} — ${exp.company}`}
+                startDate={exp.start_date}
+                endDate={exp.end_date}
+                isCurrent={exp.is_current}
+                description={exp.description}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ── Projetos autorais ────────────────────────────────────────── */}
+      {authorProjects.length > 0 && (
+        <section className="mb-10">
+          <SectionTitle>Projetos autorais</SectionTitle>
+          <div className="grid gap-5 sm:grid-cols-2">
+            {authorProjects.map((project) => (
+              <TimelineEntry
+                key={project.id}
+                title={`${project.role} — ${project.name}`}
+                startDate={project.start_date}
+                endDate={project.end_date}
+                isCurrent={project.is_current}
+                description={project.description}
+              />
             ))}
           </div>
         </section>
@@ -184,5 +188,43 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
     <h2 className="text-xl font-semibold border-b border-gray-300 dark:border-gray-700 pb-2 mb-6 text-gray-700 dark:text-gray-200">
       {children}
     </h2>
+  )
+}
+
+function TimelineEntry({
+  title,
+  startDate,
+  endDate,
+  isCurrent,
+  description,
+}: {
+  title: string
+  startDate: string
+  endDate: string | null
+  isCurrent: boolean
+  description: string
+}) {
+  return (
+    <div className="p-5">
+      <article>
+        <h3 className="text-base font-bold mb-2">{title}</h3>
+        <p className="text-sm text-gray-500 dark:text-gray-300 mb-3">
+          {startDate}
+          {isCurrent ? ' - Presente' : endDate ? ` - ${endDate}` : ''}
+        </p>
+        {description && (
+          <div className="space-y-1">
+            {description
+              .split('\n')
+              .filter(Boolean)
+              .map((line, i) => (
+                <p key={i} className="text-sm text-gray-600 dark:text-gray-300">
+                  {line.replace(/^[-•]\s*/, '')}
+                </p>
+              ))}
+          </div>
+        )}
+      </article>
+    </div>
   )
 }

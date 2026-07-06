@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { portfolioLabels } from '@/lib/portfolio/copy'
-import { CV_PUBLIC_PATH, LINKEDIN_URL } from '@/lib/site/urls'
+import { CV_PUBLIC_PATH } from '@/lib/site/urls'
 import { PortfolioPrivacyModal } from './PortfolioPrivacyModal'
 
 const linkClass =
@@ -16,16 +16,8 @@ export function PortfolioSiteFooter() {
   return (
     <>
       <footer className="mt-auto w-full bg-[var(--pf-surface-2)] text-[var(--pf-muted-2)]">
-        <div className="mx-auto flex max-w-[80rem] flex-col gap-3 px-6 py-8 sm:px-10 sm:py-9 pb-[max(2rem,env(safe-area-inset-bottom))]">
+        <div className="mx-auto flex max-w-[80rem] flex-col gap-3 overflow-x-hidden px-6 py-8 sm:px-10 sm:py-9 pb-[max(2rem,env(safe-area-inset-bottom))]">
           <nav className="flex flex-col gap-3" aria-label="Rodapé">
-            <a
-              href={LINKEDIN_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={linkClass}
-            >
-              {portfolioLabels.footerLinkedIn}
-            </a>
             <Link href={CV_PUBLIC_PATH} className={linkClass}>
               {portfolioLabels.resume}
             </Link>
@@ -38,7 +30,7 @@ export function PortfolioSiteFooter() {
             </button>
           </nav>
 
-          <p className="pt-1 text-sm text-[var(--pf-muted-3)] leading-relaxed">
+          <p className="pt-8 text-sm text-[var(--pf-muted-3)] leading-relaxed">
             {portfolioLabels.footerLocation}
           </p>
           <p className="text-sm text-[var(--pf-muted-3)] leading-relaxed">

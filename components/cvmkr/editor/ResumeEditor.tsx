@@ -6,6 +6,7 @@ import type {
   ResumeData,
   ProfileInput,
   ExperienceInput,
+  AuthorProjectInput,
   SkillInput,
   EducationInput,
 } from '@/lib/types'
@@ -30,6 +31,16 @@ const defaultProfile: ProfileInput = {
 
 const defaultExperience = (): ExperienceInput => ({
   company: '',
+  role: '',
+  start_date: '',
+  end_date: null,
+  is_current: false,
+  description: '',
+  order_index: 0,
+})
+
+const defaultAuthorProject = (): AuthorProjectInput => ({
+  name: '',
   role: '',
   start_date: '',
   end_date: null,
@@ -86,6 +97,18 @@ export function ResumeEditor({ id, initial }: Props) {
     })) ?? []
   )
 
+  const [authorProjects, setAuthorProjects] = useState<AuthorProjectInput[]>(
+    initial?.authorProjects.map((p) => ({
+      name: p.name,
+      role: p.role,
+      start_date: p.start_date,
+      end_date: p.end_date,
+      is_current: p.is_current,
+      description: p.description,
+      order_index: p.order_index,
+    })) ?? []
+  )
+
   const [skills, setSkills] = useState<SkillInput[]>(
     initial?.skills.map((s) => ({ category: s.category, items: s.items })) ?? []
   )
@@ -104,7 +127,14 @@ export function ResumeEditor({ id, initial }: Props) {
     setError(null)
     startTransition(async () => {
       try {
-        await saveResume(id, { resumeInfo, profile, experiences, skills, education })
+        await saveResume(id, {
+          resumeInfo,
+          profile,
+          experiences,
+          authorProjects,
+          skills,
+          education,
+        })
         setSaved(true)
         setTimeout(() => setSaved(false), 3000)
       } catch (e) {
@@ -268,6 +298,85 @@ export function ResumeEditor({ id, initial }: Props) {
                 value={exp.description}
                 onChange={(v) => updateList(setExperiences, i, 'description', v)}
                 placeholder="Participei da evolução de ferramentas de atendimento...&#10;Conduzi iniciativas voltadas à..."
+                rows={4}
+              />
+            </Field>
+          </div>
+        ))}
+      </Section>
+
+      {/* ── Author projects ────────────────────────────────────────────── */}
+      <Section
+        title="Projetos autorais"
+        onAdd={() => setAuthorProjects((prev) => [...prev, defaultAuthorProject()])}
+        addLabel="+ Adicionar projeto"
+      >
+        {authorProjects.map((project, i) => (
+          <div key={i} className="border border-gray-200 rounded-xl p-4 space-y-3">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-sm font-medium text-gray-500">Projeto {i + 1}</span>
+              <button
+                onClick={() => setAuthorProjects((prev) => prev.filter((_, j) => j !== i))}
+                className="text-sm text-red-400 hover:text-red-600 transition"
+              >
+                Remover
+              </button>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-3">
+              <Field label="Projeto">
+                <Input
+                  value={project.name}
+                  onChange={(v) => updateList(setAuthorProjects, i, 'name', v)}
+                  placeholder="Bipdoc"
+                />
+              </Field>
+              <Field label="Papel">
+                <Input
+                  value={project.role}
+                  onChange={(v) => updateList(setAuthorProjects, i, 'role', v)}
+                  placeholder="Product Designer"
+                />
+              </Field>
+              <Field label="Data de início">
+                <Input
+                  value={project.start_date}
+                  onChange={(v) => updateList(setAuthorProjects, i, 'start_date', v)}
+                  placeholder="2023"
+                />
+              </Field>
+              <Field label="Data de fim">
+                <Input
+                  value={project.end_date ?? ''}
+                  onChange={(v) =>
+                    updateList(setAuthorProjects, i, 'end_date', v || null)
+                  }
+                  placeholder="Deixe em branco se atual"
+                  disabled={project.is_current}
+                />
+              </Field>
+            </div>
+            <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={project.is_current}
+                onChange={(e) => {
+                  setAuthorProjects((prev) =>
+                    prev.map((item, j) =>
+                      j === i
+                        ? { ...item, is_current: e.target.checked, end_date: null }
+                        : item
+                    )
+                  )
+                }}
+                className="rounded"
+              />
+              Projeto em andamento
+            </label>
+            <Field label="Descrição (uma atividade por linha)">
+              <Textarea
+                value={project.description}
+                onChange={(v) => updateList(setAuthorProjects, i, 'description', v)}
+                placeholder="Desenvolvimento de aplicativo voltado à..."
                 rows={4}
               />
             </Field>

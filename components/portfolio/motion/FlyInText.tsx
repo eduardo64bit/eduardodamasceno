@@ -3,7 +3,12 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import SplitType from 'split-type'
-import { bindScrollReveal, prefersReducedMotion, registerPortfolioMotion } from '@/lib/portfolio/motion'
+import {
+  bindScrollReveal,
+  prefersReducedMotion,
+  registerPortfolioMotion,
+  usePortfolioCharSplit,
+} from '@/lib/portfolio/motion'
 
 type Tag = 'h1' | 'h2' | 'h3' | 'p' | 'span' | 'div'
 
@@ -26,20 +31,40 @@ export function FlyInText({ children, className, as: Tag = 'span' }: Props) {
       return
     }
 
-    const split = new SplitType(el, { types: 'words, chars' })
-    const chars = el.querySelectorAll('.char')
-    if (!chars.length) return
-
-    gsap.set(chars, { xPercent: -100, opacity: 0 })
-    gsap.set(el, { opacity: 1 })
-
+    const charSplit = usePortfolioCharSplit()
     const tl = gsap.timeline({ paused: true })
-    tl.to(chars, {
-      xPercent: 0,
-      opacity: 1,
-      duration: 0.5,
-      ease: 'power3.out',
-      stagger: 0.02,
+
+    if (charSplit) {
+      const split = new SplitType(el, { types: 'words, chars' })
+      const chars = el.querySelectorAll('.char')
+      if (!chars.length) return
+
+      gsap.set(chars, { opacity: 0, y: 14 })
+      gsap.set(el, { opacity: 1 })
+
+      tl.to(chars, {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: 'power2.out',
+        stagger: 0.02,
+      })
+
+      const cleanupScroll = bindScrollReveal(el, tl)
+
+      return () => {
+        cleanupScroll()
+        tl.kill()
+        split.revert()
+      }
+    }
+
+    gsap.set(el, { autoAlpha: 0, y: 20 })
+    tl.to(el, {
+      autoAlpha: 1,
+      y: 0,
+      duration: 0.6,
+      ease: 'power2.out',
     })
 
     const cleanupScroll = bindScrollReveal(el, tl)
@@ -47,7 +72,6 @@ export function FlyInText({ children, className, as: Tag = 'span' }: Props) {
     return () => {
       cleanupScroll()
       tl.kill()
-      split.revert()
     }
   }, [children])
 

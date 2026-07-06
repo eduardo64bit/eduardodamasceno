@@ -10,7 +10,7 @@ import {
 } from './rows'
 
 const publicFields = `
-  id, slug, title, subtitle, cover_path, sort_order, status
+  id, slug, title, subtitle, cover_path, sort_order, status, segments
 `
 
 export function getPublishedCasesPublic(): CasePublic[] {
@@ -24,7 +24,7 @@ export function getPublishedCasesPublic(): CasePublic[] {
     )
     .all() as Pick<
     CaseRow,
-    'id' | 'slug' | 'title' | 'subtitle' | 'cover_path' | 'sort_order' | 'status'
+    'id' | 'slug' | 'title' | 'subtitle' | 'cover_path' | 'sort_order' | 'status' | 'segments'
   >[]
 
   return rows.map((row) => mapCasePublic(row as CaseRow))
@@ -40,7 +40,7 @@ export function getAllCasesPublic(): CasePublic[] {
     )
     .all() as Pick<
     CaseRow,
-    'id' | 'slug' | 'title' | 'subtitle' | 'cover_path' | 'sort_order' | 'status'
+    'id' | 'slug' | 'title' | 'subtitle' | 'cover_path' | 'sort_order' | 'status' | 'segments'
   >[]
 
   return rows.map((row) => mapCasePublic(row as CaseRow))
@@ -76,7 +76,7 @@ export function getCasePublicBySlug(slug: string): CasePublic | null {
     .get(slug) as
     | Pick<
         CaseRow,
-        'id' | 'slug' | 'title' | 'subtitle' | 'cover_path' | 'sort_order' | 'status'
+        'id' | 'slug' | 'title' | 'subtitle' | 'cover_path' | 'sort_order' | 'status' | 'segments'
       >
     | undefined
 

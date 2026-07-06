@@ -56,8 +56,10 @@ Experiência na condução de iniciativas estratégicas envolvendo onboarding, a
 • Reconhecimento com o 27º Prêmio Design Museu da Casa Brasileira na categoria Produto (Prix 6 Touch).`,
       order_index: 2,
     },
+  ],
+  authorProjects: [
     {
-      company: 'Bipdoc',
+      name: 'Bipdoc',
       role: 'Product Designer',
       start_date: '2023',
       end_date: null,
@@ -65,7 +67,7 @@ Experiência na condução de iniciativas estratégicas envolvendo onboarding, a
       description: `• Desenvolvimento de aplicativo voltado à adesão de tratamentos e gestão de medicamentos.
 • Definição da proposta de valor, arquitetura da informação e experiência do usuário.
 • Desenvolvimento e validação contínua do MVP utilizando Flutter.`,
-      order_index: 3,
+      order_index: 0,
     },
   ],
   skills: [

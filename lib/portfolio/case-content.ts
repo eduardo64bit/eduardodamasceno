@@ -49,9 +49,51 @@ export function stripImagesFromHtml(html: string): string {
   return html
     .replace(/<figure[^>]*>[\s\S]*?<\/figure>/gi, '')
     .replace(/<img[^>]*\/?>/gi, '')
+    .replace(/<\/figure>/gi, '')
     .replace(/<p>\s*(?:<br\s*\/?>\s*)*<\/p>/gi, '')
     .replace(/\n{3,}/g, '\n\n')
     .trim()
+}
+
+function normalizeHeadingText(html: string): string {
+  return html
+    .replace(/<[^>]+>/g, '')
+    .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+function isContextHeading(headingInnerHtml: string): boolean {
+  return normalizeHeadingText(headingInnerHtml).toLowerCase() === 'contexto'
+}
+
+/** Conteúdo até o fim da seção Contexto; o restante vem depois do carrossel. */
+export function splitCaseBodyAfterContext(html: string): {
+  leadHtml: string
+  restHtml: string
+} {
+  const cleaned = stripImagesFromHtml(html)
+  const headings: { index: number; isContext: boolean }[] = []
+
+  const h3Re = /<h3[^>]*>[\s\S]*?<\/h3>/gi
+  let match: RegExpExecArray | null
+  while ((match = h3Re.exec(cleaned)) !== null) {
+    const inner = match[0].replace(/^<h3[^>]*>/i, '').replace(/<\/h3>$/i, '')
+    headings.push({ index: match.index, isContext: isContextHeading(inner) })
+  }
+
+  const contextIdx = headings.findIndex((h) => h.isContext)
+  if (contextIdx === -1) {
+    return { leadHtml: cleaned, restHtml: '' }
+  }
+
+  const nextSection = headings[contextIdx + 1]
+  const splitAt = nextSection?.index ?? cleaned.length
+
+  return {
+    leadHtml: cleaned.slice(0, splitAt).trim(),
+    restHtml: cleaned.slice(splitAt).trim(),
+  }
 }
 
 export function buildCaseSlides(

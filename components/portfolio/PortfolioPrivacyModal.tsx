@@ -25,7 +25,7 @@ export function PortfolioPrivacyModal({ open, onClose }: Props) {
       ariaLabel={portfolioLabels.privacyTitle}
       closeLabel={portfolioLabels.privacyClose}
     >
-      <div className="space-y-5 text-sm font-light leading-relaxed text-[var(--pf-chat-text)]">
+      <div className="min-w-0 space-y-5 break-words text-sm font-light leading-relaxed text-[var(--pf-chat-text)] [overflow-wrap:anywhere]">
         {privacyParagraphs.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}

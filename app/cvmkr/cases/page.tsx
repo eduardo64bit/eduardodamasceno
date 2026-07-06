@@ -50,6 +50,9 @@ export default function CasesAdminPage() {
                 <div>
                   <p className="font-medium text-gray-900">{c.title}</p>
                   <p className="text-xs text-gray-400">{c.slug}</p>
+                  {c.segments.length > 0 ? (
+                    <p className="mt-1 text-xs text-gray-500">{c.segments.join(', ')}</p>
+                  ) : null}
                 </div>
                 <span className="text-xs uppercase tracking-wide text-gray-400">{c.status}</span>
               </li>

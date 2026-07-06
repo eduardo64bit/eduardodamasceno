@@ -1,6 +1,7 @@
 import Database from 'better-sqlite3'
 import fs from 'fs'
 import path from 'path'
+import { randomUUID } from 'crypto'
 import { seedDatabase } from './seed'
 
 let db: Database.Database | null = null
@@ -87,7 +88,86 @@ function initSchema(database: Database.Database) {
     version = 6
   }
 
+  if (version < 7) {
+    ensureCaseSegmentsColumn(database)
+    database.pragma('user_version = 7')
+    version = 7
+  }
+
+  if (version < 8) {
+    const migrationPath = path.join(
+      process.cwd(),
+      'lib',
+      'db',
+      'migrations',
+      '007_author_projects.sql'
+    )
+    database.exec(fs.readFileSync(migrationPath, 'utf-8'))
+    migrateBipdocExperiencesToAuthorProjects(database)
+    database.pragma('user_version = 8')
+    version = 8
+  }
+
   ensureChatOwnerPresenceColumn(database)
+}
+
+function ensureCaseSegmentsColumn(database: Database.Database) {
+  const cols = database.prepare('PRAGMA table_info(cases)').all() as { name: string }[]
+  if (!cols.some((c) => c.name === 'segments')) {
+    database.exec("ALTER TABLE cases ADD COLUMN segments TEXT NOT NULL DEFAULT '[]'")
+  }
+}
+
+function migrateBipdocExperiencesToAuthorProjects(database: Database.Database) {
+  type ExpRow = {
+    id: string
+    resume_id: string
+    company: string
+    role: string
+    start_date: string
+    end_date: string | null
+    is_current: number
+    description: string
+    order_index: number
+  }
+
+  const bipdocRows = database
+    .prepare("SELECT * FROM experiences WHERE lower(trim(company)) = 'bipdoc'")
+    .all() as ExpRow[]
+
+  if (bipdocRows.length === 0) return
+
+  const insertProject = database.prepare(
+    `INSERT INTO author_projects (id, resume_id, name, role, start_date, end_date, is_current, description, order_index)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
+  )
+  const deleteExp = database.prepare('DELETE FROM experiences WHERE id = ?')
+
+  for (const row of bipdocRows) {
+    const existing = database
+      .prepare(
+        "SELECT id FROM author_projects WHERE resume_id = ? AND lower(trim(name)) = 'bipdoc' LIMIT 1"
+      )
+      .get(row.resume_id) as { id: string } | undefined
+
+    if (existing) {
+      deleteExp.run(row.id)
+      continue
+    }
+
+    insertProject.run(
+      randomUUID(),
+      row.resume_id,
+      row.company,
+      row.role,
+      row.start_date,
+      row.end_date,
+      row.is_current,
+      row.description,
+      row.order_index
+    )
+    deleteExp.run(row.id)
+  }
 }
 
 function ensureChatOwnerPresenceColumn(database: Database.Database) {

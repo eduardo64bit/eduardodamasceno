@@ -1,4 +1,5 @@
 import type { CaseFull, CaseMedia, CasePublic, CaseStatus } from './types'
+import { parseCaseSegments } from './segments'
 
 type CaseRow = {
   id: string
@@ -11,6 +12,7 @@ type CaseRow = {
   status: string
   sort_order: number
   wp_source_url: string
+  segments: string
   created_at: string
   updated_at: string
 }
@@ -32,6 +34,7 @@ export function mapCasePublic(row: CaseRow): CasePublic {
     cover_path: row.cover_path,
     sort_order: row.sort_order,
     status: row.status as CaseStatus,
+    segments: parseCaseSegments(row.segments),
   }
 }
 

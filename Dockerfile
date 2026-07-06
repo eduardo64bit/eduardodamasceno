@@ -26,6 +26,7 @@ RUN apt-get update \
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/lib/db/schema.sql ./lib/db/schema.sql
 COPY --from=builder /app/lib/db/migrations ./lib/db/migrations
+COPY --from=builder /app/scripts/set-case-segments.mjs ./scripts/set-case-segments.mjs
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 

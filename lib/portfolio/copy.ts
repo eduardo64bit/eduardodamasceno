@@ -1,18 +1,38 @@
 /** Copy da home do portfolio */
 
-export const portfolioAbout = {
-  heading: 'Olá, sou o Edu, designer de produto e arquitetura de experiência.',
-  intro:
-    'Com mais de 20 anos de experiência em design de produto, UX/UI, inovação e transformação digital, desenvolvi uma sólida expertise na criação de soluções centradas no usuário para produtos digitais e físicos. Atuo como Product Designer em projetos estratégicos voltados à experiência do cliente, com foco em usabilidade, acessibilidade e arquitetura de negócio.',
+export const portfolioHero = {
+  role: 'Designer de Produto & Arquitetura de Experiência',
+  /** Quebra controlada abaixo de `sm` */
+  roleLines: ['Designer de Produto &', 'Arquitetura de Experiência'] as const,
 }
+
+export const portfolioAbout = {
+  heading: 'Transformando complexidade em experiências intuitivas.',
+  intro: [
+    'Com mais de 20 anos de atuação em design de produto, UX/UI e transformação digital, ajudo organizações a simplificar sistemas complexos e criar experiências que geram resultados para usuários e negócios. Ao longo da carreira, participei de projetos nos setores financeiro, previdenciário, industrial e de tecnologia, atuando em produtos utilizados por milhares de pessoas.',
+    'Meu trabalho combina visão estratégica, entendimento de negócio e execução de produto para transformar desafios complexos em soluções intuitivas, escaláveis e orientadas a impacto.',
+  ],
+}
+
+export const portfolioSpecialties = [
+  'Plataformas financeiras',
+  'Produtos B2B e SaaS',
+  'Sistemas complexos e regulados',
+  'Interfaces industriais (HMI)',
+  'Design Systems e escalabilidade',
+  'IA aplicada ao processo de descoberta, concepção e validação de produtos',
+] as const
 
 export const portfolioLabels = {
   contactCta: 'Entre em contato →',
   projects: 'Projetos',
   contact: 'Contato',
-  specialties: 'Experiência em:',
-  experience: 'Empresas e marcas:',
+  specialties: 'Costumo atuar em:',
+  experience: 'Empresas:',
   noCases: 'Nenhum case publicado ainda.',
+  noCasesFiltered: 'Nenhum projeto neste filtro.',
+  caseSegmentAll: 'Todos',
+  caseSegmentFilter: 'Filtrar projetos por segmento',
   backToProjects: '← Projetos',
   contentMissing: 'Conteúdo ainda não importado.',
   gallery: 'Galeria',
@@ -21,18 +41,18 @@ export const portfolioLabels = {
   carouselGoTo: 'Ir para imagem',
   resume: 'Currículo',
   chatOpen: 'Conversar',
-  chatTitle: 'Chat com o Edu',
+  chatTitle: 'Chat',
   chatClose: 'Fechar conversa',
   chatStatus: 'Offline',
   chatStatusOnline: 'Online',
   chatStatusOffline: 'Offline',
   chatAutomated: '(mensagem automática)',
   chatTyping: 'Edu está digitando',
-  chatPlaceholder: 'Seu contato ou mensagem…',
+  chatPlaceholder: 'Sua mensagem…',
   chatWaiting: 'Aguarde…',
   chatSend: 'Enviar',
   chatCharCount: (current: number, max: number) => `${current}/${max}`,
-  chatRateLimit: 'Aguarde um momento antes de enviar outra mensagem.',
+  chatRateLimit: 'Limite excedido, aguarde um momento antes de enviar outra mensagem.',
   chatSessionLimit: 'Limite de mensagens atingido nesta conversa.',
   chatMessageTooLong: 'Máximo de 1000 caracteres.',
   footerLinkedIn: 'LinkedIn',

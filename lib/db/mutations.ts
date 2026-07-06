@@ -81,6 +81,25 @@ export function duplicateResume(id: string, newName: string): string {
       )
     }
 
+    const insertAuthorProject = db.prepare(
+      `INSERT INTO author_projects (id, resume_id, name, role, start_date, end_date, is_current, description, order_index)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    )
+    for (const p of data.authorProjects) {
+      const { id: _id, resume_id: _rid, ...project } = p
+      insertAuthorProject.run(
+        randomUUID(),
+        newId,
+        project.name,
+        project.role,
+        project.start_date,
+        project.end_date,
+        project.is_current ? 1 : 0,
+        project.description,
+        project.order_index
+      )
+    }
+
     const insertSkill = db.prepare(
       `INSERT INTO skills (id, resume_id, category, items) VALUES (?, ?, ?, ?)`
     )
@@ -205,6 +224,25 @@ function upsertRelations(
       e.end_date,
       e.is_current ? 1 : 0,
       e.description,
+      i
+    )
+  })
+
+  db.prepare('DELETE FROM author_projects WHERE resume_id = ?').run(resumeId)
+  const insertAuthorProject = db.prepare(
+    `INSERT INTO author_projects (id, resume_id, name, role, start_date, end_date, is_current, description, order_index)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
+  )
+  payload.authorProjects.forEach((p, i) => {
+    insertAuthorProject.run(
+      randomUUID(),
+      resumeId,
+      p.name,
+      p.role,
+      p.start_date,
+      p.end_date,
+      p.is_current ? 1 : 0,
+      p.description,
       i
     )
   })

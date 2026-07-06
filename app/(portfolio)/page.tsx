@@ -1,17 +1,10 @@
 import { getActiveResume } from '@/lib/db'
 import { getPublishedCasesPublic } from '@/lib/domains/cases/queries'
 import { portfolioClients } from '@/lib/portfolio/clients'
-import { portfolioAbout } from '@/lib/portfolio/copy'
+import { portfolioAbout, portfolioHero, portfolioSpecialties } from '@/lib/portfolio/copy'
 import { PortfolioHome } from '@/components/portfolio/PortfolioHome'
 
 export const dynamic = 'force-dynamic'
-
-const DEFAULT_SPECIALTIES = [
-  'Plataformas financeiras',
-  'Produtos B2B e SaaS',
-  'Sistemas complexos',
-  'Ambientes regulados',
-]
 
 export default async function PortfolioPage() {
   const cases = getPublishedCasesPublic()
@@ -24,15 +17,14 @@ export default async function PortfolioPage() {
   }
 
   const name = resume?.profile?.name ?? 'Eduardo Damasceno'
-  const role = 'Designer de Produto Sênior'
 
   return (
     <PortfolioHome
       name={name}
-      role={role}
+      role={portfolioHero.role}
       aboutHeading={portfolioAbout.heading}
       aboutIntro={portfolioAbout.intro}
-      specialties={DEFAULT_SPECIALTIES}
+      specialties={portfolioSpecialties}
       clients={portfolioClients}
       cases={cases}
     />

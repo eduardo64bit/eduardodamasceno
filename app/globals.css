@@ -15,6 +15,18 @@
     min-height: 100dvh;
     background-color: inherit;
   }
+
+  html[data-portfolio-theme],
+  html[data-portfolio-theme] body {
+    overflow-x: hidden;
+    max-width: 100%;
+    width: 100%;
+    position: relative;
+  }
+
+  html[data-portfolio-theme] body {
+    touch-action: pan-y pinch-zoom;
+  }
 }
 
 @layer components {
@@ -178,7 +190,32 @@
     will-change: transform, opacity;
   }
 
+  @media (max-width: 639px) {
+    .portfolio-theme .char {
+      display: inline;
+      will-change: auto;
+    }
+
+    .portfolio-theme .pf-split-text .word {
+      white-space: normal;
+    }
+  }
+
   /* SplitType: quebra só entre palavras, nunca no meio delas */
+  .portfolio-theme .pf-split-text {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .portfolio-theme .hero-name-line {
+    display: block;
+    max-width: 100%;
+  }
+
+  .portfolio-theme .hero-name .word {
+    display: inline;
+  }
+
   .portfolio-theme .pf-split-text .word {
     display: inline-block;
     white-space: nowrap;
@@ -194,7 +231,43 @@
     hyphens: none;
     -webkit-hyphens: none;
     word-break: normal;
-    overflow-wrap: normal;
+    overflow-wrap: break-word;
+  }
+
+  /* Filtro de projetos — off / hover / selected bem distintos */
+  .portfolio-theme .pf-filter-chip {
+    border: 1px solid transparent;
+    background-color: var(--pf-surface-2);
+    color: var(--pf-muted-2);
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      opacity 0.2s ease;
+  }
+
+  .portfolio-theme .pf-filter-chip[aria-pressed='true'] {
+    background-color: var(--pf-btn-hover-bg);
+    color: var(--pf-btn-hover-text);
+    border-color: transparent;
+    box-shadow: inset 0 0 0 1px var(--pf-border-strong);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .portfolio-theme .pf-filter-chip[aria-pressed='false']:hover {
+      border-color: var(--pf-border-strong);
+      color: var(--pf-muted);
+      background-color: var(--pf-surface-2);
+    }
+
+    .portfolio-theme .pf-filter-chip[aria-pressed='true']:hover {
+      opacity: 0.88;
+    }
+  }
+
+  .portfolio-theme .pf-filter-chip:active {
+    opacity: 0.82;
   }
 
   /* Inter 800 parece mais pesado que Larsseit — hero usa 700 */
@@ -323,7 +396,7 @@
   }
 
   .pf-modal-panel-in {
-    animation: pf-modal-panel-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: pf-modal-panel-in 0.32s ease-out both;
   }
 
   .pf-modal-panel-out {

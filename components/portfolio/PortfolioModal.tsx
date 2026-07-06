@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { lockPageScroll } from '@/lib/portfolio/lockPageScroll'
+import { useMobileViewport } from '@/lib/portfolio/useMobileViewport'
 
 export const PORTFOLIO_MODAL_CLOSE_MS = 320
 
@@ -25,6 +27,7 @@ export function PortfolioModal({
   const [mounted, setMounted] = useState(false)
   const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null)
   const [isClosing, setIsClosing] = useState(false)
+  const mobileViewport = useMobileViewport(open || isClosing)
 
   const requestClose = useCallback(() => {
     if (isClosing) return
@@ -42,11 +45,7 @@ export function PortfolioModal({
 
   useEffect(() => {
     if (!open && !isClosing) return
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => {
-      document.body.style.overflow = prev
-    }
+    return lockPageScroll()
   }, [open, isClosing])
 
   useEffect(() => {
@@ -62,7 +61,17 @@ export function PortfolioModal({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[200] flex p-0 sm:items-center sm:justify-center sm:p-8"
+      className={`fixed z-[200] flex overflow-hidden p-0 sm:items-center sm:justify-center sm:inset-0 sm:p-8 ${mobileViewport ? 'max-w-full' : 'inset-0'}`}
+      style={
+        mobileViewport
+          ? {
+              top: mobileViewport.top,
+              left: mobileViewport.left,
+              width: mobileViewport.width,
+              height: mobileViewport.height,
+            }
+          : undefined
+      }
       role="dialog"
       aria-modal="true"
       aria-label={ariaLabel}
@@ -75,10 +84,12 @@ export function PortfolioModal({
       />
 
       <div
-        className={`relative z-10 flex h-full min-h-0 w-full max-h-full flex-col bg-[var(--pf-chat-bg)] sm:max-h-[min(calc(100dvh-4rem),40rem)] sm:max-w-lg sm:rounded-[1.75rem] sm:shadow-[0_24px_80px_rgba(0,0,0,0.32)] ${isClosing ? 'pf-modal-panel-out' : 'pf-modal-panel-in'}`}
+        className={`relative z-10 flex h-full min-h-0 w-full min-w-0 max-w-full flex-col overflow-x-hidden bg-[var(--pf-chat-bg)] box-border sm:max-h-[min(calc(100dvh-4rem),40rem)] sm:max-w-lg sm:rounded-[1.75rem] sm:shadow-[0_24px_80px_rgba(0,0,0,0.32)] ${isClosing ? 'pf-modal-panel-out' : 'pf-modal-panel-in'}`}
       >
         <header className="flex shrink-0 items-center justify-between gap-4 px-5 pb-4 pt-[max(1rem,env(safe-area-inset-top))] sm:px-6 sm:pt-5">
-          <h2 className="text-base font-medium text-[var(--pf-chat-text)] sm:text-lg">{title}</h2>
+          <h2 className="min-w-0 flex-1 break-words text-base font-medium text-[var(--pf-chat-text)] sm:text-lg">
+            {title}
+          </h2>
           <button
             type="button"
             onClick={requestClose}
@@ -89,7 +100,7 @@ export function PortfolioModal({
           </button>
         </header>
 
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:px-6 sm:pb-6">
+        <div className="min-h-0 min-w-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain break-words px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] [overflow-wrap:anywhere] sm:px-6 sm:pb-6">
           {children}
         </div>
       </div>

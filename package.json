@@ -9,7 +9,8 @@
     "lint": "next lint",
     "wp:inventory": "node scripts/wp-inventory.mjs",
     "wp:import": "node scripts/wp-import.mjs",
-    "wp:import:wxr": "node scripts/wp-import-wxr.mjs"
+    "wp:import:wxr": "node scripts/wp-import-wxr.mjs",
+    "cases:segments": "node scripts/set-case-segments.mjs"
   },
   "dependencies": {
     "better-sqlite3": "^11.9.0",

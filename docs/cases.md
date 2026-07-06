@@ -44,9 +44,12 @@ node scripts/wp-import.mjs --force
 2. **Ordem na home:** `UPDATE cases SET sort_order = 10 WHERE slug = 'meu-case';` (menor = mais acima)
 3. **Capa:** path relativo, ex. `/media/cases/meu-case/cover.png` (arquivo em `data/media/cases/...`)
 4. **Galeria:** inserir linhas em `case_media` com `sort_order` sequencial
-5. **Corpo:** editar `case_content.body_html` (HTML sanitizado na renderização)
+5. **Segmentos (filtro na home):** coluna `cases.segments` — JSON array, ex. `'["financeiros","plataformas"]'`. Valores: `financeiros`, `industria`, `plataformas`, `autorais`. Um case pode ter vários.
+6. **Corpo:** editar `case_content.body_html` (HTML sanitizado na renderização)
 
 Ferramentas: [DB Browser for SQLite](https://sqlitebrowser.org/), ou `sqlite3 data/cvmkr.db`.
+
+**Docker:** o Compose usa volume `cvmkr_data` em `/app/data/cvmkr.db` — **não** é o mesmo arquivo que `./data/cvmkr.db` no host. Para aplicar segmentos no banco do container, use `scripts/set-case-segments.mjs` (copie para o container ou rode o inline após `docker compose exec web`).
 
 ## Mídia
 
@@ -67,6 +70,7 @@ data/media/cases/<slug>/01.png
 - [ ] `body_html` revisado (headings, listas, embeds)
 - [ ] `youtube_url` se houver vídeo
 - [ ] `status = published` e `sort_order` definido
+- [ ] `segments` preenchido para aparecer nos filtros da home
 - [ ] Testar em `/cases/<slug>` (logado) e na home
 
 ## Roadmap

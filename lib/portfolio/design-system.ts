@@ -159,8 +159,8 @@ export const layoutTokens = [
 
 export const motionTokens = [
   { label: 'Sheet in/out', value: '380ms · cubic-bezier(0.22, 1, 0.36, 1)' },
+  { label: 'Overlay fade', value: '280ms ease-out/in' },
   { label: 'Modal panel', value: '320ms in · 280ms out' },
-  { label: 'Overlay fade', value: '280ms' },
   { label: 'Chat script pause', value: '320ms entre mensagens' },
   { label: 'Typing indicator', value: '520ms (script) · 480ms (reply)' },
   { label: 'Reduced motion', value: 'prefers-reduced-motion → 0.01ms' },
@@ -197,7 +197,7 @@ export const cssUtilities = [
   { name: '.pf-glass', description: 'Blur + saturação para nav e sticky titles' },
   { name: '.case-body', description: 'Prose tipográfico para HTML de cases' },
   { name: '.hero-name', description: 'Peso 700 + antialiasing no display' },
-  { name: '.pf-chat-sheet', description: 'Animação entrada/saída do side sheet' },
+  { name: '.pf-chat-sheet', description: 'Animação entrada/saída do side sheet (keyframes)' },
   { name: '.pf-modal-panel-in', description: 'Animação entrada do modal' },
   { name: '.pf-chat-typing-dot', description: 'Indicador de digitação' },
 ] as const

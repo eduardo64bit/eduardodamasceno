@@ -56,7 +56,7 @@ export async function POST(request: Request, context: RouteContext) {
     }
     if (message === 'RATE_LIMIT') {
       return NextResponse.json(
-        { error: 'Aguarde um momento antes de enviar outra mensagem.', code: 'RATE_LIMIT' },
+        { error: 'Limite excedido, aguarde um momento antes de enviar outra mensagem.', code: 'RATE_LIMIT' },
         { status: 429 }
       )
     }

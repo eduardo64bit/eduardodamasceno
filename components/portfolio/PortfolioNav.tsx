@@ -81,7 +81,7 @@ export function PortfolioNav({ name }: Props) {
   return (
     <nav
       ref={navRef}
-      className={`fixed top-0 inset-x-0 z-50 px-6 sm:px-10 py-4 flex items-center justify-between pointer-events-none transition-transform duration-300 ease-out ${
+      className={`fixed top-0 left-0 right-0 z-50 w-full max-w-full overflow-hidden px-6 sm:px-10 py-4 flex items-center justify-between pointer-events-none transition-transform duration-300 ease-out ${
         visible
           ? 'translate-y-0'
           : '-translate-y-full'

@@ -1,4 +1,4 @@
-import type { Education, Experience, Profile, Resume, Skill } from '../types'
+import type { Education, AuthorProject, Experience, Profile, Resume, Skill } from '../types'
 
 type ResumeRow = Omit<Resume, 'is_base' | 'is_active'> & {
   is_base: number
@@ -6,6 +6,7 @@ type ResumeRow = Omit<Resume, 'is_base' | 'is_active'> & {
 }
 
 type ExperienceRow = Omit<Experience, 'is_current'> & { is_current: number }
+type AuthorProjectRow = Omit<AuthorProject, 'is_current'> & { is_current: number }
 type SkillRow = Omit<Skill, 'items'> & { items: string }
 
 export function mapResume(row: ResumeRow): Resume {
@@ -17,6 +18,10 @@ export function mapResume(row: ResumeRow): Resume {
 }
 
 export function mapExperience(row: ExperienceRow): Experience {
+  return { ...row, is_current: Boolean(row.is_current) }
+}
+
+export function mapAuthorProject(row: AuthorProjectRow): AuthorProject {
   return { ...row, is_current: Boolean(row.is_current) }
 }
 

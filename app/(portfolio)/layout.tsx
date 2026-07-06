@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export default function PortfolioLayout({ children }: { children: React.ReactNode }) {
   return (
     <PortfolioThemeProvider className={inter.className}>
-      <div className="flex flex-1 flex-col">{children}</div>
+      <div className="flex min-w-0 flex-1 flex-col">{children}</div>
       <PortfolioSiteFooter />
     </PortfolioThemeProvider>
   )

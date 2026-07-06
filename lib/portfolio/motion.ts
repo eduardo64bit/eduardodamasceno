@@ -16,6 +16,13 @@ export function prefersReducedMotion() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
+/** SplitType por caractere expande largura intrínseca no iOS — só em telas maiores. */
+export function usePortfolioCharSplit(): boolean {
+  if (typeof window === 'undefined') return false
+  if (prefersReducedMotion()) return false
+  return window.matchMedia('(min-width: 640px)').matches
+}
+
 export function bindScrollReveal(
   trigger: Element,
   timeline: gsap.core.Timeline

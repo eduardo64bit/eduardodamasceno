@@ -40,7 +40,7 @@ export function RevealOnScroll({
       autoAlpha: 1,
       y: 0,
       duration: 1,
-      ease: 'power3.out',
+      ease: 'power2.out',
     })
 
     const enter = ScrollTrigger.create({

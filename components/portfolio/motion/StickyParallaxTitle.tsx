@@ -21,11 +21,13 @@ export function StickyParallaxTitle({ children, className }: Props) {
 
     if (prefersReducedMotion()) return
 
+    const mobile = window.matchMedia('(max-width: 639px)').matches
+
     gsap.fromTo(
       el,
-      { scale: 0.92, opacity: 0.6 },
+      mobile ? { opacity: 0.6 } : { scale: 0.92, opacity: 0.6 },
       {
-        scale: 1,
+        ...(mobile ? {} : { scale: 1 }),
         opacity: 1,
         ease: 'none',
         scrollTrigger: {

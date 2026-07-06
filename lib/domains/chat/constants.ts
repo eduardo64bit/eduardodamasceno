@@ -1,5 +1,5 @@
 export const CHAT_AUTO_REPLY =
-  'Mensagem recebida. Se não te responder agora, logo entro em contato. Obrigado 🙂'
+  'Mensagem recebida! Obrigado pelo contato. Se eu não responder imediatamente, retornarei assim que possível.'
 
 export const CHAT_MESSAGE_MAX_LENGTH = 1000
 export const CHAT_SESSION_MESSAGE_LIMIT = 20

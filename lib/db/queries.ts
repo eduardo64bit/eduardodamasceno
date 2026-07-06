@@ -1,5 +1,6 @@
 import { getDb } from './client'
 import {
+  mapAuthorProject,
   mapEducation,
   mapExperience,
   mapProfile,
@@ -45,6 +46,11 @@ export function fetchResumeRelations(resume: Resume): ResumeData {
       'SELECT * FROM experiences WHERE resume_id = ? ORDER BY order_index ASC'
     )
     .all(resume.id) as Parameters<typeof mapExperience>[0][]
+  const authorProjectRows = db
+    .prepare(
+      'SELECT * FROM author_projects WHERE resume_id = ? ORDER BY order_index ASC'
+    )
+    .all(resume.id) as Parameters<typeof mapAuthorProject>[0][]
   const skillRows = db
     .prepare('SELECT * FROM skills WHERE resume_id = ?')
     .all(resume.id) as Parameters<typeof mapSkill>[0][]
@@ -58,6 +64,7 @@ export function fetchResumeRelations(resume: Resume): ResumeData {
     resume,
     profile: profileRow ? mapProfile(profileRow as Parameters<typeof mapProfile>[0]) : null,
     experiences: experienceRows.map(mapExperience),
+    authorProjects: authorProjectRows.map(mapAuthorProject),
     skills: skillRows.map(mapSkill),
     education: educationRows.map(mapEducation),
   }

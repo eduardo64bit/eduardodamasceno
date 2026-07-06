@@ -90,7 +90,7 @@ export function PortfolioThemeProvider({ children, className }: Props) {
   return (
     <PortfolioThemeContext.Provider value={{ mode, resolved, toggleTheme }}>
       <div
-        className={`portfolio-theme ${className ?? ''} flex min-h-screen flex-col antialiased bg-[var(--pf-bg)] text-[var(--pf-text)] transition-colors duration-300`}
+        className={`portfolio-theme ${className ?? ''} flex min-h-screen w-full max-w-full flex-col antialiased bg-[var(--pf-bg)] text-[var(--pf-text)] transition-colors duration-300`}
         data-theme={resolved}
         lang="pt-BR"
         suppressHydrationWarning

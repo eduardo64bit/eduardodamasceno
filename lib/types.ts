@@ -49,10 +49,23 @@ export interface Education {
   order_index: number
 }
 
+export interface AuthorProject {
+  id: string
+  resume_id: string
+  name: string
+  role: string
+  start_date: string
+  end_date: string | null
+  is_current: boolean
+  description: string
+  order_index: number
+}
+
 export interface ResumeData {
   resume: Resume
   profile: Profile | null
   experiences: Experience[]
+  authorProjects: AuthorProject[]
   skills: Skill[]
   education: Education[]
 }
@@ -62,11 +75,13 @@ export type ProfileInput = Omit<Profile, 'id' | 'resume_id'>
 export type ExperienceInput = Omit<Experience, 'id' | 'resume_id'>
 export type SkillInput = Omit<Skill, 'id' | 'resume_id'>
 export type EducationInput = Omit<Education, 'id' | 'resume_id'>
+export type AuthorProjectInput = Omit<AuthorProject, 'id' | 'resume_id'>
 
 export interface SaveResumePayload {
   resumeInfo: { name: string; description: string }
   profile: ProfileInput
   experiences: ExperienceInput[]
+  authorProjects: AuthorProjectInput[]
   skills: SkillInput[]
   education: EducationInput[]
 }
