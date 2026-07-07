@@ -11,6 +11,7 @@ import {
   PORTFOLIO_THEME_STORAGE_KEY,
   PORTFOLIO_THEME_DARK_BG,
   PORTFOLIO_THEME_LIGHT_BG,
+  readStoredThemeMode,
   themeFromSystem,
   toggleManualTheme,
   type PortfolioThemeMode,
@@ -39,23 +40,12 @@ interface Props {
 }
 
 export function PortfolioThemeProvider({ children, className }: Props) {
-  const [mode, setMode] = useState<PortfolioThemeMode>('auto')
+  const [mode, setMode] = useState<PortfolioThemeMode>(readStoredThemeMode)
   const [systemTheme, setSystemTheme] = useState<PortfolioThemeResolved>(() =>
     typeof window !== 'undefined' ? themeFromSystem() : 'dark'
   )
 
   const resolved: PortfolioThemeResolved = mode === 'auto' ? systemTheme : mode
-
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem(PORTFOLIO_THEME_STORAGE_KEY)
-      if (stored === 'auto' || stored === 'light' || stored === 'dark') {
-        setMode(stored)
-      }
-    } catch {
-      /* ignore */
-    }
-  }, [])
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-color-scheme: dark)')

@@ -8,7 +8,7 @@ interface Props {
   params: Promise<{ id: string }>
 }
 
-export default async function PrintPage({ params }: Props) {
+export default async function CvPrintPage({ params }: Props) {
   const { id } = await params
   const data = await getResumeById(id)
 
@@ -21,7 +21,6 @@ export default async function PrintPage({ params }: Props) {
         body { background: white !important; }
       `}</style>
 
-      {/* Auto-print trigger */}
       <script
         dangerouslySetInnerHTML={{
           __html: `window.addEventListener('load', () => window.print())`,

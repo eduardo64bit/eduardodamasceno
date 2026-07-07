@@ -10,6 +10,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import { randomUUID } from 'crypto'
 import Database from 'better-sqlite3'
+import { resolveSiteDbPath } from './lib/site-db-path.mjs'
 
 const force = process.argv.includes('--force')
 
@@ -275,7 +276,7 @@ async function main() {
   const siteUrl = (process.env.WP_SITE_URL || fileEnv.WP_SITE_URL)?.replace(/\/$/, '')
   const passwords = collectPasswords(fileEnv)
   const password = passwords[0]
-  const dbPath = process.env.CVMKR_DB_PATH || fileEnv.CVMKR_DB_PATH || path.join(root, 'data', 'cvmkr.db')
+  const dbPath = resolveSiteDbPath(root, { ...fileEnv, ...process.env })
   const inventoryPath = path.join(root, 'data', 'wp-inventory.json')
 
   if (!siteUrl || !password) {

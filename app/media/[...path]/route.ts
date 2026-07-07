@@ -1,13 +1,9 @@
 import fs from 'fs'
 import path from 'path'
 import { NextResponse } from 'next/server'
+import { getDataDir } from '@/lib/db/paths'
 
-const MEDIA_ROOT = path.join(
-  process.env.CVMKR_DB_PATH
-    ? path.dirname(process.env.CVMKR_DB_PATH)
-    : path.join(process.cwd(), 'data'),
-  'media'
-)
+const MEDIA_ROOT = path.join(getDataDir(), 'media')
 
 const MIME: Record<string, string> = {
   '.jpg': 'image/jpeg',

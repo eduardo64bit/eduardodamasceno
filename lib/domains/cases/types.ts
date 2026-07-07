@@ -41,6 +41,7 @@ export interface SaveCasePayload {
   body_html: string
   status: CaseStatus
   sort_order: number
+  segments: CaseSegmentId[]
   wp_id?: string | null
   wp_source_url?: string
 }

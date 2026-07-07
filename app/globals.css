@@ -42,21 +42,21 @@
     @apply text-sm text-gray-800 dark:text-gray-200 transition-all duration-200;
   }
 
-  /* Admin CVMKR: campos sempre legíveis (html pode ter .dark do site público) */
-  .cvmkr-field {
+  /* Editor admin: campos sempre legíveis (html pode ter .dark do site público) */
+  .editor-field {
     color-scheme: light;
     color: #111827;
     -webkit-text-fill-color: #111827;
     caret-color: #111827;
   }
 
-  .cvmkr-field::placeholder {
+  .editor-field::placeholder {
     color: #9ca3af;
     -webkit-text-fill-color: #9ca3af;
     opacity: 1;
   }
 
-  .cvmkr-field:disabled {
+  .editor-field:disabled {
     color: #9ca3af;
     -webkit-text-fill-color: #9ca3af;
   }

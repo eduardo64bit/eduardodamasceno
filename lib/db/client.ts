@@ -2,12 +2,13 @@ import Database from 'better-sqlite3'
 import fs from 'fs'
 import path from 'path'
 import { randomUUID } from 'crypto'
+import { resolveSiteDbPath } from './paths'
 import { seedDatabase } from './seed'
 
 let db: Database.Database | null = null
 
 export function getDbPath(): string {
-  return process.env.CVMKR_DB_PATH ?? path.join(process.cwd(), 'data', 'cvmkr.db')
+  return resolveSiteDbPath()
 }
 
 export function getDb(): Database.Database {

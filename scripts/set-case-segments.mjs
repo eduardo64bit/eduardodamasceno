@@ -8,6 +8,7 @@ import Database from 'better-sqlite3'
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { resolveSiteDbPath } from './lib/site-db-path.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const root = path.join(__dirname, '..')
@@ -28,7 +29,7 @@ function loadEnv(file) {
 }
 
 const env = { ...loadEnv(path.join(root, '.env')), ...loadEnv(path.join(root, '.env.local')) }
-const dbPath = process.env.CVMKR_DB_PATH || env.CVMKR_DB_PATH || path.join(root, 'data', 'cvmkr.db')
+const dbPath = resolveSiteDbPath(root, { ...env, ...process.env })
 
 /** slug → segment ids */
 const CASE_SEGMENTS = {

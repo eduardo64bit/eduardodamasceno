@@ -1,13 +1,13 @@
 # eduardodamasceno.com.br
 
-Portfólio, cases, chat de contato (Telegram) e editor de currículo (**CVMKR**) — self-hosted com SQLite e Docker.
+Portfólio, cases, chat de contato (Telegram) e editor de currículo — self-hosted com SQLite e Docker.
 
 ## Stack
 
 | Camada | Tecnologia |
 |--------|------------|
 | App | Next.js 15 (App Router), React 19, Tailwind |
-| Dados | SQLite (`better-sqlite3`) em `data/cvmkr.db` |
+| Dados | SQLite (`better-sqlite3`) em `data/site.db` |
 | Produção | Docker Compose + Cloudflare Tunnel |
 | Chat | API própria + Telegram Bot (webhook) |
 
@@ -16,10 +16,12 @@ Portfólio, cases, chat de contato (Telegram) e editor de currículo (**CVMKR**)
 | Rota | Acesso | Descrição |
 |------|--------|-----------|
 | `/` | Público | Home do portfólio |
+| `/cases` | Senha `PORTFOLIO_PASSWORD` | Índice de projetos |
 | `/cases/[slug]` | Senha `PORTFOLIO_PASSWORD` | Detalhe do case |
 | `/cv` | Público | Currículo |
 | `/ds` | Público | Design system (referência visual) |
-| `/cvmkr/*` | Senha `CVMKR_PASSWORD` | Admin de currículos |
+| `/status` | Senha `EDITOR_PASSWORD` | Painel operacional |
+| `/editor/*` | Senha `EDITOR_PASSWORD` | Editor (CV, cases) |
 | `/api/chat/*` | Público (sessão anônima) | Chat + webhook Telegram |
 
 ## Desenvolvimento
@@ -31,7 +33,7 @@ npm run dev
 ```
 
 - Site: http://localhost:3000
-- CVMKR: http://localhost:3000/cvmkr/login
+- Editor: http://localhost:3000/editor/login
 
 ## Produção local (Docker)
 
@@ -74,7 +76,7 @@ Evolução segura (migrations, deploy, o que não quebrar): [docs/evolucao.md](.
 
 ```
 app/(portfolio)/     # Site público
-app/cvmkr/           # Admin currículo
+app/editor/           # Editor (CV, cases)
 app/api/chat/        # Chat + Telegram webhook
 components/portfolio/
 lib/domains/         # auth, cases, chat

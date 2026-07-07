@@ -20,19 +20,39 @@ async function computeToken(password: string, secret: string): Promise<string> {
 interface AuthGate {
   password: string
   secret: string
-  cookieName: string
+  cookieNames: string[]
   loginPath: string
 }
 
 async function requireAuth(request: NextRequest, gate: AuthGate): Promise<NextResponse> {
   const expectedToken = await computeToken(gate.password, gate.secret)
-  const sessionToken = request.cookies.get(gate.cookieName)?.value
+  const sessionToken = gate.cookieNames
+    .map((name) => request.cookies.get(name)?.value)
+    .find(Boolean)
   if (sessionToken === expectedToken) {
     return NextResponse.next()
   }
 
   const url = request.nextUrl.clone()
   url.pathname = gate.loginPath
+  url.searchParams.set('from', request.nextUrl.pathname)
+  return NextResponse.redirect(url)
+}
+
+/** Editor auth — redirect (páginas) ou 401 JSON (API). Retorna null se autenticado. */
+async function denyUnlessEditor(request: NextRequest): Promise<NextResponse | null> {
+  const password = process.env.EDITOR_PASSWORD ?? 'admin'
+  const secret = process.env.EDITOR_SECRET ?? 'editor-secret'
+  const expectedToken = await computeToken(password, secret)
+  const sessionToken = request.cookies.get('editor_session')?.value
+  if (sessionToken === expectedToken) return null
+
+  if (request.nextUrl.pathname.startsWith('/api/')) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  const url = request.nextUrl.clone()
+  url.pathname = '/editor/login'
   url.searchParams.set('from', request.nextUrl.pathname)
   return NextResponse.redirect(url)
 }
@@ -46,24 +66,25 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(dest, request.url), 308)
   }
 
-  if (pathname.startsWith('/cvmkr')) {
-    if (pathname === '/cvmkr/login') {
+  if (pathname.startsWith('/editor')) {
+    if (pathname === '/editor/login') {
       return NextResponse.next()
     }
 
-    return requireAuth(request, {
-      password: process.env.CVMKR_PASSWORD ?? 'admin',
-      secret: process.env.CVMKR_SECRET ?? 'cvmkr-secret',
-      cookieName: 'cvmkr_session',
-      loginPath: '/cvmkr/login',
-    })
+    const denied = await denyUnlessEditor(request)
+    return denied ?? NextResponse.next()
+  }
+
+  if (pathname === '/status' || pathname === '/api/status') {
+    const denied = await denyUnlessEditor(request)
+    return denied ?? NextResponse.next()
   }
 
   if (pathname.startsWith('/cases')) {
     return requireAuth(request, {
       password: process.env.PORTFOLIO_PASSWORD ?? 'portfolio',
       secret: process.env.PORTFOLIO_SECRET ?? 'portfolio-secret',
-      cookieName: 'portfolio_session',
+      cookieNames: ['portfolio_session'],
       loginPath: '/login',
     })
   }
@@ -72,5 +93,13 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/homolog/:path*', '/cvmkr/:path*', '/cases/:path*'],
+  matcher: [
+    '/homolog/:path*',
+    '/editor',
+    '/editor/:path*',
+    '/cases',
+    '/cases/:path*',
+    '/status',
+    '/api/status',
+  ],
 }

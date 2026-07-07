@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import type { CasePublic } from '@/lib/domains/cases/types'
 import type { PortfolioClient } from '@/lib/portfolio/clients'
 import { portfolioLabels } from '@/lib/portfolio/copy'
@@ -120,7 +121,14 @@ export function PortfolioHome({
               {portfolioLabels.noCases}
             </p>
           ) : (
-            <CaseProjectsSection cases={cases} />
+            <>
+              <CaseProjectsSection cases={cases} />
+              <p className="mt-12 text-center">
+                <Link href="/cases" className={ctaButtonClass}>
+                  {portfolioLabels.viewAllProjects}
+                </Link>
+              </p>
+            </>
           )}
         </div>
       </section>

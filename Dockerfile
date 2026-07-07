@@ -38,7 +38,7 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
-ENV CVMKR_DB_PATH=/app/data/cvmkr.db
+ENV SITE_DB_PATH=/app/data/site.db
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["node", "server.js"]

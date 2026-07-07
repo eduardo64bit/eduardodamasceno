@@ -1,4 +1,4 @@
--- CVMKR — SQLite schema (self-hosted, no Supabase)
+-- Site — SQLite schema (self-hosted)
 
 CREATE TABLE IF NOT EXISTS resumes (
   id          TEXT PRIMARY KEY,

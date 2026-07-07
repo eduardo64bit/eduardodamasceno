@@ -2,6 +2,7 @@
 
 | Documento | Conteúdo |
 |-----------|----------|
+| [arquitetura.md](./arquitetura.md) | **Rotas, auth, nomenclatura** — spec alvo (editor, cases, status) |
 | [evolucao.md](./evolucao.md) | Princípios de evolução não destrutiva do projeto |
 | [cases.md](./cases.md) | Cases — importação, publicação e enriquecimento |
 | [telegram-chat.md](./telegram-chat.md) | Chat de contato + integração Telegram |

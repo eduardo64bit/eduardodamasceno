@@ -38,7 +38,14 @@ Reimport forçado (sobrescreve cases existentes com mesmo `wp_id`):
 node scripts/wp-import.mjs --force
 ```
 
-## Enriquecer um case manualmente
+## Editar no browser
+
+1. Acesse `/editor/login` → **Cases** → escolha um case ou **+ Novo case**
+2. Campos: título, subtítulo, status, ordem, segmentos, capa, YouTube, corpo HTML
+3. **Preview →** abre `/cases/<slug>` (senha de leitor)
+4. Galeria (`case_media`): ainda via import WP ou SQL — lista read-only no editor
+
+## Enriquecer via SQL (alternativa)
 
 1. **Publicar:** `UPDATE cases SET status = 'published' WHERE slug = 'meu-case';`
 2. **Ordem na home:** `UPDATE cases SET sort_order = 10 WHERE slug = 'meu-case';` (menor = mais acima)
@@ -47,9 +54,9 @@ node scripts/wp-import.mjs --force
 5. **Segmentos (filtro na home):** coluna `cases.segments` — JSON array, ex. `'["financeiros","plataformas"]'`. Valores: `financeiros`, `industria`, `plataformas`, `autorais`. Um case pode ter vários.
 6. **Corpo:** editar `case_content.body_html` (HTML sanitizado na renderização)
 
-Ferramentas: [DB Browser for SQLite](https://sqlitebrowser.org/), ou `sqlite3 data/cvmkr.db`.
+Ferramentas: [DB Browser for SQLite](https://sqlitebrowser.org/), ou `sqlite3 data/site.db`.
 
-**Docker:** o Compose usa volume `cvmkr_data` em `/app/data/cvmkr.db` — **não** é o mesmo arquivo que `./data/cvmkr.db` no host. Para aplicar segmentos no banco do container, use `scripts/set-case-segments.mjs` (copie para o container ou rode o inline após `docker compose exec web`).
+**Docker:** com bind mount `./data`, Mac e container usam o mesmo `data/site.db`. Sem bind, o volume `site_data` guarda `/app/data/site.db`.
 
 ## Mídia
 
@@ -75,5 +82,5 @@ data/media/cases/<slug>/01.png
 
 ## Roadmap
 
-- Editor visual no `/cvmkr/cases` (placeholder hoje)
 - Unificar lógica de import nos scripts `.mjs` com `lib/domains/cases/mutations.ts`
+- Upload de capa/galeria no editor

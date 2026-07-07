@@ -8,12 +8,14 @@ import type { SaveResumePayload } from '@/lib/types'
 export async function saveResume(id: string, payload: SaveResumePayload) {
   if (id === 'new') {
     const newId = createResume(payload)
-    revalidatePath('/cvmkr/dashboard')
-    redirect(`/cvmkr/edit/${newId}`)
+    revalidatePath('/editor/cv')
+    revalidatePath('/editor')
+    redirect(`/editor/cv/${newId}`)
   }
 
   updateResume(id, payload)
-  revalidatePath('/cvmkr/dashboard')
-  revalidatePath(`/cvmkr/edit/${id}`)
+  revalidatePath('/editor/cv')
+  revalidatePath('/editor')
+  revalidatePath(`/editor/cv/${id}`)
   revalidatePath('/cv')
 }

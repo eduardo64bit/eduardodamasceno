@@ -11,6 +11,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import { randomUUID } from 'crypto'
 import Database from 'better-sqlite3'
+import { resolveSiteDbPath } from './lib/site-db-path.mjs'
 
 const force = process.argv.includes('--force')
 const xmlArg = process.argv.find((a) => a.endsWith('.xml'))
@@ -169,7 +170,7 @@ function upsertCase(db, payload) {
 async function main() {
   const root = projectRoot()
   const fileEnv = { ...loadEnv(path.join(root, '.env')), ...loadEnv(path.join(root, '.env.local')) }
-  const dbPath = process.env.CVMKR_DB_PATH || fileEnv.CVMKR_DB_PATH || path.join(root, 'data', 'cvmkr.db')
+  const dbPath = resolveSiteDbPath(root, { ...fileEnv, ...process.env })
   const xmlPath = xmlArg ?? path.join(root, 'data', 'wordpress-export.xml')
 
   if (!fs.existsSync(xmlPath)) {

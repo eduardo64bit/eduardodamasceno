@@ -5,9 +5,9 @@ services:
       # Padrão 9090 — evita conflito com ilovemalu (9080) e luizdaniel (8080).
       - "${EDUARDODAMASCENO_HTTP_PORT:-9090}:3000"
     environment:
-      - CVMKR_DB_PATH=/app/data/cvmkr.db
-      - CVMKR_PASSWORD=${CVMKR_PASSWORD:-admin}
-      - CVMKR_SECRET=${CVMKR_SECRET:-cvmkr-secret}
+      - SITE_DB_PATH=/app/data/site.db
+      - EDITOR_PASSWORD=${EDITOR_PASSWORD:-admin}
+      - EDITOR_SECRET=${EDITOR_SECRET:-editor-secret}
       - PORTFOLIO_PASSWORD=${PORTFOLIO_PASSWORD:-portfolio}
       - PORTFOLIO_SECRET=${PORTFOLIO_SECRET:-portfolio-secret}
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-}
@@ -18,8 +18,8 @@ services:
       - WP_SITE_PASSWORD=${WP_SITE_PASSWORD:-}
       - WP_POST_PASSWORD=${WP_POST_PASSWORD:-}
     volumes:
-      - cvmkr_data:/app/data
+      - site_data:/app/data
     restart: unless-stopped
 
 volumes:
-  cvmkr_data:
+  site_data:

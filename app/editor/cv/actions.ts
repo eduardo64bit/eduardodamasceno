@@ -1,9 +1,6 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
-import { cookies } from 'next/headers'
-import { CVMKR_SESSION_COOKIE } from '@/lib/domains/auth/cvmkr'
 import {
   deleteResume as deleteResumeDb,
   duplicateResume as duplicateResumeDb,
@@ -12,24 +9,21 @@ import {
 
 export async function setActiveResume(id: string) {
   setActiveResumeDb(id)
-  revalidatePath('/cvmkr/dashboard')
+  revalidatePath('/editor/cv')
+  revalidatePath('/editor')
   revalidatePath('/')
 }
 
 export async function deleteResume(id: string) {
   deleteResumeDb(id)
-  revalidatePath('/cvmkr/dashboard')
+  revalidatePath('/editor/cv')
+  revalidatePath('/editor')
   revalidatePath('/')
 }
 
 export async function duplicateResume(id: string, newName: string) {
   const newId = duplicateResumeDb(id, newName)
-  revalidatePath('/cvmkr/dashboard')
+  revalidatePath('/editor/cv')
+  revalidatePath('/editor')
   return newId
-}
-
-export async function logoutAction() {
-  const cookieStore = await cookies()
-  cookieStore.delete(CVMKR_SESSION_COOKIE)
-  redirect('/cvmkr/login')
 }

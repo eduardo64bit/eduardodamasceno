@@ -2,8 +2,8 @@
 
 import { useEffect } from 'react'
 
-/** Admin CVMKR is light-only; restore public dark preference on unmount. */
-export function CvmkrLightTheme({ children }: { children: React.ReactNode }) {
+/** Editor admin is light-only; restore public dark preference on unmount. */
+export function EditorLightTheme({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const root = document.documentElement
     const hadDark = root.classList.contains('dark')

@@ -376,7 +376,7 @@ export function DesignSystemPage() {
           <DsSection
             id="roadmap"
             title="Roadmap"
-            description="Próximos passos — CV e CVMKR convergem para este sistema."
+            description="Próximos passos — CV e editor convergem para este sistema."
           >
             <ul className="space-y-3">
               {roadmapNotes.map((note) => (

@@ -34,6 +34,10 @@ export const portfolioLabels = {
   caseSegmentAll: 'Todos',
   caseSegmentFilter: 'Filtrar projetos por segmento',
   backToProjects: '← Projetos',
+  backToHome: '← Início',
+  casesIndexIntro:
+    'Seleção de projetos em plataformas financeiras, indústria e produtos autorais.',
+  viewAllProjects: 'Ver todos os projetos',
   contentMissing: 'Conteúdo ainda não importado.',
   gallery: 'Galeria',
   carouselPrev: 'Imagem anterior',

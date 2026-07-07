@@ -194,10 +194,10 @@ function collectIntegrationChecks(): StatusCheck[] {
       detail: process.env.PORTFOLIO_PASSWORD ? 'Configurada' : 'Usando padrão do .env',
     },
     {
-      id: 'cvmkr-auth',
-      label: 'Senha CVMKR',
-      status: process.env.CVMKR_PASSWORD ? 'ok' : 'warn',
-      detail: process.env.CVMKR_PASSWORD ? 'Configurada' : 'Usando padrão do .env',
+      id: 'editor-auth',
+      label: 'Senha editor',
+      status: process.env.EDITOR_PASSWORD ? 'ok' : 'warn',
+      detail: process.env.EDITOR_PASSWORD ? 'Configurada' : 'Usando padrão do .env',
     },
   ]
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useTransition } from 'react'
-import { saveResume } from '@/app/cvmkr/edit/[id]/actions'
+import { saveResume } from '@/app/editor/cv/[id]/actions'
 import type {
   ResumeData,
   ProfileInput,
@@ -490,7 +490,7 @@ export function ResumeEditor({ id, initial }: Props) {
 
 // Campos com fundo claro: cores explícitas para não herdar text-gray-100 do dark mode no body.
 const fieldClass =
-  'cvmkr-field w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition disabled:bg-gray-50 disabled:text-gray-400'
+  'editor-field w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition disabled:bg-gray-50 disabled:text-gray-400'
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 

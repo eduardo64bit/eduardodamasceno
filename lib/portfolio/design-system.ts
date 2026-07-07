@@ -230,6 +230,6 @@ export const componentCatalog: ComponentEntry[] = [
 
 export const roadmapNotes = [
   'CV migrará para estes tokens (--pf-*) em vez do tema azul legado.',
-  'CVMKR admin mantém .cvmkr-field até unificação completa.',
+  'Editor admin usa .editor-field.',
   'Novos componentes devem consumir CSS vars, não cores hardcoded.',
 ] as const

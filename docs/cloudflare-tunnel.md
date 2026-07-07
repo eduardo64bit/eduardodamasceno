@@ -56,7 +56,7 @@ curl -s -o /dev/null -w "%{http_code}\n" https://eduardodamasceno.com.br/
 curl -s -o /dev/null -w "%{http_code}\n" https://www.eduardodamasceno.com.br/
 ```
 
-Admin CVMKR: `/cvmkr/login` (senha no `.env` → `CVMKR_PASSWORD`).
+Admin editor: `/editor/login` (senha no `.env` → `EDITOR_PASSWORD`).
 
 ## Desenvolvimento sem Docker
 
@@ -66,7 +66,7 @@ npm install
 npm run dev
 ```
 
-SQLite em `./data/cvmkr.db`.
+SQLite em `./data/site.db`.
 
 ## Troubleshooting
 
@@ -75,6 +75,6 @@ SQLite em `./data/cvmkr.db`.
 | 404 na Cloudflare | `sudo systemctl restart lda-cloudflared`; ingress no `config.yml` |
 | 502 | `./scripts/stack.sh up`; `curl http://127.0.0.1:9090/` |
 | Ainda abre site da Vercel | DNS no painel Cloudflare — apagar CNAME da Vercel |
-| Login CVMKR | `CVMKR_PASSWORD` / `CVMKR_SECRET` no `.env` |
+| Login editor | `EDITOR_PASSWORD` / `EDITOR_SECRET` no `.env` |
 
 Instalação inicial do cloudflared: **luizdaniel** → `docs/remote-access-cloudflare.md`.

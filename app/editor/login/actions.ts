@@ -2,9 +2,10 @@
 
 import { cookies } from 'next/headers'
 import {
-  CVMKR_SESSION_COOKIE,
-  getCvmkrSessionToken,
-} from '@/lib/domains/auth/cvmkr'
+  EDITOR_SESSION_COOKIE,
+  getEditorSessionToken,
+  editorPassword,
+} from '@/lib/domains/auth/editor'
 
 export interface LoginState {
   error?: string
@@ -16,25 +17,23 @@ export async function loginAction(
   formData: FormData
 ): Promise<LoginState> {
   const password = formData.get('password') as string
-  const from = (formData.get('from') as string) || '/cvmkr/dashboard'
+  const from = (formData.get('from') as string) || '/editor'
 
-  const expectedPassword = process.env.CVMKR_PASSWORD ?? 'admin'
-
-  if (password !== expectedPassword) {
+  if (password !== editorPassword()) {
     return { error: 'Senha incorreta. Tente novamente.' }
   }
 
-  const token = getCvmkrSessionToken(password)
+  const token = getEditorSessionToken(password)
 
   const cookieStore = await cookies()
-  cookieStore.set(CVMKR_SESSION_COOKIE, token, {
+  cookieStore.set(EDITOR_SESSION_COOKIE, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
     path: '/',
-    maxAge: 60 * 60 * 24 * 7, // 7 days
+    maxAge: 60 * 60 * 24 * 7,
   })
 
-  const redirectTo = from.startsWith('/') ? from : '/cvmkr/dashboard'
+  const redirectTo = from.startsWith('/') ? from : '/editor'
   return { redirectTo }
 }

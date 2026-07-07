@@ -2,7 +2,11 @@
 
 import { useTransition } from 'react'
 import Link from 'next/link'
-import { setActiveResume, deleteResume, duplicateResume } from '@/app/cvmkr/dashboard/actions'
+import {
+  setActiveResume,
+  deleteResume,
+  duplicateResume,
+} from '@/app/editor/cv/actions'
 import type { Resume } from '@/lib/types'
 
 interface Props {
@@ -46,7 +50,6 @@ export function ResumeCard({ resume }: Props) {
         resume.is_active ? 'border-blue-400 shadow-blue-100 shadow-md' : 'border-gray-200'
       } p-5 flex flex-col gap-3 transition-shadow`}
     >
-      {/* Top row */}
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
@@ -69,12 +72,8 @@ export function ResumeCard({ resume }: Props) {
         <p className="text-xs text-gray-400 shrink-0">{fmt(resume.updated_at)}</p>
       </div>
 
-      {/* Actions */}
       <div className="flex flex-wrap gap-2 pt-1 border-t border-gray-100">
-        <Link
-          href={`/cvmkr/edit/${resume.id}`}
-          className="btn-ghost"
-        >
+        <Link href={`/editor/cv/${resume.id}`} className="btn-ghost">
           Editar
         </Link>
 
@@ -89,7 +88,7 @@ export function ResumeCard({ resume }: Props) {
         </button>
 
         <a
-          href={`/cvmkr/print/${resume.id}`}
+          href={`/editor/cv/${resume.id}/print`}
           target="_blank"
           rel="noopener noreferrer"
           className="btn-ghost"

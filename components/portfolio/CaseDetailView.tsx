@@ -38,7 +38,7 @@ export function CaseDetailView({ data, contactName, contactEmail }: Props) {
       <article className="min-h-screen pt-12 sm:pt-16 pb-20">
         <div className="max-w-3xl mx-auto px-6 sm:px-10">
           <Link
-            href="/#projetos"
+            href="/cases"
             className="text-sm text-[var(--pf-muted-3)] hover:text-[var(--pf-text)] transition mb-12 inline-flex items-center gap-2"
           >
             {portfolioLabels.backToProjects}
