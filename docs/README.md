@@ -2,6 +2,7 @@
 
 | Documento | Conteúdo |
 |-----------|----------|
+| [inventario-arquitetura.md](./inventario-arquitetura.md) | **Inventário completo** — arquitetura, stack, fluxos, banco (base para infográfico) |
 | [arquitetura.md](./arquitetura.md) | **Rotas, auth, nomenclatura** — spec alvo (editor, cases, status) |
 | [evolucao.md](./evolucao.md) | Princípios de evolução não destrutiva do projeto |
 | [cases.md](./cases.md) | Cases — importação, publicação e enriquecimento |

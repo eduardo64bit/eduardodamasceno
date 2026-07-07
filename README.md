@@ -15,9 +15,9 @@ Portfólio, cases, chat de contato (Telegram) e editor de currículo — self-ho
 
 | Rota | Acesso | Descrição |
 |------|--------|-----------|
-| `/` | Público | Home do portfólio |
-| `/cases` | Senha `PORTFOLIO_PASSWORD` | Índice de projetos |
-| `/cases/[slug]` | Senha `PORTFOLIO_PASSWORD` | Detalhe do case |
+| `/` | Público | Home do portfólio (grid de cases em `/#projetos`) |
+| `/cases` | Público | Redirect → `/?section=projetos` (`next.config.ts`) |
+| `/cases/[slug]` | Senha leitor | Detalhe do case; voltar → `/#projeto-<slug>` |
 | `/cv` | Público | Currículo |
 | `/ds` | Público | Design system (referência visual) |
 | `/status` | Senha `EDITOR_PASSWORD` | Painel operacional |

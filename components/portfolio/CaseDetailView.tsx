@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { CaseFull } from '@/lib/domains/cases/types'
 import { buildCaseSlides, splitCaseBodyAfterContext } from '@/lib/portfolio/case-content'
 import { portfolioLabels } from '@/lib/portfolio/copy'
+import { portfolioCaseBackHref } from '@/lib/portfolio/routes'
 import { CaseImageCarousel } from './CaseImageCarousel'
 import { PortfolioNav } from './PortfolioNav'
 
@@ -38,7 +39,7 @@ export function CaseDetailView({ data, contactName, contactEmail }: Props) {
       <article className="min-h-screen pt-12 sm:pt-16 pb-20">
         <div className="max-w-3xl mx-auto px-6 sm:px-10">
           <Link
-            href="/cases"
+            href={portfolioCaseBackHref(data.slug)}
             className="text-sm text-[var(--pf-muted-3)] hover:text-[var(--pf-text)] transition mb-12 inline-flex items-center gap-2"
           >
             {portfolioLabels.backToProjects}

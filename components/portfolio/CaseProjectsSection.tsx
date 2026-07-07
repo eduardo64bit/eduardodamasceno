@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import type { CasePublic } from '@/lib/domains/cases/types'
 import { CASE_SEGMENTS, type CaseSegmentId } from '@/lib/domains/cases/segments'
 import { portfolioLabels } from '@/lib/portfolio/copy'
+import { portfolioCaseAnchorId } from '@/lib/portfolio/routes'
 import { CaseCard } from './CaseCard'
 
 const chipClass =
@@ -76,7 +77,11 @@ export function CaseProjectsSection({ cases }: Props) {
       ) : (
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
           {filteredCases.map((caseItem, i) => (
-            <li key={caseItem.id}>
+            <li
+              key={caseItem.id}
+              id={portfolioCaseAnchorId(caseItem.slug)}
+              className="scroll-mt-[var(--pf-nav-offset,0px)]"
+            >
               <CaseCard caseItem={caseItem} revealDelay={(i % 4) * 0.05} />
             </li>
           ))}

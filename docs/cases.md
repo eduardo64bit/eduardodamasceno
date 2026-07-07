@@ -14,6 +14,8 @@ Conteúdo dos projetos do portfólio. Fonte atual: import do WordPress + ediçã
 
 **Protegido:** `/cases/[slug]` exige senha `PORTFOLIO_PASSWORD` (middleware).
 
+**Navegação:** a listagem de projetos fica só na home (`/#projetos`). O detalhe abre em `/cases/<slug>`; o link “← Projetos” volta para `/#projeto-<slug>` na home.
+
 ## Importar do WordPress
 
 Configure no `.env`:

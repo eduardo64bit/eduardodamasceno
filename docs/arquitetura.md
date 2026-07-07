@@ -9,9 +9,9 @@ Decisões fechadas em jul/2026. Implementação incremental, sem quebrar Mac nem
 
 | Rota | Acesso | Descrição |
 |------|--------|-----------|
-| `/` | Público | Home do portfólio |
+| `/` | Público | Home do portfólio (grid + filtros em `/#projetos`) |
 | `/cv` | Público | Currículo |
-| `/cases` | Senha leitor | Índice de cases (grid + filtros) |
+| `/cases` | Público | Redirect legado → `/?section=projetos` |
 | `/cases/[slug]` | Senha leitor | Detalhe do case |
 | `/status` | Senha editor | Painel operacional |
 | `/login` | — | Login para leitura de cases |
@@ -44,7 +44,7 @@ Decisões fechadas em jul/2026. Implementação incremental, sem quebrar Mac nem
 
 | Papel | Senha no `.env` | Cookie | Login | Protege |
 |-------|-----------------|--------|-------|---------|
-| **Leitor** | `PORTFOLIO_PASSWORD` + `PORTFOLIO_SECRET` | `portfolio_session` | `/login` | `/cases`, `/cases/*` |
+| **Leitor** | `PORTFOLIO_PASSWORD` + `PORTFOLIO_SECRET` | `portfolio_session` | `/login` | `/cases/*` (detalhe) |
 | **Editor** | `EDITOR_PASSWORD` + `EDITOR_SECRET` | `editor_session` | `/editor/login` | `/editor/*`, `/status`, `/api/status` |
 
 Leitor e editor são **independentes**: quem lê cases não edita; quem edita usa outra senha.
@@ -171,11 +171,19 @@ Marcar conforme for entregando. Uma PR por fase quando possível.
 - [x] Rename local `cvmkr.db` → `site.db` (Mac)
 - [ ] Procedimento Oracle documentado acima executado no deploy
 
-### Fase 3 — `/cases` índice ✅
+### Fase 3 — `/cases` índice ✅ (substituída na Fase 7)
 
 - [x] `app/(portfolio)/cases/page.tsx` — grid + filtros (reuso de `CaseProjectsSection`)
 - [x] Middleware: proteger `/cases` (não só `/cases/*`)
 - [x] Links na home → `/cases` onde fizer sentido
+
+### Fase 7 — Navegação cases simplificada ✅
+
+- [x] Remover índice `/cases` — grid e filtros só na home (`/#projetos`)
+- [x] `/cases` → redirect `/?section=projetos` (`next.config.ts`)
+- [x] Voltar do detalhe → `/#projeto-<slug>` (`lib/portfolio/routes.ts`, `CaseDetailView.tsx`)
+- [x] Middleware protege apenas `/cases/<slug>` (matcher `/cases/:path+`)
+- [x] Âncoras por card na home (`CaseProjectsSection.tsx`)
 
 ### Fase 4 — `/status` com senha editor ✅
 
@@ -211,4 +219,11 @@ Ver também [evolucao.md](./evolucao.md).
 
 ## Estado atual (jul/2026)
 
-Cutover concluído — todas as fases 1–6 entregues. Spec de referência para evoluções futuras.
+Cutover concluído — fases 1–6 e simplificação de navegação (fase 7) entregues. Spec de referência para evoluções futuras.
+
+## Navegação de cases (jul/2026)
+
+- **Listagem:** apenas na home, seção `/#projetos` (`CaseProjectsSection`).
+- **Detalhe:** `/cases/[slug]` (senha leitor).
+- **Voltar:** `/#projeto-<slug>` — retorna ao card na home, não a uma página índice.
+- **Legado:** `/cases` redireciona para `/?section=projetos` (scroll automático via `ScrollToHashOnMount`).

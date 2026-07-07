@@ -112,7 +112,6 @@ export async function saveCaseAction(
 
 function revalidateCasePaths(slug: string) {
   revalidatePath('/')
-  revalidatePath('/cases')
   revalidatePath(`/cases/${slug}`)
   revalidatePath('/editor/cases')
   revalidatePath(`/editor/cases/${slug}`)
