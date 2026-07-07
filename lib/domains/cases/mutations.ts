@@ -1,8 +1,9 @@
 import { randomUUID } from 'crypto'
 import { getDb } from '@/lib/db/client'
+import { deleteCaseMediaFile } from './media-storage'
 import { serializeCaseSegments } from './segments'
 import { ensureUniqueCaseSlug, slugifyCaseTitle } from './slug'
-import type { CaseStatus, SaveCasePayload } from './types'
+import type { CaseStatus, SaveCaseMediaItem, SaveCasePayload } from './types'
 
 export interface ImportCasePayload {
   slug: string
@@ -93,6 +94,42 @@ export function upsertImportedCase(payload: ImportCasePayload): string {
   return caseId
 }
 
+function listCaseMediaPaths(caseId: string): string[] {
+  const db = getDb()
+  const rows = db
+    .prepare('SELECT path FROM case_media WHERE case_id = ?')
+    .all(caseId) as { path: string }[]
+  return rows.map((r) => r.path)
+}
+
+function syncCaseMedia(caseId: string, media: SaveCaseMediaItem[]): void {
+  const db = getDb()
+  const previousPaths = listCaseMediaPaths(caseId)
+  const nextPaths = new Set(media.map((m) => m.path))
+
+  db.prepare('DELETE FROM case_media WHERE case_id = ?').run(caseId)
+  const insertMedia = db.prepare(
+    `INSERT INTO case_media (id, case_id, path, alt, caption, sort_order)
+     VALUES (?, ?, ?, ?, ?, ?)`
+  )
+  for (const item of media) {
+    insertMedia.run(
+      randomUUID(),
+      caseId,
+      item.path,
+      item.alt,
+      item.caption,
+      item.sort_order
+    )
+  }
+
+  for (const oldPath of previousPaths) {
+    if (!nextPaths.has(oldPath)) {
+      deleteCaseMediaFile(oldPath)
+    }
+  }
+}
+
 function caseSlugExists(slug: string): boolean {
   const db = getDb()
   const row = db.prepare('SELECT id FROM cases WHERE slug = ?').get(slug) as
@@ -178,4 +215,8 @@ export function updateCaseBySlug(slug: string, payload: SaveCasePayload): void {
      VALUES (?, ?, NULL)
      ON CONFLICT(case_id) DO UPDATE SET body_html = excluded.body_html`
   ).run(row.id, payload.body_html)
+
+  if (payload.media) {
+    syncCaseMedia(row.id, payload.media)
+  }
 }

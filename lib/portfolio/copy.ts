@@ -37,7 +37,6 @@ export const portfolioLabels = {
   backToHome: '← Início',
   casesIndexIntro:
     'Seleção de projetos em plataformas financeiras, indústria e produtos autorais.',
-  viewAllProjects: 'Ver todos os projetos',
   contentMissing: 'Conteúdo ainda não importado.',
   gallery: 'Galeria',
   carouselPrev: 'Imagem anterior',
@@ -59,6 +58,12 @@ export const portfolioLabels = {
   chatRateLimit: 'Limite excedido, aguarde um momento antes de enviar outra mensagem.',
   chatSessionLimit: 'Limite de mensagens atingido nesta conversa.',
   chatMessageTooLong: 'Máximo de 1000 caracteres.',
+  loginRestrictedLabel: 'Acesso restrito',
+  loginTitle: 'Portfólio confidencial',
+  loginConfidentiality:
+    'Este conteúdo contém projetos protegidos por acordos de confidencialidade.',
+  loginPasswordHint: 'Se você possui a senha, informe abaixo.',
+  loginContactHint: 'Caso contrário, entre em contato para solicitar acesso.',
   footerLinkedIn: 'LinkedIn',
   footerLocation: 'São Paulo, Brasil',
   footerPrivacy: 'Privacidade',

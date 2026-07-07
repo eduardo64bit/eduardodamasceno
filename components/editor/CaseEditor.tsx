@@ -1,11 +1,17 @@
 'use client'
 
-import { useActionState, useEffect, useState } from 'react'
+import { useActionState, useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { saveCaseAction, type SaveCaseState } from '@/app/editor/cases/[slug]/actions'
 import { CASE_SEGMENTS, type CaseSegmentId } from '@/lib/domains/cases/segments'
 import { slugifyCaseTitle } from '@/lib/domains/cases/slug'
+import {
+  deriveEditorCoverPath,
+  deriveEditorMedia,
+  listLegacyRemoteImages,
+} from '@/lib/domains/cases/editor-media'
 import type { CaseFull } from '@/lib/domains/cases/types'
+import { CaseMediaEditor, type CaseMediaDraft } from './CaseMediaEditor'
 
 const fieldClass =
   'editor-field w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition'
@@ -13,9 +19,10 @@ const fieldClass =
 interface Props {
   slug: string
   initial: CaseFull | null
+  diskMediaPaths?: string[]
 }
 
-export function CaseEditor({ slug, initial }: Props) {
+export function CaseEditor({ slug, initial, diskMediaPaths = [] }: Props) {
   const isNew = slug === 'new'
   const [state, action, pending] = useActionState<SaveCaseState, FormData>(
     saveCaseAction.bind(null, slug),
@@ -25,6 +32,18 @@ export function CaseEditor({ slug, initial }: Props) {
   const [title, setTitle] = useState(initial?.title ?? '')
   const [newSlug, setNewSlug] = useState('')
   const [slugTouched, setSlugTouched] = useState(false)
+  const [media, setMedia] = useState<CaseMediaDraft[]>(() =>
+    initial ? deriveEditorMedia(initial, diskMediaPaths) : []
+  )
+  const [coverPath, setCoverPath] = useState(() =>
+    initial ? deriveEditorCoverPath(initial, deriveEditorMedia(initial, diskMediaPaths)) : ''
+  )
+  const legacyRemoteImages = initial ? listLegacyRemoteImages(initial, diskMediaPaths) : []
+
+  const handleMediaChange = useCallback((nextMedia: CaseMediaDraft[], nextCover: string) => {
+    setMedia(nextMedia)
+    setCoverPath(nextCover)
+  }, [])
 
   useEffect(() => {
     if (!state.error && !pending && !isNew) {
@@ -151,18 +170,22 @@ export function CaseEditor({ slug, initial }: Props) {
           Mídia
         </h2>
 
-        <div>
-          <label htmlFor="cover_path" className="block text-sm font-medium text-gray-700 mb-1">
-            Capa (path)
-          </label>
-          <input
-            id="cover_path"
-            name="cover_path"
-            defaultValue={initial?.cover_path ?? ''}
-            className={fieldClass}
-            placeholder="/media/cases/meu-case/cover.png"
+        {isNew ? (
+          <p className="text-sm text-gray-500">
+            Salve o case primeiro para enviar imagens, definir a capa e ordenar a galeria.
+          </p>
+        ) : (
+          <CaseMediaEditor
+            slug={slug}
+            initialMedia={media}
+            initialCoverPath={coverPath}
+            legacyRemoteImages={legacyRemoteImages}
+            onChange={handleMediaChange}
           />
-        </div>
+        )}
+
+        <input type="hidden" name="cover_path" value={coverPath} />
+        <input type="hidden" name="media_json" value={JSON.stringify(media)} />
 
         <div>
           <label htmlFor="youtube_url" className="block text-sm font-medium text-gray-700 mb-1">
@@ -177,20 +200,6 @@ export function CaseEditor({ slug, initial }: Props) {
             placeholder="https://www.youtube.com/watch?v=..."
           />
         </div>
-
-        {initial?.media && initial.media.length > 0 ? (
-          <div>
-            <p className="text-sm font-medium text-gray-700 mb-2">Galeria ({initial.media.length})</p>
-            <ul className="text-xs text-gray-500 space-y-1 font-mono">
-              {initial.media.map((m) => (
-                <li key={m.id}>{m.path}</li>
-              ))}
-            </ul>
-            <p className="mt-2 text-xs text-gray-400">
-              Edição da galeria via import WP ou SQL — em breve no editor.
-            </p>
-          </div>
-        ) : null}
       </section>
 
       <section className="space-y-4">

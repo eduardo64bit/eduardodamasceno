@@ -33,6 +33,13 @@ export interface CaseFull extends CasePublic {
   updated_at: string
 }
 
+export interface SaveCaseMediaItem {
+  path: string
+  alt: string
+  caption: string
+  sort_order: number
+}
+
 export interface SaveCasePayload {
   title: string
   subtitle: string
@@ -42,6 +49,7 @@ export interface SaveCasePayload {
   status: CaseStatus
   sort_order: number
   segments: CaseSegmentId[]
+  media?: SaveCaseMediaItem[]
   wp_id?: string | null
   wp_source_url?: string
 }

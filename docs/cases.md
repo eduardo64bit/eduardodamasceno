@@ -41,9 +41,9 @@ node scripts/wp-import.mjs --force
 ## Editar no browser
 
 1. Acesse `/editor/login` → **Cases** → escolha um case ou **+ Novo case**
-2. Campos: título, subtítulo, status, ordem, segmentos, capa, YouTube, corpo HTML
+2. Campos: título, subtítulo, status, ordem, segmentos, **galeria (upload + capa + ordem)**, YouTube, corpo HTML
 3. **Preview →** abre `/cases/<slug>` (senha de leitor)
-4. Galeria (`case_media`): ainda via import WP ou SQL — lista read-only no editor
+4. Galeria: arraste para reordenar; **Definir capa** na miniatura desejada; **Salvar** persiste `case_media` e remove arquivos excluídos
 
 ## Enriquecer via SQL (alternativa)
 
@@ -83,4 +83,4 @@ data/media/cases/<slug>/01.png
 ## Roadmap
 
 - Unificar lógica de import nos scripts `.mjs` com `lib/domains/cases/mutations.ts`
-- Upload de capa/galeria no editor
+- Editor visual do corpo (sem HTML) — etapa 2

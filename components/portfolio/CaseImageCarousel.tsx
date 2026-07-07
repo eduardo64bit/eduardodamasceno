@@ -167,24 +167,8 @@ export function CaseImageCarousel({ slides, title }: Props) {
               <ChevronRight />
             </button>
 
-            <div className="absolute bottom-3 inset-x-0 flex flex-col items-center gap-2 pointer-events-none">
-              <div className="flex items-center gap-1.5 pointer-events-auto">
-                {slides.map((_, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    onClick={() => setIndex(i)}
-                    className={`h-2 rounded-full transition-all ${
-                      i === index
-                        ? 'w-6 bg-[var(--pf-text)]'
-                        : 'w-2 bg-[var(--pf-text)]/35 hover:bg-[var(--pf-text)]/60'
-                    }`}
-                    aria-label={`${portfolioLabels.carouselGoTo} ${i + 1}`}
-                    aria-current={i === index ? 'true' : undefined}
-                  />
-                ))}
-              </div>
-              <span className="text-xs text-[var(--pf-muted-3)] tabular-nums">
+            <div className="absolute bottom-3 inset-x-0 flex justify-center pointer-events-none">
+              <span className="rounded-full bg-[var(--pf-bg)]/80 px-2.5 py-1 text-xs text-[var(--pf-muted-3)] tabular-nums backdrop-blur">
                 {index + 1} / {total}
               </span>
             </div>

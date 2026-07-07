@@ -1,8 +1,8 @@
-import Link from 'next/link'
 import type { CasePublic } from '@/lib/domains/cases/types'
 import type { PortfolioClient } from '@/lib/portfolio/clients'
 import { portfolioLabels } from '@/lib/portfolio/copy'
 import { LINKEDIN_URL } from '@/lib/site/urls'
+import { PORTFOLIO_PROJECTS_SECTION_ID } from '@/lib/portfolio/routes'
 import { ClientList } from './ClientList'
 import { PortfolioNav } from './PortfolioNav'
 import { CaseProjectsSection } from './CaseProjectsSection'
@@ -10,6 +10,7 @@ import { PortfolioChatButton, PortfolioChatRoot } from './PortfolioChat'
 import { HeroSection } from './motion/HeroSection'
 import { FlyInText } from './motion/FlyInText'
 import { RevealOnScroll } from './motion/RevealOnScroll'
+import { ScrollToHashOnMount } from './motion/ScrollToHashOnMount'
 import { StickyParallaxTitle } from './motion/StickyParallaxTitle'
 
 const sectionGrid =
@@ -43,6 +44,7 @@ export function PortfolioHome({
 }: Props) {
   return (
     <PortfolioChatRoot>
+      <ScrollToHashOnMount />
       <PortfolioNav name={name} />
 
       <HeroSection name={name} role={role} />
@@ -110,7 +112,10 @@ export function PortfolioHome({
         </section>
       )}
 
-      <section id="projetos" className="overflow-x-clip py-16 sm:py-24 scroll-mt-[var(--pf-nav-offset,0px)]">
+      <section
+        id={PORTFOLIO_PROJECTS_SECTION_ID}
+        className="overflow-x-clip py-16 sm:py-24 scroll-mt-[var(--pf-nav-offset,0px)]"
+      >
         <StickyParallaxTitle className="w-full max-w-full px-4 text-5xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-[-0.04em] text-center text-[var(--pf-text)] mb-12 sm:mb-16 sticky top-[var(--pf-nav-offset,0px)] z-40 py-4 pf-glass transition-[top] duration-300 ease-out will-change-[top]">
           {portfolioLabels.projects}
         </StickyParallaxTitle>
@@ -121,14 +126,7 @@ export function PortfolioHome({
               {portfolioLabels.noCases}
             </p>
           ) : (
-            <>
-              <CaseProjectsSection cases={cases} />
-              <p className="mt-12 text-center">
-                <Link href="/cases" className={ctaButtonClass}>
-                  {portfolioLabels.viewAllProjects}
-                </Link>
-              </p>
-            </>
+            <CaseProjectsSection cases={cases} />
           )}
         </div>
       </section>

@@ -10,6 +10,8 @@
     "wp:inventory": "node scripts/wp-inventory.mjs",
     "wp:import": "node scripts/wp-import.mjs",
     "wp:import:wxr": "node scripts/wp-import-wxr.mjs",
+    "cases:migrate-media": "node scripts/migrate-case-media-local.mjs",
+    "cases:migrate-html-images": "node scripts/migrate-case-html-images.mjs",
     "cases:segments": "node scripts/set-case-segments.mjs"
   },
   "dependencies": {

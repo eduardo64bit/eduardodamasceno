@@ -142,15 +142,24 @@
 
   .portfolio-theme .case-body :is(h1, h2, h3, h4) {
     color: var(--pf-body-heading);
-    @apply font-semibold tracking-tight mt-10 mb-4 first:mt-0;
+    @apply font-semibold tracking-tight first:mt-0;
   }
 
   .portfolio-theme .case-body h1 {
-    @apply text-2xl sm:text-3xl;
+    @apply text-2xl sm:text-3xl mt-10 mb-4;
   }
 
   .portfolio-theme .case-body h2 {
-    @apply text-xl sm:text-2xl;
+    @apply text-xl sm:text-2xl mt-12 mb-4;
+  }
+
+  .portfolio-theme .case-body h3 {
+    @apply text-lg sm:text-xl mt-12 mb-4;
+  }
+
+  .portfolio-theme .case-body h4 {
+    color: var(--pf-body-text);
+    @apply text-base sm:text-lg font-medium mt-8 mb-3;
   }
 
   .portfolio-theme .case-body p {
@@ -166,13 +175,32 @@
     @apply w-full rounded-xl my-8;
   }
 
-  .portfolio-theme .case-body ul,
+  .portfolio-theme .case-body ul {
+    @apply mb-4 list-disc space-y-2 pl-6;
+  }
+
   .portfolio-theme .case-body ol {
-    @apply mb-4 pl-5 space-y-2;
+    @apply mb-4 list-decimal space-y-2 pl-6;
   }
 
   .portfolio-theme .case-body li {
-    @apply text-base sm:text-lg;
+    @apply text-base sm:text-lg pl-1;
+  }
+
+  .portfolio-theme .case-body li::marker {
+    color: var(--pf-muted-3);
+  }
+
+  .portfolio-theme .case-body ul ul,
+  .portfolio-theme .case-body ol ol,
+  .portfolio-theme .case-body ul ol,
+  .portfolio-theme .case-body ol ul {
+    @apply mt-2 mb-0;
+  }
+
+  .portfolio-theme .case-body hr {
+    border-color: var(--pf-border);
+    @apply my-10 border-0 border-t;
   }
 
   .portfolio-theme .case-body blockquote {

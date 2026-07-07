@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { listCaseMediaPublicPathsOnDisk } from '@/lib/domains/cases/media-storage'
 import { getCaseFullBySlug } from '@/lib/domains/cases/queries'
 import { CaseEditor } from '@/components/editor/CaseEditor'
 import { EditorHeader } from '@/components/editor/EditorHeader'
@@ -17,6 +18,8 @@ export default async function EditCasePage({ params }: Props) {
 
   const data = getCaseFullBySlug(slug)
   if (!data) notFound()
+
+  const diskMediaPaths = listCaseMediaPublicPathsOnDisk(slug)
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -37,7 +40,7 @@ export default async function EditCasePage({ params }: Props) {
       />
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
-        <CaseEditor slug={slug} initial={data} />
+        <CaseEditor slug={slug} initial={data} diskMediaPaths={diskMediaPaths} />
       </main>
     </div>
   )

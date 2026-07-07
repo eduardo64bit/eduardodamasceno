@@ -8,7 +8,7 @@ import { PortfolioSideSheet } from './PortfolioSideSheet'
 
 const SCRIPT = [
   'Oi, tudo bem? Nem sempre estou online, mas acompanho todos os contatos.',
-  'Pode escrever por aqui. Se desejar um retorno, deixe também seu e-mail ou telefone.',
+  'Pode escrever por aqui. Se quiser, deixe também seu contato para continuarmos a conversa caso eu não responda de imediato.',
 ] as const
 
 const SCRIPT_PAUSE_MS = 320

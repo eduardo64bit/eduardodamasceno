@@ -43,6 +43,47 @@ Depois de alterar o `.env` (token, chat id ou secret):
 
 O `stack.sh up` é **obrigatório** após mudar variáveis — o Docker não recarrega o `.env` sozinho.
 
+## Desenvolvimento local (Mac)
+
+No localhost funciona **metade** do fluxo:
+
+| Direção | Localhost | Por quê |
+|---------|-----------|---------|
+| Site → Telegram | ✅ | O servidor chama a API do Telegram (saída) |
+| Telegram → Site | ❌ por padrão | O Telegram só entrega respostas via **webhook HTTPS público** |
+
+Hoje o webhook está em produção (`https://eduardodamasceno.com.br/...`). Quando você responde no Telegram durante um teste local, a mensagem vai para a **Oracle**, não para o `npm run dev` — e a sessão existe só no SQLite do Mac.
+
+O código local está ok (webhook simulado no Mac grava a resposta no banco). O que falta é o Telegram conseguir **alcançar** o Mac.
+
+### Testar respostas no Mac (túnel temporário)
+
+1. Suba o dev server: `npm run dev`
+2. Exponha `localhost:3000` com túnel HTTPS, por exemplo:
+   ```bash
+   brew install cloudflared   # uma vez
+   cloudflared tunnel --url http://localhost:3000
+   ```
+   Copie a URL `https://….trycloudflare.com`.
+3. Aponte o webhook para o túnel (lê `.env.local` no Mac):
+   ```bash
+   ./scripts/telegram-set-webhook-url.sh https://SEU-TUNEL.trycloudflare.com
+   ```
+4. Teste: mensagem no site → responda **em thread** no Telegram → deve aparecer no chat local.
+
+**Atenção:** enquanto o webhook aponta para o túnel, respostas do Telegram **não** chegam em produção. Ao terminar, restaure:
+
+```bash
+# na Oracle, com .env de produção
+./scripts/telegram-set-webhook.sh
+```
+
+Ou, no Mac, com `SITE_PUBLIC_ORIGIN` de produção no `.env.local` temporariamente:
+
+```bash
+./scripts/telegram-set-webhook-url.sh https://eduardodamasceno.com.br
+```
+
 ## Fluxo
 
 1. Visitante abre **Conversar** → sessão anônima (`sessionId` só na memória da aba).
