@@ -15,10 +15,10 @@ Portfólio, cases, chat de contato (Telegram) e editor de currículo — self-ho
 
 | Rota | Acesso | Descrição |
 |------|--------|-----------|
-| `/` | Público | Home do portfólio (grid de cases em `/#projetos`) |
-| `/cases` | Público | Redirect → `/?section=projetos` (`next.config.ts`) |
-| `/cases/[slug]` | Senha leitor | Detalhe do case; voltar → `/#projeto-<slug>` |
-| `/cv` | Público | Currículo |
+| `/` | Público | Home do portfólio |
+| `/cases` | Senha leitor | Listagem de cases |
+| `/cases/[slug]` | Senha leitor | Detalhe do case; voltar → `/cases#projeto-<slug>` |
+| `/cv` | Senha leitor | Currículo |
 | `/ds` | Público | Design system (referência visual) |
 | `/status` | Senha `EDITOR_PASSWORD` | Painel operacional |
 | `/editor/*` | Senha `EDITOR_PASSWORD` | Editor (CV, cases) |

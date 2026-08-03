@@ -1,6 +1,7 @@
 import type { CasePublic } from '@/lib/domains/cases/types'
 import type { PortfolioClient } from '@/lib/portfolio/clients'
 import { portfolioLabels } from '@/lib/portfolio/copy'
+import { SHOW_HOME_PROJECTS } from '@/lib/portfolio/features'
 import { LINKEDIN_URL } from '@/lib/site/urls'
 import { PORTFOLIO_PROJECTS_SECTION_ID } from '@/lib/portfolio/routes'
 import { ClientList } from './ClientList'
@@ -112,24 +113,26 @@ export function PortfolioHome({
         </section>
       )}
 
-      <section
-        id={PORTFOLIO_PROJECTS_SECTION_ID}
-        className="overflow-x-clip py-16 sm:py-24 scroll-mt-[var(--pf-nav-offset,0px)]"
-      >
-        <StickyParallaxTitle className="w-full max-w-full px-4 text-5xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-[-0.04em] text-center text-[var(--pf-text)] mb-12 sm:mb-16 sticky top-[var(--pf-nav-offset,0px)] z-40 py-4 pf-glass transition-[top] duration-300 ease-out will-change-[top]">
-          {portfolioLabels.projects}
-        </StickyParallaxTitle>
+      {SHOW_HOME_PROJECTS && (
+        <section
+          id={PORTFOLIO_PROJECTS_SECTION_ID}
+          className="overflow-x-clip py-16 sm:py-24 scroll-mt-[var(--pf-nav-offset,0px)]"
+        >
+          <StickyParallaxTitle className="w-full max-w-full px-4 text-5xl sm:text-6xl lg:text-7xl font-extrabold uppercase tracking-[-0.04em] text-center text-[var(--pf-text)] mb-12 sm:mb-16 sticky top-[var(--pf-nav-offset,0px)] z-40 py-4 pf-glass transition-[top] duration-300 ease-out will-change-[top]">
+            {portfolioLabels.projects}
+          </StickyParallaxTitle>
 
-        <div className="max-w-[80rem] mx-auto px-6 sm:px-10">
-          {cases.length === 0 ? (
-            <p className="text-center text-[var(--pf-muted-3)] text-sm">
-              {portfolioLabels.noCases}
-            </p>
-          ) : (
-            <CaseProjectsSection cases={cases} />
-          )}
-        </div>
-      </section>
+          <div className="max-w-[80rem] mx-auto px-6 sm:px-10">
+            {cases.length === 0 ? (
+              <p className="text-center text-[var(--pf-muted-3)] text-sm">
+                {portfolioLabels.noCases}
+              </p>
+            ) : (
+              <CaseProjectsSection cases={cases} />
+            )}
+          </div>
+        </section>
+      )}
 
       <footer id="contato" className="overflow-x-hidden px-6 sm:px-10 py-24 sm:py-32 text-center border-t border-[var(--pf-border)]">
         <FlyInText

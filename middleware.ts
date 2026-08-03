@@ -80,7 +80,7 @@ export async function middleware(request: NextRequest) {
     return denied ?? NextResponse.next()
   }
 
-  if (pathname.startsWith('/cases')) {
+  if (pathname.startsWith('/cases') || pathname === '/cv' || pathname.startsWith('/cv/')) {
     return requireAuth(request, {
       password: process.env.PORTFOLIO_PASSWORD ?? 'portfolio',
       secret: process.env.PORTFOLIO_SECRET ?? 'portfolio-secret',
@@ -97,7 +97,10 @@ export const config = {
     '/homolog/:path*',
     '/editor',
     '/editor/:path*',
-    '/cases/:path+',
+    '/cases',
+    '/cases/:path*',
+    '/cv',
+    '/cv/:path*',
     '/status',
     '/api/status',
   ],

@@ -12,9 +12,9 @@ Conteúdo dos projetos do portfólio. Fonte atual: import do WordPress + ediçã
 
 **Público:** apenas `status = 'published'`, ordenado por `sort_order`.
 
-**Protegido:** `/cases/[slug]` exige senha `PORTFOLIO_PASSWORD` (middleware).
+**Protegido:** `/cases`, `/cases/[slug]` e `/cv` exigem senha `PORTFOLIO_PASSWORD` (middleware).
 
-**Navegação:** a listagem de projetos fica só na home (`/#projetos`). O detalhe abre em `/cases/<slug>`; o link “← Projetos” volta para `/#projeto-<slug>` na home.
+**Navegação:** a listagem fica em `/cases` (protegida). O detalhe abre em `/cases/<slug>`; o link “← Projetos” volta para `/cases#projeto-<slug>`. A seção Projetos na home só aparece se `PORTFOLIO_SHOW_HOME_PROJECTS=true`.
 
 ## Importar do WordPress
 
