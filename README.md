@@ -49,6 +49,20 @@ Padrão: http://127.0.0.1:9090
 
 Após mudar `.env`: `./scripts/stack.sh up` (obrigatório).
 
+## Deploy (Mac → GitHub → Oracle)
+
+Fluxo padrão: editar local → `npm run dev` → `git commit` → publicar:
+
+```bash
+./scripts/deploy.sh
+```
+
+O script: confere `main` limpa → `git push` se necessário → SSH na Oracle (`git pull` + `stack.sh build && up`) → smoke test em https://eduardodamasceno.com.br/.
+
+Flags: `--skip-push` (só remoto) · `--no-build` (só pull + `up`, útil pra `.env`).
+
+Não sincroniza `data/` (banco/mídia).
+
 ## Cases (WordPress → SQLite)
 
 ```bash

@@ -1,9 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import { portfolioLabels } from '@/lib/portfolio/copy'
-import { CV_PUBLIC_PATH, LINKEDIN_URL } from '@/lib/site/urls'
+import { LINKEDIN_URL } from '@/lib/site/urls'
 import { PortfolioPrivacyModal } from './PortfolioPrivacyModal'
 
 const linkClass =
@@ -26,9 +25,6 @@ export function PortfolioSiteFooter() {
             >
               {portfolioLabels.footerLinkedIn}
             </a>
-            <Link href={CV_PUBLIC_PATH} className={linkClass}>
-              {portfolioLabels.resume}
-            </Link>
             <button
               type="button"
               onClick={() => setPrivacyOpen(true)}
