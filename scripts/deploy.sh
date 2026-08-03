@@ -105,7 +105,15 @@ fi
 ssh -o BatchMode=yes -o ConnectTimeout=20 "$SSH_HOST" "$remote_cmd"
 
 echo "→ smoke test $PUBLIC_URL/"
-http_code="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "$PUBLIC_URL/" || true)"
+http_code=""
+for attempt in 1 2 3 4 5 6; do
+  http_code="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "$PUBLIC_URL/" || true)"
+  if [[ "$http_code" == "200" ]]; then
+    break
+  fi
+  echo "  tentativa $attempt: HTTP ${http_code:-?} — aguardando container..."
+  sleep 5
+done
 if [[ "$http_code" != "200" ]]; then
   echo "Aviso: home respondeu HTTP ${http_code:-?} (esperado 200)." >&2
   exit 1
