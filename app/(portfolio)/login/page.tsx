@@ -12,7 +12,7 @@ export default async function PortfolioLoginPage({ searchParams }: Props) {
   const { from } = await searchParams
   const backHref = portfolioLoginBackHref(from)
   const backLabel =
-    from?.startsWith('/cases') ? portfolioLabels.backToProjects : portfolioLabels.backToHome
+    from?.startsWith('/portfolio') ? portfolioLabels.backToProjects : portfolioLabels.backToHome
 
   return (
     <PortfolioChatRoot>

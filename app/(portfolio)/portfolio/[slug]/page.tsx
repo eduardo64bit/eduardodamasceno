@@ -10,11 +10,11 @@ interface Props {
   params: Promise<{ slug: string }>
 }
 
-export default async function CasePage({ params }: Props) {
+export default async function PortfolioCasePage({ params }: Props) {
   const { slug } = await params
 
   if (!(await isPortfolioAuthenticated())) {
-    redirect(`/login?from=${encodeURIComponent(`/cases/${slug}`)}`)
+    redirect(`/login?from=${encodeURIComponent(`/portfolio/${slug}`)}`)
   }
 
   const data = getCaseFullBySlug(slug)

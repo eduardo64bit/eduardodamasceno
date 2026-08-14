@@ -25,11 +25,12 @@ A proposta da plataforma é ser um **monólito Next.js** com persistência local
 | Módulo | Finalidade |
 |--------|------------|
 | **Site institucional (Home)** | Página `/` com hero animado, sobre, especialidades, clientes e grid de cases publicados com filtros por segmento em `/#projetos` (`app/(portfolio)/page.tsx`, `PortfolioHome.tsx`, `CaseProjectsSection.tsx`) |
-| **Portfólio / Cases (detalhe)** | Página `/cases/[slug]` com carrossel, YouTube embed e corpo HTML; voltar para `/#projeto-<slug>` na home (`CaseDetailView.tsx`) |
-| **Currículo público** | Rota `/cv` renderiza o currículo ativo do SQLite (`app/cv/page.tsx`, `CVPageContent.tsx`) |
+| **Portfólio / Cases** | Índice em `/portfolio` e detalhe em `/portfolio/[slug]`, com carrossel, YouTube embed e corpo HTML (`CaseDetailView.tsx`) |
+| **Apresentação de case** | Deck fullscreen em `/case`, sincronizado de `case/` para `public/case/` |
+| **Currículo protegido** | Rota `/cv` renderiza o currículo ativo do SQLite (`app/cv/page.tsx`, `CVPageContent.tsx`) |
 | **Design System** | Referência visual em `/ds` (`app/(portfolio)/ds/page.tsx`, `DesignSystemPage.tsx`) |
 | **Chat de contato** | Widget flutuante na home; sessões anônimas, SSE e integração Telegram (`PortfolioChat.tsx`, `app/api/chat/*`) |
-| **Login de leitor** | `/login` — autenticação para `/cases/[slug]` via `PORTFOLIO_PASSWORD` |
+| **Login de leitor** | `/login` — autenticação compartilhada por `/portfolio`, `/case` e `/cv` via `PORTFOLIO_PASSWORD` |
 | **Editor / CMS** | Hub e CRUD em `/editor/*` para currículo e cases |
 | **Gestão de currículo** | Múltiplas versões de CV, perfil, experiências, projetos autorais, skills e educação (`app/editor/cv/*`, `ResumeEditor.tsx`) |
 | **Gestão de cases** | Criar, editar, publicar cases; metadados, segmentos, corpo HTML, galeria (`app/editor/cases/*`, `CaseEditor.tsx`) |
@@ -39,7 +40,7 @@ A proposta da plataforma é ser um **monólito Next.js** com persistência local
 | **Dashboard / Status** | `/status` + `/api/status` — saúde do app, SQLite, Telegram, site público (`lib/domains/status/collector.ts`) |
 | **Import WordPress** | Scripts CLI para inventário e import de posts para SQLite (`scripts/wp-import.mjs`, `wp-inventory.mjs`) |
 | **Migrações de mídia** | Scripts para migrar imagens locais e do HTML para `case_media` (`scripts/migrate-case-*.mjs`) |
-| **Redirect legado** | `/homolog/*` → rotas definitivas (308); `/cases` → `/?section=projetos` (`next.config.ts`) |
+| **Redirect legado** | `/homolog/*` → rotas definitivas; `/cases/*` → `/portfolio/*` (`middleware.ts`) |
 | **Tema claro/escuro** | Toggle no portfólio com script anti-FOUC (`PortfolioThemeProvider.tsx`, `lib/portfolio/theme.ts`) |
 | **Animações de scroll** | GSAP + split-type em hero e reveals (`components/portfolio/motion/*`) |
 | **Impressão de CV** | `/editor/cv/[id]/print` para versão de impressão |
@@ -77,7 +78,7 @@ A proposta da plataforma é ser um **monólito Next.js** com persistência local
 ## Autenticação
 
 - **Duas portas independentes** (`docs/arquitetura.md`):
-  - **Leitor:** `PORTFOLIO_PASSWORD` + `PORTFOLIO_SECRET` → cookie `portfolio_session` → protege `/cases/<slug>`.
+  - **Leitor:** `PORTFOLIO_PASSWORD` + `PORTFOLIO_SECRET` → cookie `portfolio_session` → protege `/portfolio/*`, `/case/*` e `/cv`.
   - **Editor:** `EDITOR_PASSWORD` + `EDITOR_SECRET` → cookie `editor_session` → protege `/editor/*`, `/status`, `/api/status`.
 - Token = **HMAC-SHA256** da senha com o secret (`lib/domains/auth/token.ts`).
 - Validação no **middleware Edge** (`middleware.ts`) e em APIs via `requireEditorApi()`.
@@ -99,9 +100,9 @@ A proposta da plataforma é ser um **monólito Next.js** com persistência local
 
 | Grupo | Rotas |
 |-------|-------|
-| Público | `/`, `/cv`, `/ds`, `/login` |
-| Leitor | `/cases/[slug]` |
-| Redirect | `/cases` → `/?section=projetos`; `/homolog/*` → 308 |
+| Público | `/`, `/ds`, `/login` |
+| Leitor | `/portfolio`, `/portfolio/[slug]`, `/case`, `/cv` |
+| Redirect | `/cases/*` → `/portfolio/*`; `/homolog/*` → 308 |
 | Editor | `/editor`, `/editor/login`, `/editor/cv/*`, `/editor/cases/*` |
 | Ops | `/status` |
 | API | `/api/chat/*`, `/api/status`, `/api/editor/cases/[slug]/media` |
@@ -222,7 +223,9 @@ git pull
 | Pasta / arquivo | Responsabilidade |
 |-----------------|------------------|
 | `app/(portfolio)/` | Site público: home (grid em `/#projetos`), detalhe de case, login, status, design system |
-| `app/(portfolio)/cases/[slug]/` | Detalhe protegido do case |
+| `app/(portfolio)/portfolio/` | Índice e detalhe protegidos do portfólio |
+| `app/case/` | Route handler do deck protegido em `/case` |
+| `case/` / `public/case/` | Fonte editável e cópia publicada do deck |
 | `app/cv/` | Página pública do currículo |
 | `app/editor/` | CMS: hub, login, CRUD de CV e cases, Server Actions |
 | `app/api/chat/` | REST + SSE do chat e webhook Telegram |
@@ -274,17 +277,17 @@ HTML + assets → Usuário
 ## Leitura de case protegido
 
 ```
-Usuário → home /#projetos → clica card → /cases/[slug]
+Usuário → /portfolio → clica card → /portfolio/[slug]
     ↓
 middleware.ts (cookie portfolio_session vs HMAC)
-    ↓ (se inválido → /login?from=/cases/<slug>)
+    ↓ (se inválido → /login?from=/portfolio/<slug>)
 Server Component → lib/domains/cases/queries.ts
     ↓
 SQLite (cases, case_content, case_media)
     ↓
 CaseDetailView + /media/... para imagens
     ↓
-“← Projetos” → /#projeto-<slug> (ScrollToHashOnMount)
+“← Projetos” → /portfolio#projeto-<slug> (ScrollToHashOnMount)
 ```
 
 ## Edição de case
@@ -300,7 +303,7 @@ saveCaseAction (Server Action)   data/media/cases/<slug>/
     ↓
 lib/domains/cases/mutations.ts → SQLite (cases, case_content, case_media)
     ↓
-revalidatePath('/') /cases/<slug> /editor/...
+revalidatePath('/') /portfolio /portfolio/<slug> /editor/...
 ```
 
 ## Chat
@@ -385,7 +388,7 @@ Layout: tema claro fixo via `EditorLightTheme` (`app/editor/layout.tsx`).
 ## Gerenciamento de conteúdo (cases)
 
 - `CaseEditor.tsx`: título, slug, subtítulo, status, ordem, segmentos (checkboxes), URL YouTube, corpo HTML (textarea), galeria.
-- **Preview** link para `/cases/<slug>` (requer senha leitor).
+- **Preview** link para `/portfolio/<slug>` (requer senha leitor).
 - Novos cases: salvar metadados primeiro antes de upload de imagens.
 
 ## Gerenciamento do currículo
@@ -474,7 +477,7 @@ api.telegram.org (notificações chat)
 |---------|---------------|
 | **HTTPS** | Na borda Cloudflare; origem HTTP local |
 | **Autenticação** | Senha compartilhada + HMAC-SHA256 em cookie httpOnly |
-| **Proteção de rotas** | `middleware.ts` matcher para `/editor`, `/cases/:path+`, `/status`, `/api/status` |
+| **Proteção de rotas** | `middleware.ts` matcher para `/editor`, `/portfolio/*`, `/case/*`, `/cv`, `/status`, `/api/status` |
 | **API editor** | 401 JSON se cookie inválido (`denyUnlessEditor`) |
 | **Cookies** | `httpOnly`, `secure` em `NODE_ENV=production`, `sameSite: 'lax'`, `maxAge` 7 dias |
 | **Sessão chat** | ID em memória do browser (não cookie); TTL 24h no servidor (`docs/evolucao.md`) |
@@ -532,9 +535,9 @@ Com base em `docs/cases.md`, `docs/evolucao.md`, `README.md` e comentários no c
 
 A persistência é **100% local**: banco **SQLite** (`data/site.db`, driver `better-sqlite3`, modo WAL) e arquivos de mídia em `data/media/`. Não há ORM, Redis, nem serviços de nuvem para dados. O schema cobre currículo (resumes e entidades relacionadas), portfólio (cases, conteúdo HTML, galeria) e chat (sessões e mensagens com TTL). Migrations versionadas em `lib/db/client.ts` evoluem o schema de forma incremental.
 
-O produto divide-se em três superfícies: **site público** (home com grid em `/#projetos`, CV, design system), **detalhe de case protegido** (`/cases/[slug]` com senha de portfólio) e **editor administrativo** (`/editor` com senha separada). A autenticação é baseada em **cookies httpOnly** cujo valor é um **HMAC-SHA256** da senha, validado no middleware Edge e nas APIs sensíveis. Duas credenciais independentes separam leitores de editores.
+O produto divide-se em três superfícies: **site público** (home e design system), **conteúdo de leitor protegido** (`/portfolio`, `/case` e `/cv`, com a mesma senha) e **editor administrativo** (`/editor` com senha separada). A autenticação é baseada em **cookies httpOnly** cujo valor é um **HMAC-SHA256** da senha, validado no middleware Edge e nas páginas sensíveis. Duas credenciais independentes separam leitores de editores.
 
-O CMS em `/editor` gerencia currículos multi-versão e cases com metadados, segmentos, corpo HTML e **galeria de imagens** (upload multipart, reorder, capa). O conteúdo editorial da home permanece em código (`lib/portfolio/copy.ts`). Cases publicados alimentam a home; o detalhe combina carrossel (`case_media` + `cover_path`), embed YouTube e HTML processado. A navegação de retorno usa âncoras `/#projeto-<slug>` — não há página índice `/cases`.
+O CMS em `/editor` gerencia currículos multi-versão e cases com metadados, segmentos, corpo HTML e **galeria de imagens** (upload multipart, reorder, capa). O conteúdo editorial da home permanece em código (`lib/portfolio/copy.ts`). Cases publicados alimentam `/portfolio`; o detalhe combina carrossel (`case_media` + `cover_path`), embed YouTube e HTML processado. O deck especial em `/case` é um artefato estático versionado separadamente em `case/`.
 
 O **chat de contato** é um subsistema próprio: sessões anônimas no SQLite, resposta automática, notificação **Telegram** e entrega de respostas do dono via **SSE** (pub/sub in-memory). Não há IA no fluxo.
 

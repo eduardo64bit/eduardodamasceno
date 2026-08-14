@@ -26,3 +26,9 @@ yarn-error.log*
 
 # SQLite local
 data/
+
+# Deck: deps e artefatos gerados ficam fora do git
+case/node_modules/
+case/exports/
+case/.DS_Store
+

@@ -34,7 +34,7 @@ Regras práticas para mudanças seguras neste repositório.
 
 - Preferir estender (`lib/domains/*`, migrations) a reescrever.
 - Remover código morto só quando grep confirmar zero referências.
-- Auth de `/cases/<slug>` (leitor) e `/editor` (dono) é independente — ver [arquitetura.md](./arquitetura.md).
+- Auth de `/portfolio`, `/case` e `/cv` (leitor) e `/editor` (dono) é independente — ver [arquitetura.md](./arquitetura.md).
 
 ## O que pode sair depois do cutover
 

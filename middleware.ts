@@ -66,6 +66,13 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(dest, request.url), 308)
   }
 
+  // Legado: /cases → /portfolio, preservando slug e query string.
+  if (pathname === '/cases' || pathname.startsWith('/cases/')) {
+    const url = request.nextUrl.clone()
+    url.pathname = pathname.replace(/^\/cases/, '/portfolio')
+    return NextResponse.redirect(url, 308)
+  }
+
   if (pathname.startsWith('/editor')) {
     if (pathname === '/editor/login') {
       return NextResponse.next()
@@ -80,7 +87,13 @@ export async function middleware(request: NextRequest) {
     return denied ?? NextResponse.next()
   }
 
-  if (pathname.startsWith('/cases') || pathname === '/cv' || pathname.startsWith('/cv/')) {
+  if (
+    pathname.startsWith('/portfolio') ||
+    pathname === '/case' ||
+    pathname.startsWith('/case/') ||
+    pathname === '/cv' ||
+    pathname.startsWith('/cv/')
+  ) {
     return requireAuth(request, {
       password: process.env.PORTFOLIO_PASSWORD ?? 'portfolio',
       secret: process.env.PORTFOLIO_SECRET ?? 'portfolio-secret',
@@ -99,6 +112,10 @@ export const config = {
     '/editor/:path*',
     '/cases',
     '/cases/:path*',
+    '/portfolio',
+    '/portfolio/:path*',
+    '/case',
+    '/case/:path*',
     '/cv',
     '/cv/:path*',
     '/status',

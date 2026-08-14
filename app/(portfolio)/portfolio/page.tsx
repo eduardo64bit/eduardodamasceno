@@ -10,9 +10,9 @@ import { ScrollToHashOnMount } from '@/components/portfolio/motion/ScrollToHashO
 
 export const dynamic = 'force-dynamic'
 
-export default async function CasesIndexPage() {
+export default async function PortfolioIndexPage() {
   if (!(await isPortfolioAuthenticated())) {
-    redirect(`/login?from=${encodeURIComponent('/cases')}`)
+    redirect(`/login?from=${encodeURIComponent('/portfolio')}`)
   }
 
   const cases = getPublishedCasesPublic()

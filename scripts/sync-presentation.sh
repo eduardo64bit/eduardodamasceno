@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Sincroniza o deck vizinho em public/case para publicação pelo Next.js.
+# Sincroniza o deck em case/ → public/case/ para publicação em /case.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SOURCE="${CASE_SOURCE:-"$ROOT/../case"}"
+SOURCE="${CASE_SOURCE:-"$ROOT/case"}"
 TARGET="$ROOT/public/case"
 
 for required in index.html assets css js; do
@@ -19,15 +19,17 @@ rsync -a --delete "$SOURCE/css/" "$TARGET/css/"
 rsync -a --delete "$SOURCE/js/" "$TARGET/js/"
 cp "$SOURCE/index.html" "$TARGET/index.html"
 
-# Mantém o deck local funcionando em / e os mesmos arquivos publicados em /case.
+# Fonte local continua em /; a cópia publicada precisa de base /case/.
 python3 - "$TARGET/index.html" <<'PY'
 from pathlib import Path
 import sys
 
 path = Path(sys.argv[1])
 html = path.read_text(encoding="utf-8")
-html = html.replace("<head>", '<head>\n  <base href="/case/" />', 1)
+if '<base href="/case/"' not in html:
+    html = html.replace("<head>", '<head>\n  <base href="/case/" />', 1)
 path.write_text(html, encoding="utf-8")
 PY
 
-echo "Apresentação sincronizada em $TARGET"
+echo "Apresentação sincronizada: $SOURCE → $TARGET"
+echo "Publicada em https://eduardodamasceno.com.br/case"

@@ -6,6 +6,7 @@
 | [arquitetura.md](./arquitetura.md) | **Rotas, auth, nomenclatura** — spec alvo (editor, cases, status) |
 | [evolucao.md](./evolucao.md) | Princípios de evolução não destrutiva do projeto |
 | [cases.md](./cases.md) | Cases — importação, publicação e enriquecimento |
+| [presentation-case.md](./presentation-case.md) | **`/case`** — apresentação detalhada de um case específico |
 | [telegram-chat.md](./telegram-chat.md) | Chat de contato + integração Telegram |
 | [cloudflare-tunnel.md](./cloudflare-tunnel.md) | Tunnel HTTPS (produção) |
 | [dominio-cloudflare.md](./dominio-cloudflare.md) | DNS e cutover Vercel → Cloudflare |

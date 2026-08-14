@@ -2,9 +2,9 @@
 export const PORTFOLIO_PROJECTS_SECTION_ID = 'projetos'
 
 /** Listagem principal de cases (protegida por senha) */
-export const PORTFOLIO_PROJECTS_HREF = '/cases'
+export const PORTFOLIO_PROJECTS_HREF = '/portfolio'
 
-/** Âncora de um card na listagem (`/cases#projeto-<slug>`) */
+/** Âncora de um card na listagem (`/portfolio#projeto-<slug>`) */
 export function portfolioCaseAnchorId(slug: string): string {
   return `projeto-${slug}`
 }
@@ -15,9 +15,11 @@ export function portfolioCaseBackHref(slug: string): string {
 
 /** Destino do “voltar” na tela de login de leitor */
 export function portfolioLoginBackHref(from?: string): string {
-  const caseMatch = from?.match(/^\/cases\/([^/?]+)/)
+  const caseMatch = from?.match(/^\/portfolio\/([^/?]+)/)
   if (caseMatch) return portfolioCaseBackHref(caseMatch[1])
-  if (from === '/cases' || from?.startsWith('/cases')) return PORTFOLIO_PROJECTS_HREF
+  if (from === '/portfolio' || from?.startsWith('/portfolio')) {
+    return PORTFOLIO_PROJECTS_HREF
+  }
   if (from === '/cv' || from?.startsWith('/cv')) return '/'
   return '/'
 }

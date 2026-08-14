@@ -63,7 +63,7 @@ export default function CasesAdminPage() {
                     Editar
                   </Link>
                   <Link
-                    href={`/cases/${c.slug}`}
+                    href={`/portfolio/${c.slug}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-xs text-gray-500 hover:text-gray-800 underline"

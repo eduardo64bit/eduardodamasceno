@@ -98,7 +98,7 @@ export function CaseEditor({ slug, initial, diskMediaPaths = [] }: Props) {
               placeholder="meu-projeto"
             />
             <p className="mt-1 text-xs text-gray-400">
-              Aparece em /cases/<strong>{newSlug || 'slug'}</strong>
+              Aparece em /portfolio/<strong>{newSlug || 'slug'}</strong>
             </p>
           </div>
         ) : (
@@ -239,7 +239,7 @@ export function CaseEditor({ slug, initial, diskMediaPaths = [] }: Props) {
 
         {!isNew ? (
           <Link
-            href={`/cases/${slug}`}
+            href={`/portfolio/${slug}`}
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm text-gray-500 hover:text-gray-800 underline"

@@ -29,7 +29,7 @@ export default async function EditCasePage({ params }: Props) {
         backLabel="Cases"
         trailing={
           <Link
-            href={`/cases/${slug}`}
+            href={`/portfolio/${slug}`}
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm text-gray-500 hover:text-gray-800 transition"

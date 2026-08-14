@@ -10,9 +10,11 @@ Decisões fechadas em jul/2026. Implementação incremental, sem quebrar Mac nem
 | Rota | Acesso | Descrição |
 |------|--------|-----------|
 | `/` | Público | Home do portfólio (grid + filtros em `/#projetos`) |
-| `/cv` | Público | Currículo |
-| `/cases` | Público | Redirect legado → `/?section=projetos` |
-| `/cases/[slug]` | Senha leitor | Detalhe do case |
+| `/cv` | Senha leitor | Currículo |
+| `/portfolio` | Senha leitor | Índice de cases (grid + filtros) |
+| `/portfolio/[slug]` | Senha leitor | Detalhe do case |
+| `/case` | Senha leitor | Apresentação fullscreen do case em destaque |
+| `/cases/*` | Redirect | URLs legadas → `/portfolio/*` |
 | `/status` | Senha editor | Painel operacional |
 | `/login` | — | Login para leitura de cases |
 | `/ds` | Público | Design system (referência interna) |
@@ -44,7 +46,7 @@ Decisões fechadas em jul/2026. Implementação incremental, sem quebrar Mac nem
 
 | Papel | Senha no `.env` | Cookie | Login | Protege |
 |-------|-----------------|--------|-------|---------|
-| **Leitor** | `PORTFOLIO_PASSWORD` + `PORTFOLIO_SECRET` | `portfolio_session` | `/login` | `/cases/*` (detalhe) |
+| **Leitor** | `PORTFOLIO_PASSWORD` + `PORTFOLIO_SECRET` | `portfolio_session` | `/login` | `/portfolio/*`, `/case/*`, `/cv` |
 | **Editor** | `EDITOR_PASSWORD` + `EDITOR_SECRET` | `editor_session` | `/editor/login` | `/editor/*`, `/status`, `/api/status` |
 
 Leitor e editor são **independentes**: quem lê cases não edita; quem edita usa outra senha.
@@ -217,13 +219,14 @@ Ver também [evolucao.md](./evolucao.md).
 
 ---
 
-## Estado atual (jul/2026)
+## Estado atual (ago/2026)
 
-Cutover concluído — fases 1–6 e simplificação de navegação (fase 7) entregues. Spec de referência para evoluções futuras.
+Cutover concluído. Spec de referência para evoluções futuras.
 
-## Navegação de cases (jul/2026)
+## Navegação de cases (ago/2026)
 
-- **Listagem:** apenas na home, seção `/#projetos` (`CaseProjectsSection`).
-- **Detalhe:** `/cases/[slug]` (senha leitor).
-- **Voltar:** `/#projeto-<slug>` — retorna ao card na home, não a uma página índice.
-- **Legado:** `/cases` redireciona para `/?section=projetos` (scroll automático via `ScrollToHashOnMount`).
+- **Listagem:** `/portfolio` (senha leitor).
+- **Detalhe:** `/portfolio/[slug]` (senha leitor).
+- **Voltar:** `/portfolio#projeto-<slug>`.
+- **Apresentação especial:** `/case`, protegida pela mesma sessão.
+- **Legado:** `/cases` e `/cases/[slug]` redirecionam permanentemente para `/portfolio` e `/portfolio/[slug]`.

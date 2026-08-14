@@ -16,8 +16,10 @@ Portfólio, cases, chat de contato (Telegram) e editor de currículo — self-ho
 | Rota | Acesso | Descrição |
 |------|--------|-----------|
 | `/` | Público | Home do portfólio |
-| `/cases` | Senha leitor | Listagem de cases |
-| `/cases/[slug]` | Senha leitor | Detalhe do case; voltar → `/cases#projeto-<slug>` |
+| `/portfolio` | Senha leitor | Listagem de cases |
+| `/portfolio/[slug]` | Senha leitor | Detalhe do case; voltar → `/portfolio#projeto-<slug>` |
+| `/case` | Senha leitor | Apresentação detalhada de um case específico ([docs](./docs/presentation-case.md)) |
+| `/cases/*` | Redirect | URLs legadas → `/portfolio/*` |
 | `/cv` | Senha leitor | Currículo |
 | `/ds` | Público | Design system (referência visual) |
 | `/status` | Senha `EDITOR_PASSWORD` | Painel operacional |
@@ -72,6 +74,19 @@ npm run wp:import
 
 Guia completo: [docs/cases.md](./docs/cases.md)
 
+## Apresentação `/case`
+
+Deck narrativo de **um** case em profundidade, protegido pela mesma senha do portfólio:
+
+```bash
+npm run presentation:sync   # case/ → public/case/
+./scripts/deploy.sh
+```
+
+→ https://eduardodamasceno.com.br/case  
+
+Detalhes: [docs/presentation-case.md](./docs/presentation-case.md)
+
 ## Chat + Telegram
 
 Setup do bot, webhook e variáveis: [docs/telegram-chat.md](./docs/telegram-chat.md)
@@ -90,12 +105,15 @@ Evolução segura (migrations, deploy, o que não quebrar): [docs/evolucao.md](.
 
 ```
 app/(portfolio)/     # Site público
+app/case/            # Rota /case (deck publicado)
 app/editor/           # Editor (CV, cases)
 app/api/chat/        # Chat + Telegram webhook
+case/                # Fonte editável da apresentação /case
+public/case/         # Cópia publicada do deck
 components/portfolio/
 lib/domains/         # auth, cases, chat
 lib/db/              # SQLite + migrations
-scripts/             # stack, WP import, Telegram
+scripts/             # stack, sync, WP import, Telegram
 data/                # DB + media (gitignored)
 ```
 

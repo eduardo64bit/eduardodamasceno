@@ -22,7 +22,7 @@ export function CaseCard({ caseItem, revealDelay = 0 }: Props) {
   return (
     <RevealOnScroll delay={revealDelay} y={32}>
       <Link
-        href={`/cases/${caseItem.slug}`}
+        href={`/portfolio/${caseItem.slug}`}
         className="group block rounded-xl overflow-hidden bg-[var(--pf-surface)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--pf-text)]"
         aria-label={caseItem.title}
       >

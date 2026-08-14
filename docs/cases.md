@@ -12,9 +12,9 @@ Conteúdo dos projetos do portfólio. Fonte atual: import do WordPress + ediçã
 
 **Público:** apenas `status = 'published'`, ordenado por `sort_order`.
 
-**Protegido:** `/cases`, `/cases/[slug]` e `/cv` exigem senha `PORTFOLIO_PASSWORD` (middleware).
+**Protegido:** `/portfolio`, `/portfolio/[slug]`, `/case` e `/cv` exigem a mesma senha `PORTFOLIO_PASSWORD` (middleware).
 
-**Navegação:** a listagem fica em `/cases` (protegida). O detalhe abre em `/cases/<slug>`; o link “← Projetos” volta para `/cases#projeto-<slug>`. A seção Projetos na home só aparece se `PORTFOLIO_SHOW_HOME_PROJECTS=true`.
+**Navegação:** a listagem fica em `/portfolio`. O detalhe abre em `/portfolio/<slug>`; o link “← Projetos” volta para `/portfolio#projeto-<slug>`. URLs antigas em `/cases/*` redirecionam para `/portfolio/*`. A seção Projetos na home só aparece se `PORTFOLIO_SHOW_HOME_PROJECTS=true`.
 
 ## Importar do WordPress
 
@@ -44,7 +44,7 @@ node scripts/wp-import.mjs --force
 
 1. Acesse `/editor/login` → **Cases** → escolha um case ou **+ Novo case**
 2. Campos: título, subtítulo, status, ordem, segmentos, **galeria (upload + capa + ordem)**, YouTube, corpo HTML
-3. **Preview →** abre `/cases/<slug>` (senha de leitor)
+3. **Preview →** abre `/portfolio/<slug>` (senha de leitor)
 4. Galeria: arraste para reordenar; **Definir capa** na miniatura desejada; **Salvar** persiste `case_media` e remove arquivos excluídos
 
 ## Enriquecer via SQL (alternativa)
@@ -80,7 +80,7 @@ data/media/cases/<slug>/01.png
 - [ ] `youtube_url` se houver vídeo
 - [ ] `status = published` e `sort_order` definido
 - [ ] `segments` preenchido para aparecer nos filtros da home
-- [ ] Testar em `/cases/<slug>` (logado) e na home
+- [ ] Testar em `/portfolio/<slug>` (logado) e na home
 
 ## Roadmap
 
