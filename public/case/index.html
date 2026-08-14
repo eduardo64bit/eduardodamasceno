@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <base href="/case/" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CASE · Partner Onboarding B2B · XP Inc.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/deck.css" />
+  <!-- Panorâmicas são pesadas: carrega desde o início para não pipocar na virada do slide -->
+  <link rel="preload" as="image" href="assets/eventstorm02.png" />
+  <link rel="preload" as="image" href="assets/asis_completa.png" />
+</head>
+<body>
+  <div class="progress" aria-hidden="true">
+    <div class="progress__bar" id="progress"></div>
+  </div>
+
+  <footer class="chrome">
+    <span class="chrome__counter" id="counter">01 / 26</span>
+    <div class="chrome__actions">
+      <div class="info">
+        <button type="button" class="info__btn" id="info-btn" aria-label="Atalhos" aria-describedby="info-tip" aria-expanded="false">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <circle cx="7" cy="7" r="6.25" stroke="currentColor" stroke-width="1.25"/>
+            <path d="M7 6.25V10" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+            <circle cx="7" cy="4.15" r="0.75" fill="currentColor"/>
+          </svg>
+        </button>
+        <div class="info__tip" id="info-tip" role="tooltip">
+          <div><kbd>←</kbd><kbd>→</kbd> navegar</div>
+          <div><kbd>P</kbd> notas do apresentador</div>
+          <div><kbd>F</kbd> tela cheia</div>
+          <div><kbd>Home</kbd><kbd>End</kbd> início / fim</div>
+        </div>
+      </div>
+      <nav class="nav" aria-label="Navegação">
+        <button type="button" class="nav__btn" id="prev" aria-label="Anterior">←</button>
+        <button type="button" class="nav__btn" id="next" aria-label="Próximo">→</button>
+      </nav>
+    </div>
+  </footer>
+
+  <main class="deck" id="deck" tabindex="0">
+
+    <!-- 01 · Capa -->
+    <section class="slide is-active" data-slide="1">
+      <div class="frame frame--cover">
+        <h1 class="display">
+          Redesenhando o onboarding<br />
+          de parceiros B2B
+        </h1>
+        <p class="lede">
+          Como transformamos um processo<br />
+          operacional complexo<br />
+          em uma experiência escalável.
+        </p>
+        <div class="cover-meta">
+          <span>XP Inc.</span>
+          <span>Product Design</span>
+        </div>
+      </div>
+      <aside class="notes">
+        Eu gosto de começar pelo impacto — não pelo cargo. Deixa o título respirar um segundo. A conversa que a gente vai ter aqui é sobre transformar um sistema, não sobre telas.
+      </aside>
+    </section>
+
+    <!-- 02 · O desafio -->
+    <section class="slide" data-slide="2">
+      <div class="frame frame--center">
+        <p class="kicker">O desafio</p>
+        <h2 class="statement">
+          O crescimento da XP tornou o processo<br />
+          de onboarding incompatível<br />
+          com a nova escala.
+        </h2>
+      </div>
+      <aside class="notes">
+        Quando eu entrei no projeto, o onboarding já era legado vivo. Cada nova exigência regulatória, cada integração, cada necessidade de negócio foi sendo empilhada — sem uma visão sistêmica da experiência. O resultado você sente no próximo slide.
+      </aside>
+    </section>
+
+    <!-- 03 · Métricas -->
+    <section class="slide" data-slide="3">
+      <div class="frame">
+        <div class="metrics">
+          <div class="metric">
+            <span class="metric__n">11</span>
+            <span class="metric__l">sistemas</span>
+          </div>
+          <div class="metric">
+            <span class="metric__n">87</span>
+            <span class="metric__l">etapas</span>
+          </div>
+          <div class="metric">
+            <span class="metric__n">60</span>
+            <span class="metric__l">ações manuais</span>
+          </div>
+          <div class="metric">
+            <span class="metric__n">20</span>
+            <span class="metric__l">minutos para vincular</span>
+          </div>
+          <div class="metric">
+            <span class="metric__n">17</span>
+            <span class="metric__l">dias para concluir</span>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">
+        Sem decoração. Só a realidade operacional. Esse número de vinte minutos — o vínculo — vai voltar. Guarda ele.
+      </aside>
+    </section>
+
+    <!-- 04 · Ecossistema frase -->
+    <section class="slide" data-slide="4">
+      <div class="frame frame--center">
+        <h2 class="statement">
+          O onboarding não atendia<br />
+          apenas um usuário.
+        </h2>
+        <p class="closing">
+          Precisava conectar um ecossistema inteiro.
+        </p>
+      </div>
+      <aside class="notes">
+        E aqui tem um ponto importante. Se a gente olhasse só a interface do parceiro, a gente erraria o problema. Porque não era um usuário. Era uma cadeia.
+      </aside>
+    </section>
+
+    <!-- 05 · Cadeia -->
+    <section class="slide" data-slide="5">
+      <div class="frame">
+        <p class="kicker">O ecossistema</p>
+        <ol class="chain">
+          <li>Parceiro</li>
+          <li>Operações</li>
+          <li>Compliance</li>
+          <li>Jurídico</li>
+          <li>Produto</li>
+          <li>Tecnologia</li>
+          <li>Sistemas internos</li>
+          <li>Cliente final</li>
+        </ol>
+      </div>
+      <aside class="notes">
+        Validar, aprovar, configurar permissão, garantir conformidade — cada área com a sua verdade. O desafio nunca foi “melhorar uma tela”. Era coordenar um ecossistema.
+      </aside>
+    </section>
+
+    <!-- 06 · Papel de pão -->
+    <section class="slide slide--bleed" data-slide="6">
+      <div class="bleed bleed--center">
+        <img
+          class="bleed__img"
+          src="assets/papel-de-pao.png"
+          alt="Conta no papel de pão"
+        />
+      </div>
+      <aside class="notes">
+        Até que fizemos uma conta extremamente simples. Nossa meta era cadastrar aproximadamente cinco mil novos assessores naquele ano. Somente a etapa de vínculo consumia em média vinte minutos por assessor. Fiz literalmente uma conta de padaria. Cinco mil vezes vinte minutos. Cem mil minutos. Mil seiscentas e sessenta e seis horas. Duzentos e oito dias úteis. Isso significava praticamente uma pessoa trabalhando o ano inteiro apenas executando uma única etapa do processo.
+      </aside>
+    </section>
+
+    <!-- 07 · Papel amassado -->
+    <section class="slide" data-slide="7">
+      <div class="frame frame--full">
+        <div class="photo photo--story">
+          <img src="assets/papel-amassado.png" alt="Papel amassado" onerror="this.parentElement.classList.add('is-empty')" />
+          <span class="photo__ph">assets/papel-amassado.png</span>
+        </div>
+      </div>
+      <aside class="notes">
+        Naquele momento percebemos que estávamos fazendo a pergunta errada. Nós não precisávamos fazer essa atividade mais rápido. Precisávamos fazer essa atividade deixar de existir.
+      </aside>
+    </section>
+
+    <!-- 08 · Pergunta -->
+    <section class="slide slide--blank" data-slide="8">
+      <div class="frame frame--center">
+        <h2 class="statement">
+          O que realmente precisava<br />
+          ser resolvido?
+        </h2>
+      </div>
+      <aside class="notes">
+        Foi essa pergunta que direcionou todo o restante do projeto.
+      </aside>
+    </section>
+
+    <!-- 09 · Discovery -->
+    <section class="slide" data-slide="9">
+      <div class="frame">
+        <h2 class="title">Como responder essa pergunta?</h2>
+        <ol class="principles principles--5">
+          <li><span>Entender o serviço</span></li>
+          <li><span>Alinhar especialistas</span></li>
+          <li><span>Visualizar o sistema</span></li>
+          <li><span>Validar hipóteses</span></li>
+          <li><span>Construir uma estratégia</span></li>
+        </ol>
+        <p class="tools-footnote">Entrevistas · Event Storm · Blueprint · Experiência</p>
+      </div>
+      <aside class="notes">
+        Discovery aqui não é um checklist. É um raciocínio. As ferramentas embaixo existem só para responder essas perguntas — nunca para produzir artefato por produzir.
+      </aside>
+    </section>
+
+    <!-- 10 · Event Storm -->
+    <section class="slide slide--bleed" data-slide="10">
+      <div class="bleed bleed--pan">
+        <div class="pan pan--short">
+          <img
+            class="pan__img"
+            src="assets/eventstorm02.png"
+            alt="Event Storm do onboarding"
+          />
+          <img
+            class="pan__img"
+            src="assets/eventstorm02.png"
+            alt=""
+            aria-hidden="true"
+          />
+        </div>
+      </div>
+      <aside class="notes">
+        O Event Storm reuniu o conhecimento que estava espalhado entre as áreas. Pela primeira vez, todo mundo enxergava o mesmo processo. Esse alinhamento foi o que abriu espaço para priorizar de verdade.
+      </aside>
+    </section>
+
+    <!-- 11 · Insight A -->
+    <section class="slide" data-slide="11">
+      <div class="frame frame--center">
+        <h2 class="statement">
+          O problema não era<br />
+          cadastrar parceiros.
+        </h2>
+      </div>
+      <aside class="notes">
+        Pausa. Deixa a frase assentar. O próximo clique fecha o pensamento.
+      </aside>
+    </section>
+
+    <!-- 12 · Insight B -->
+    <section class="slide" data-slide="12">
+      <div class="frame frame--center">
+        <h2 class="statement">
+          O problema era orquestrar<br />
+          todas as partes.
+        </h2>
+      </div>
+      <aside class="notes">
+        E quando a gente muda a pergunta, a solução muda de lugar. De tela para sistema. O Blueprint deixa isso explícito.
+      </aside>
+    </section>
+
+    <!-- 13 · AS IS -->
+    <section class="slide slide--bleed" data-slide="13">
+      <div class="bleed bleed--pan">
+        <div class="pan">
+          <img
+            class="pan__img"
+            src="assets/asis_completa.png"
+            alt="Fluxo AS IS completo"
+          />
+          <img
+            class="pan__img"
+            src="assets/asis_completa.png"
+            alt=""
+            aria-hidden="true"
+          />
+        </div>
+      </div>
+      <aside class="notes">
+        Experiência, processos, sistemas, dependências, responsabilidades — no mesmo mapa. Ficou claro: muito do que o usuário sofria era consequência da arquitetura operacional.
+      </aside>
+    </section>
+
+    <!-- 14 · Aprendizados -->
+    <section class="slide" data-slide="14">
+      <div class="frame">
+        <p class="kicker">O que aprendemos</p>
+        <ul class="lines">
+          <li>Fragmentação da experiência</li>
+          <li>Regras próprias em cada sistema</li>
+          <li>Múltiplas fontes de verdade</li>
+          <li>Trabalho majoritariamente operacional</li>
+          <li>Usuário forçado a entender o backstage</li>
+        </ul>
+      </div>
+      <aside class="notes">
+        Esses padrões mudaram a direção. Se o problema é fragmentação e orquestração, a resposta não é redesenhar telas isoladas.
+      </aside>
+    </section>
+
+    <!-- 15 · Estratégia -->
+    <section class="slide" data-slide="15">
+      <div class="frame">
+        <p class="kicker">Estratégia</p>
+        <h2 class="title">Quatro princípios</h2>
+        <ol class="principles">
+          <li><span>Centralizar</span> Unificar a jornada</li>
+          <li><span>Automatizar</span> Eliminar o repetitivo</li>
+          <li><span>Guiar</span> Conduzir o usuário</li>
+          <li><span>Monitorar</span> Visibilidade operacional</li>
+        </ol>
+      </div>
+      <aside class="notes">
+        A estratégia valia para quem cadastrava e para quem operava. Simplificar os dois lados do sistema.
+      </aside>
+    </section>
+
+    <!-- 16 · Frentes -->
+    <section class="slide" data-slide="16">
+      <div class="frame">
+        <p class="kicker">Entrega</p>
+        <h2 class="title">Três frentes</h2>
+        <ol class="fronts">
+          <li>
+            <h3>Coleta de Dados</h3>
+            <p>Autenticação e entrada</p>
+          </li>
+          <li>
+            <h3>Experiência de Cadastro</h3>
+            <p>Micro jornadas e validações</p>
+          </li>
+          <li>
+            <h3>Monitor de Cadastro</h3>
+            <p>Vínculo e visibilidade</p>
+          </li>
+        </ol>
+      </div>
+      <aside class="notes">
+        Dividir em frentes permitiu evoluir sem depender da entrega completa. Valor contínuo, risco controlado.
+      </aside>
+    </section>
+
+    <!-- 17 · Depois (comparação) -->
+    <section class="slide slide--blank" data-slide="17">
+      <div class="frame frame--compare">
+        <div class="compare">
+          <div class="compare__block">
+            <p class="kicker">Antes</p>
+            <div class="photo photo--fixed photo--compare">
+              <img src="assets/as-is.jpg" alt="Fluxo AS IS" onerror="this.parentElement.classList.add('is-empty')" />
+              <span class="photo__ph">AS IS</span>
+            </div>
+          </div>
+          <div class="compare__block">
+            <p class="kicker">Depois</p>
+            <div class="photo photo--fixed photo--compare">
+              <img src="assets/to-be.jpg" alt="Fluxo TO BE" onerror="this.parentElement.classList.add('is-empty')" />
+              <span class="photo__ph">TO BE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">
+        Mesmo AS IS em cima — referência objetiva. Embaixo, o TO BE. Reorganizamos o fluxo: eliminamos etapas, consolidamos decisões, reduzimos mudança de contexto. A conta do papel de pão começa a perder sentido aqui.
+      </aside>
+    </section>
+
+    <!-- 18 · Depois ampliado -->
+    <section class="slide slide--blank" data-slide="18">
+      <div class="frame frame--full">
+        <p class="kicker">Depois</p>
+        <div class="split-zoom" aria-label="TO BE ampliado em duas metades">
+          <div class="split-zoom__pane">
+            <img src="assets/detalhetobe01.png" alt="TO BE — detalhe superior" />
+          </div>
+          <div class="split-zoom__pane">
+            <img src="assets/detalhetobe02.png" alt="TO BE — detalhe inferior" />
+          </div>
+        </div>
+      </div>
+      <aside class="notes">
+        Agora o TO BE ampliado em duas metades — topo à esquerda, base à direita. Deixa o olhar percorrer o fluxo novo com calma.
+      </aside>
+    </section>
+
+    <!-- 19 · Monitor de Cadastro -->
+    <section class="slide slide--bleed" data-slide="19">
+      <div class="bleed bleed--center bleed--white">
+        <img
+          class="bleed__img"
+          src="assets/monitor.png"
+          alt="Monitor de Cadastro"
+        />
+      </div>
+      <aside class="notes">
+        Aqui a operação ganha visibilidade. Acompanhar, vincular, permissões — o vínculo deixa de ser um buraco negro de vinte minutos. Uma imagem basta para mostrar o produto em uso.
+      </aside>
+    </section>
+
+    <!-- 20 · Monitor detalhe -->
+    <section class="slide slide--bleed" data-slide="20">
+      <div class="bleed bleed--center bleed--black">
+        <img
+          class="bleed__img"
+          src="assets/monitor2.png"
+          alt="Monitor de Cadastro — detalhe"
+        />
+      </div>
+      <aside class="notes">
+        Detalhe do monitor. Deixa a tela falar.
+      </aside>
+    </section>
+
+    <!-- 21 · Resultados -->
+    <section class="slide" data-slide="21">
+      <div class="frame">
+        <p class="kicker">Resultados</p>
+        <div class="results">
+          <div class="result">
+            <span class="result__l">Sistemas</span>
+            <span class="result__v"><s>11</s> 6</span>
+          </div>
+          <div class="result">
+            <span class="result__l">Etapas</span>
+            <span class="result__v"><s>87</s> 59</span>
+          </div>
+          <div class="result">
+            <span class="result__l">Ações manuais</span>
+            <span class="result__v"><s>60</s> 32</span>
+          </div>
+          <div class="result">
+            <span class="result__l">Vínculo</span>
+            <span class="result__v"><s>20 min</s> 2 min</span>
+          </div>
+          <div class="result">
+            <span class="result__l">Conclusão</span>
+            <span class="result__v"><s>17 dias</s> 5 dias</span>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">
+        Isso é primeira fase. Já era ganho real — e base para continuar. Repara no vínculo: de vinte para menos de dois. A conta do papel de pão começa a desaparecer.
+      </aside>
+    </section>
+
+    <!-- 22 · O que mudou -->
+    <section class="slide" data-slide="22">
+      <div class="frame">
+        <h2 class="title">O que mudou para a empresa?</h2>
+        <div class="impact">
+          <div class="impact__item">
+            <span class="impact__who">Parceiros</span>
+            <span class="impact__arrow" aria-hidden="true">↓</span>
+            <span class="impact__what">Menos espera</span>
+          </div>
+          <div class="impact__item">
+            <span class="impact__who">Operações</span>
+            <span class="impact__arrow" aria-hidden="true">↓</span>
+            <span class="impact__what">Menos trabalho manual</span>
+          </div>
+          <div class="impact__item">
+            <span class="impact__who">Compliance</span>
+            <span class="impact__arrow" aria-hidden="true">↓</span>
+            <span class="impact__what">Mais rastreabilidade</span>
+          </div>
+          <div class="impact__item">
+            <span class="impact__who">Produto</span>
+            <span class="impact__arrow" aria-hidden="true">↓</span>
+            <span class="impact__what">Base preparada para evoluir</span>
+          </div>
+          <div class="impact__item">
+            <span class="impact__who">Negócio</span>
+            <span class="impact__arrow" aria-hidden="true">↓</span>
+            <span class="impact__what">Escalabilidade</span>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">
+        Quero deixar explícito: o impacto não foi só para o usuário final do fluxo. Foi transformação organizacional. Cada área saiu diferente.
+      </aside>
+    </section>
+
+    <!-- 23 · Frente 2 · Experiência de Cadastro -->
+    <section class="slide slide--bleed" data-slide="23">
+      <div class="bleed bleed--center bleed--white">
+        <img
+          class="bleed__img"
+          src="assets/frente2.png"
+          alt="Frente 2 — Experiência de Cadastro"
+        />
+      </div>
+      <aside class="notes">
+        Frente 2: Experiência de Cadastro. Micro jornadas e validações — o parceiro avança sem trocar de contexto.
+      </aside>
+    </section>
+
+    <!-- 24 · Frente 1 · Coleta de Dados -->
+    <section class="slide slide--bleed" data-slide="24">
+      <div class="bleed bleed--center bleed--white">
+        <img
+          class="bleed__img"
+          src="assets/frente1.jpg"
+          alt="Frente 1 — Coleta de Dados"
+        />
+      </div>
+      <aside class="notes">
+        Frente 1: Coleta de Dados. Autenticação e entrada — o ponto de partida do parceiro no ecossistema.
+      </aside>
+    </section>
+
+    <!-- 25 · Contribuição -->
+    <section class="slide" data-slide="25">
+      <div class="frame">
+        <h2 class="title">Como contribuí para essa transformação</h2>
+        <ol class="contrib">
+          <li class="contrib__item">
+            <span class="contrib__n">01</span>
+            <span class="contrib__t">Estruturei a investigação</span>
+          </li>
+          <li class="contrib__item">
+            <span class="contrib__n">02</span>
+            <span class="contrib__t">Facilitei o alinhamento</span>
+          </li>
+          <li class="contrib__item">
+            <span class="contrib__n">03</span>
+            <span class="contrib__t">Transformei conhecimento distribuído em arquitetura</span>
+          </li>
+          <li class="contrib__item">
+            <span class="contrib__n">04</span>
+            <span class="contrib__t">Conectei Produto, Tecnologia, Compliance e Operações</span>
+          </li>
+          <li class="contrib__item">
+            <span class="contrib__n">05</span>
+            <span class="contrib__t">Conduzi a evolução da experiência</span>
+          </li>
+        </ol>
+      </div>
+      <aside class="notes">
+        Meu papel não foi “desenhar telas”. Foi liderar a costura: tirar o conhecimento da cabeça das pessoas, transformar em arquitetura executável e manter o ritmo entre áreas que normalmente não falam o mesmo idioma.
+      </aside>
+    </section>
+
+    <!-- 26 · Obrigado -->
+    <section class="slide slide--blank" data-slide="26">
+      <div class="frame frame--thanks">
+        <div class="thanks-copy">
+          <h2 class="display display--thanks">Obrigado</h2>
+          <p class="thanks-name">Eduardo Damasceno</p>
+        </div>
+        <div class="thanks-qr">
+          <img src="assets/qrcode.svg" alt="QR Code LinkedIn" width="180" height="180" />
+          <span>LinkedIn</span>
+        </div>
+      </div>
+      <aside class="notes">
+        Fecha com calma. Deixa o QR disponível se quiserem continuar a conversa.
+      </aside>
+    </section>
+
+  </main>
+
+  <div class="presenter" id="presenter" hidden>
+    <div class="presenter__head">
+      <strong>Notas</strong>
+      <button type="button" id="close-notes" aria-label="Fechar">✕</button>
+    </div>
+    <p class="presenter__notes" id="presenter-notes"></p>
+    <p class="presenter__next"><span>Próximo</span> <em id="presenter-next"></em></p>
+  </div>
+
+  <script src="js/deck.js"></script>
+</body>
+</html>
