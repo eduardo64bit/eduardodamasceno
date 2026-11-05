@@ -1,4 +1,4 @@
-import type { ResumeData } from '@/lib/types'
+import type { Education, ResumeData } from '@/lib/types'
 import { DarkModeToggle } from './DarkModeToggle'
 
 interface Props {
@@ -54,40 +54,42 @@ export function CVTemplate({ data, isPrint = false }: Props) {
         profile.location) && (
         <section className="mb-10">
           <SectionTitle>Contato</SectionTitle>
-          <div className="space-y-2">
-            {profile.location && (
-              <p className="text-sm text-gray-600 dark:text-gray-300">{profile.location}</p>
-            )}
-            {profile.email && (
-              <a href={`mailto:${profile.email}`} className="contact-link block">
-                {profile.email}
-              </a>
-            )}
-            {profile.phone && (
-              <p className="text-sm text-gray-600 dark:text-gray-300">{profile.phone}</p>
-            )}
-            {profile.linkedin && (
-              <a
-                href={profile.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="contact-link flex items-center gap-1 w-fit"
-              >
-                <span className="font-medium hover:underline">LinkedIn</span>
-                <span className="text-blue-600 dark:text-blue-400 text-sm">→</span>
-              </a>
-            )}
-            {profile.portfolio && (
-              <a
-                href={profile.portfolio}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="contact-link flex items-center gap-1 w-fit"
-              >
-                <span className="font-medium hover:underline">Portfólio</span>
-                <span className="text-blue-600 dark:text-blue-400 text-sm">→</span>
-              </a>
-            )}
+          <div className="grid grid-cols-1 gap-x-10 gap-y-2 sm:grid-cols-2 print:grid-cols-2">
+            <div className="min-w-0 space-y-2">
+              {profile.location && (
+                <p className="text-sm text-gray-600 dark:text-gray-300">{profile.location}</p>
+              )}
+              {profile.email && (
+                <a href={`mailto:${profile.email}`} className="contact-link block break-words underline">
+                  {profile.email}
+                </a>
+              )}
+              {profile.phone && (
+                <p className="text-sm text-gray-600 dark:text-gray-300">{profile.phone}</p>
+              )}
+            </div>
+            <div className="min-w-0 space-y-2">
+              {profile.linkedin && (
+                <a
+                  href={profile.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="contact-link block break-all underline print:text-black"
+                >
+                  {profile.linkedin}
+                </a>
+              )}
+              {profile.portfolio && (
+                <a
+                  href={profile.portfolio}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="contact-link block break-all underline print:text-black"
+                >
+                  {profile.portfolio}
+                </a>
+              )}
+            </div>
           </div>
         </section>
       )}
@@ -105,18 +107,6 @@ export function CVTemplate({ data, isPrint = false }: Props) {
           </div>
         </section>
       )}
-
-      {/* ── Skills ───────────────────────────────────────────────────── */}
-      {skills.map((group) => (
-        <section key={group.id} className="mb-10">
-          <SectionTitle>{group.category}</SectionTitle>
-          <ul className="flex flex-wrap gap-2 p-0 list-none">
-            {group.items.map((item, i) => (
-              <li key={i} className="pill">{item}</li>
-            ))}
-          </ul>
-        </section>
-      ))}
 
       {/* ── Experiência ──────────────────────────────────────────────── */}
       {experiences.length > 0 && (
@@ -156,23 +146,25 @@ export function CVTemplate({ data, isPrint = false }: Props) {
         </section>
       )}
 
-      {/* ── Educação ─────────────────────────────────────────────────── */}
-      {education.length > 0 && (
-        <section className="mb-10">
-          <SectionTitle>Educação</SectionTitle>
-          <ul className="list-disc sm:pl-5 pl-4 space-y-1">
-            {education.map((edu) => (
-              <li key={edu.id} className="text-sm text-gray-700 dark:text-gray-300">
-                {edu.title}
-                {edu.institution && ` — ${edu.institution}`}
-                {edu.description && (
-                  <span className="text-gray-500 dark:text-gray-400"> · {edu.description}</span>
-                )}
-              </li>
+      {skills.map((group) => (
+        <section key={group.id} className="mb-10">
+          <SectionTitle>{group.category}</SectionTitle>
+          <ul className="flex flex-wrap gap-2 p-0 list-none">
+            {group.items.map((item, i) => (
+              <li key={i} className="pill">{item}</li>
             ))}
           </ul>
         </section>
-      )}
+      ))}
+
+      <EducationBlock
+        title="Educação"
+        items={education.filter((edu) => edu.section !== 'complementary')}
+      />
+      <EducationBlock
+        title="Formação complementar"
+        items={education.filter((edu) => edu.section === 'complementary')}
+      />
 
       {!isPrint && (
         <footer className="text-center py-6 text-xs text-gray-500 dark:text-gray-400">
@@ -180,6 +172,31 @@ export function CVTemplate({ data, isPrint = false }: Props) {
         </footer>
       )}
     </div>
+  )
+}
+
+function EducationBlock({ title, items }: { title: string; items: Education[] }) {
+  if (items.length === 0) return null
+
+  return (
+    <section className="mb-10">
+      <SectionTitle>{title}</SectionTitle>
+      <ul className="list-disc sm:pl-5 pl-4 space-y-1">
+        {items.map((edu) => {
+          const note =
+            edu.description.trim().toLowerCase() === 'formação complementar'
+              ? ''
+              : edu.description
+          return (
+            <li key={edu.id} className="text-sm text-gray-700 dark:text-gray-300">
+              {edu.title}
+              {edu.institution && ` — ${edu.institution}`}
+              {note && <span className="text-gray-500 dark:text-gray-400"> · {note}</span>}
+            </li>
+          )
+        })}
+      </ul>
+    </section>
   )
 }
 

@@ -9,6 +9,7 @@ import type {
   AuthorProjectInput,
   SkillInput,
   EducationInput,
+  EducationSection,
 } from '@/lib/types'
 
 interface Props {
@@ -51,10 +52,11 @@ const defaultAuthorProject = (): AuthorProjectInput => ({
 
 const defaultSkill = (): SkillInput => ({ category: '', items: [] })
 
-const defaultEducation = (): EducationInput => ({
+const defaultEducation = (section: EducationSection): EducationInput => ({
   title: '',
   institution: '',
   description: '',
+  section,
   order_index: 0,
 })
 
@@ -118,6 +120,7 @@ export function ResumeEditor({ id, initial }: Props) {
       title: e.title,
       institution: e.institution,
       description: e.description,
+      section: e.section === 'complementary' ? 'complementary' : 'education',
       order_index: e.order_index,
     })) ?? []
   )
@@ -216,6 +219,9 @@ export function ResumeEditor({ id, initial }: Props) {
             placeholder="https://seu-portfolio.com"
           />
         </Field>
+      </Section>
+
+      <Section title="Resumo">
         <Field label="Resumo profissional">
           <Textarea
             value={profile.summary}
@@ -426,49 +432,19 @@ export function ResumeEditor({ id, initial }: Props) {
         ))}
       </Section>
 
-      {/* ── Education ────────────────────────────────────────────────────── */}
-      <Section
+      <EducationEditor
         title="Educação"
-        onAdd={() => setEducation((prev) => [...prev, defaultEducation()])}
-        addLabel="+ Adicionar formação"
-      >
-        {education.map((edu, i) => (
-          <div key={i} className="border border-gray-200 rounded-xl p-4 space-y-3">
-            <div className="flex justify-between items-center mb-1">
-              <span className="text-sm font-medium text-gray-500">Formação {i + 1}</span>
-              <button
-                onClick={() => setEducation((prev) => prev.filter((_, j) => j !== i))}
-                className="text-sm text-red-400 hover:text-red-600 transition"
-              >
-                Remover
-              </button>
-            </div>
-            <div className="grid sm:grid-cols-2 gap-3">
-              <Field label="Título / Curso">
-                <Input
-                  value={edu.title}
-                  onChange={(v) => updateList(setEducation, i, 'title', v)}
-                  placeholder="Bacharelado em Design"
-                />
-              </Field>
-              <Field label="Instituição">
-                <Input
-                  value={edu.institution}
-                  onChange={(v) => updateList(setEducation, i, 'institution', v)}
-                  placeholder="Faculdade Cásper Líbero"
-                />
-              </Field>
-            </div>
-            <Field label="Descrição (opcional)">
-              <Input
-                value={edu.description}
-                onChange={(v) => updateList(setEducation, i, 'description', v)}
-                placeholder=""
-              />
-            </Field>
-          </div>
-        ))}
-      </Section>
+        section="education"
+        items={education}
+        setItems={setEducation}
+      />
+
+      <EducationEditor
+        title="Formação complementar"
+        section="complementary"
+        items={education}
+        setItems={setEducation}
+      />
 
       {/* ── Save bar ─────────────────────────────────────────────────────── */}
       <div className="sticky bottom-0 bg-white border-t border-gray-200 px-4 py-3 flex items-center justify-between gap-4 -mx-4 sm:-mx-6 lg:-mx-10">
@@ -504,6 +480,67 @@ function updateList<T>(
 }
 
 // ── Small UI primitives ────────────────────────────────────────────────────────
+
+function EducationEditor({
+  title,
+  section,
+  items,
+  setItems,
+}: {
+  title: string
+  section: EducationSection
+  items: EducationInput[]
+  setItems: React.Dispatch<React.SetStateAction<EducationInput[]>>
+}) {
+  const indexed = items
+    .map((edu, index) => ({ edu, index }))
+    .filter(({ edu }) => edu.section === section)
+
+  return (
+    <Section
+      title={title}
+      onAdd={() => setItems((prev) => [...prev, defaultEducation(section)])}
+      addLabel="+ Adicionar formação"
+    >
+      {indexed.map(({ edu, index }, position) => (
+        <div key={index} className="border border-gray-200 rounded-xl p-4 space-y-3">
+          <div className="flex justify-between items-center mb-1">
+            <span className="text-sm font-medium text-gray-500">Formação {position + 1}</span>
+            <button
+              onClick={() => setItems((prev) => prev.filter((_, j) => j !== index))}
+              className="text-sm text-red-400 hover:text-red-600 transition"
+            >
+              Remover
+            </button>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-3">
+            <Field label="Título / Curso">
+              <Input
+                value={edu.title}
+                onChange={(v) => updateList(setItems, index, 'title', v)}
+                placeholder="Bacharelado em Design"
+              />
+            </Field>
+            <Field label="Instituição">
+              <Input
+                value={edu.institution}
+                onChange={(v) => updateList(setItems, index, 'institution', v)}
+                placeholder="Faculdade Cásper Líbero"
+              />
+            </Field>
+          </div>
+          <Field label="Descrição (opcional)">
+            <Input
+              value={edu.description}
+              onChange={(v) => updateList(setItems, index, 'description', v)}
+              placeholder=""
+            />
+          </Field>
+        </div>
+      ))}
+    </Section>
+  )
+}
 
 function Section({
   title,

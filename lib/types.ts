@@ -40,12 +40,16 @@ export interface Skill {
   items: string[]
 }
 
+export type EducationSection = 'education' | 'complementary'
+
 export interface Education {
   id: string
   resume_id: string
   title: string
   institution: string
   description: string
+  /** `education` = Educação; `complementary` = Formação complementar. */
+  section: EducationSection
   order_index: number
 }
 

@@ -70,6 +70,7 @@ CREATE TABLE IF NOT EXISTS education (
   title       TEXT NOT NULL DEFAULT '',
   institution TEXT NOT NULL DEFAULT '',
   description TEXT NOT NULL DEFAULT '',
+  section     TEXT NOT NULL DEFAULT 'education',
   order_index INTEGER NOT NULL DEFAULT 0
 );
 

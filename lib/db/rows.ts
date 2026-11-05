@@ -34,5 +34,8 @@ export function mapProfile(row: Profile): Profile {
 }
 
 export function mapEducation(row: Education): Education {
-  return row
+  return {
+    ...row,
+    section: row.section === 'complementary' ? 'complementary' : 'education',
+  }
 }

@@ -80,8 +80,8 @@ export function seedDatabase(database: Database.Database) {
   }
 
   const insertEdu = database.prepare(
-    `INSERT INTO education (id, resume_id, title, institution, description, order_index)
-     VALUES (?, ?, ?, ?, ?, ?)`
+    `INSERT INTO education (id, resume_id, title, institution, description, section, order_index)
+     VALUES (?, ?, ?, ?, ?, ?, ?)`
   )
   education.forEach((edu, i) => {
     insertEdu.run(
@@ -90,6 +90,7 @@ export function seedDatabase(database: Database.Database) {
       edu.title,
       edu.institution,
       edu.description,
+      edu.section,
       i
     )
   })

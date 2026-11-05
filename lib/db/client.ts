@@ -109,6 +109,11 @@ function initSchema(database: Database.Database) {
     version = 8
   }
 
+  if (version < 9) {
+    ensureEducationSectionColumn(database)
+    database.pragma('user_version = 9')
+  }
+
   ensureChatOwnerPresenceColumn(database)
 }
 
@@ -180,6 +185,21 @@ function ensureChatOwnerPresenceColumn(database: Database.Database) {
     database.exec("UPDATE chat_sessions SET status = 'offline' WHERE status IN ('auto', 'closed')")
     database.exec("UPDATE chat_sessions SET status = 'online' WHERE status = 'live'")
   }
+}
+
+function ensureEducationSectionColumn(database: Database.Database) {
+  const cols = database.prepare('PRAGMA table_info(education)').all() as { name: string }[]
+  if (cols.some((c) => c.name === 'section')) return
+
+  database.exec(
+    `ALTER TABLE education ADD COLUMN section TEXT NOT NULL DEFAULT 'education'`
+  )
+  database.exec(`
+    UPDATE education
+    SET section = 'complementary',
+        description = ''
+    WHERE lower(trim(description)) = 'formação complementar'
+  `)
 }
 
 function ensureProfilePortfolioColumn(database: Database.Database) {

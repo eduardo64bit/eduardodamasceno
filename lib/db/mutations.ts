@@ -109,20 +109,20 @@ export function duplicateResume(id: string, newName: string): string {
     }
 
     const insertEdu = db.prepare(
-      `INSERT INTO education (id, resume_id, title, institution, description, order_index)
-       VALUES (?, ?, ?, ?, ?, ?)`
+      `INSERT INTO education (id, resume_id, title, institution, description, section, order_index)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`
     )
-    for (const e of data.education) {
-      const { id: _id, resume_id: _rid, ...edu } = e
+    orderedEducation(data.education).forEach((edu, i) => {
       insertEdu.run(
         randomUUID(),
         newId,
         edu.title,
         edu.institution,
         edu.description,
-        edu.order_index
+        educationSection(edu.section),
+        i
       )
-    }
+    })
   })
 
   tx()
@@ -257,17 +257,29 @@ function upsertRelations(
 
   db.prepare('DELETE FROM education WHERE resume_id = ?').run(resumeId)
   const insertEdu = db.prepare(
-    `INSERT INTO education (id, resume_id, title, institution, description, order_index)
-     VALUES (?, ?, ?, ?, ?, ?)`
+    `INSERT INTO education (id, resume_id, title, institution, description, section, order_index)
+     VALUES (?, ?, ?, ?, ?, ?, ?)`
   )
-  payload.education.forEach((e, i) => {
+  orderedEducation(payload.education).forEach((e, i) => {
     insertEdu.run(
       randomUUID(),
       resumeId,
       e.title,
       e.institution,
       e.description,
+      educationSection(e.section),
       i
     )
   })
+}
+
+function educationSection(section: string | undefined): 'education' | 'complementary' {
+  return section === 'complementary' ? 'complementary' : 'education'
+}
+
+function orderedEducation<T extends { section?: string }>(items: T[]): T[] {
+  return [
+    ...items.filter((item) => educationSection(item.section) === 'education'),
+    ...items.filter((item) => educationSection(item.section) === 'complementary'),
+  ]
 }
