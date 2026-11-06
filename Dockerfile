@@ -29,6 +29,8 @@ COPY --from=builder /app/lib/db/migrations ./lib/db/migrations
 COPY --from=builder /app/scripts/set-case-segments.mjs ./scripts/set-case-segments.mjs
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# pdfkit loads these font modules by a private path Next's file tracer drops.
+COPY --from=builder /app/node_modules/pdfkit/js/standard-fonts ./node_modules/pdfkit/js/standard-fonts
 
 RUN mkdir -p /app/data && chown nextjs:nodejs /app/data
 
