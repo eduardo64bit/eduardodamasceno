@@ -1,5 +1,6 @@
 import { getActiveResume } from '@/lib/db'
 import { CVTemplate } from '@/components/CVTemplate'
+import { CVNav } from '@/components/cv/CVNav'
 
 export async function CVPageContent() {
   let data = null
@@ -13,7 +14,8 @@ export async function CVPageContent() {
   if (!data) {
     return (
       <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-3xl mx-auto my-20 px-6 text-center text-gray-400">
+        <CVNav />
+        <div className="sheet my-20 text-center text-gray-400">
           <p className="text-lg font-semibold">Eduardo Damasceno</p>
           <p className="text-sm mt-2">Currículo em breve.</p>
         </div>
@@ -23,6 +25,7 @@ export async function CVPageContent() {
 
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <CVNav />
       <CVTemplate data={data} />
     </main>
   )

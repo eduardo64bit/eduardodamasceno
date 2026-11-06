@@ -1,6 +1,4 @@
 import Link from 'next/link'
-import { EditorHeader } from '@/components/editor/EditorHeader'
-import { logoutAction } from './actions'
 
 const sections = [
   {
@@ -14,7 +12,7 @@ const sections = [
     description: 'Listar e editar projetos do portfólio.',
   },
   {
-    href: '/status',
+    href: '/editor/status',
     title: 'Status',
     description: 'Painel operacional — banco, env, Telegram.',
   },
@@ -22,28 +20,9 @@ const sections = [
 
 export default function EditorHubPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <EditorHeader
-        title="Painel"
-        trailing={
-          <>
-            <Link href="/" className="text-sm text-gray-500 hover:text-gray-800 transition">
-              Ver site
-            </Link>
-            <form action={logoutAction}>
-              <button
-                type="submit"
-                className="text-sm text-gray-500 hover:text-gray-800 transition"
-              >
-                Sair
-              </button>
-            </form>
-          </>
-        }
-      />
-
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
-        <h1 className="text-xl font-semibold text-gray-900 mb-2">O que editar</h1>
+    <div className="min-h-screen">
+      <main className="sheet py-8">
+        <h1 className="mb-2 text-xl font-semibold text-gray-900 dark:text-gray-50">Editor</h1>
         <p className="text-sm text-gray-500 mb-8">
           Conteúdo editável do site — currículo, cases e operação.
         </p>
@@ -53,9 +32,9 @@ export default function EditorHubPage() {
             <Link
               key={section.href}
               href={section.href}
-              className="bg-white border border-gray-200 rounded-xl p-5 hover:border-gray-300 hover:shadow-sm transition group"
+              className="rounded-xl border border-gray-200 bg-white p-5 transition hover:border-gray-300 hover:shadow-sm group dark:border-gray-700 dark:bg-gray-800 dark:hover:border-gray-600"
             >
-              <h2 className="font-semibold text-gray-900 group-hover:text-blue-700 transition">
+              <h2 className="font-semibold text-gray-900 transition group-hover:text-blue-700 dark:text-gray-50 dark:group-hover:text-blue-300">
                 {section.title}
               </h2>
               <p className="text-sm text-gray-500 mt-2 leading-relaxed">{section.description}</p>

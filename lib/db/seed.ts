@@ -15,14 +15,15 @@ export function seedDatabase(database: Database.Database) {
 
   database
     .prepare(
-      `INSERT INTO profile (id, resume_id, name, title, location, email, phone, linkedin, portfolio, summary)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+      `INSERT INTO profile (id, resume_id, name, title, descriptor, location, email, phone, linkedin, portfolio, summary)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
     .run(
       randomUUID(),
       BASE_RESUME_ID,
       profile.name,
       profile.title,
+      profile.descriptor,
       profile.location,
       profile.email,
       profile.phone,

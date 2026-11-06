@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getResumeById } from '@/lib/db'
-import { EditorHeader } from '@/components/editor/EditorHeader'
 import { ResumeEditor } from '@/components/editor/editor/ResumeEditor'
 
 export const dynamic = 'force-dynamic'
@@ -20,26 +19,26 @@ export default async function CvEditPage({ params }: Props) {
   const title = data ? `Editando: ${data.resume.name}` : 'Novo currículo'
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900">
-      <EditorHeader
-        title={title}
-        backHref="/editor/cv"
-        backLabel="Currículos"
-        trailing={
-          data ? (
+    <div className="min-h-screen">
+      <main className="sheet py-8">
+        <div className="mb-8 flex items-start justify-between gap-4">
+          <div>
+            <Link href="/editor/cv" className="text-sm text-gray-500 transition hover:text-gray-800">
+              Currículos
+            </Link>
+            <h1 className="mt-2 text-xl font-semibold text-gray-900 dark:text-gray-50">{title}</h1>
+          </div>
+          {data ? (
             <a
               href={`/editor/cv/${id}/print`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-gray-500 hover:text-gray-800 transition"
+              className="text-sm text-gray-500 transition hover:text-gray-800"
             >
               Pré-visualizar PDF
             </a>
-          ) : undefined
-        }
-      />
-
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-10 py-8">
+          ) : null}
+        </div>
         <ResumeEditor id={id} initial={data} />
       </main>
     </div>

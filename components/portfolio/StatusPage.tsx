@@ -7,9 +7,9 @@ const statusLabel: Record<ServiceStatus, string> = {
 }
 
 const statusClass: Record<ServiceStatus, string> = {
-  ok: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30',
-  warn: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
-  error: 'bg-red-500/15 text-red-300 border-red-500/30',
+  ok: 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/15 dark:text-emerald-300',
+  warn: 'border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-500/30 dark:bg-amber-500/15 dark:text-amber-300',
+  error: 'border-red-200 bg-red-50 text-red-700 dark:border-red-500/30 dark:bg-red-500/15 dark:text-red-300',
 }
 
 interface Props {
@@ -23,43 +23,40 @@ export function StatusPage({ status }: Props) {
   })
 
   return (
-    <main className="mx-auto w-full max-w-[48rem] px-6 py-16 sm:px-10 sm:py-24">
-      <header className="mb-12">
-        <p className="text-sm uppercase tracking-[0.2em] text-[var(--pf-muted-3)]">Operações</p>
-        <h1 className="mt-3 text-3xl font-semibold text-[var(--pf-text)] sm:text-4xl">Status</h1>
-        <p className="mt-4 text-base text-[var(--pf-muted-2)] leading-relaxed">
-          Visão rápida do que está rodando em{' '}
-          <span className="text-[var(--pf-muted)]">{status.hostname}</span>.
+    <main className="sheet py-5">
+      <header className="mb-3 flex items-baseline justify-between gap-3">
+        <h1 className="text-lg font-semibold text-gray-900 dark:text-gray-50">Status</h1>
+        <p className="text-xs text-gray-400 dark:text-gray-500">
+          {status.hostname} · {generated}
         </p>
-        <p className="mt-2 text-sm text-[var(--pf-muted-3)]">Atualizado em {generated}</p>
       </header>
 
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-2.5">
         {status.groups.map((group) => (
           <section
             key={group.id}
-            className="rounded-2xl border border-[var(--pf-border)] bg-[var(--pf-surface)] overflow-hidden"
+            className="overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800"
           >
-            <h2 className="px-5 py-4 text-sm font-medium uppercase tracking-wide text-[var(--pf-muted)] border-b border-[var(--pf-border)]">
+            <h2 className="border-b border-gray-200 px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-gray-500 dark:border-gray-700 dark:text-gray-400">
               {group.title}
             </h2>
-            <ul className="divide-y divide-[var(--pf-border)]">
+            <ul>
               {group.checks.map((check) => (
                 <li
                   key={check.id}
-                  className="flex flex-col gap-2 px-5 py-4 sm:flex-row sm:items-center sm:justify-between"
+                  className="flex items-center gap-3 border-t border-gray-100 px-3 py-1.5 first:border-t-0 dark:border-gray-700"
                 >
-                  <span className="text-[var(--pf-text)]">{check.label}</span>
-                  <div className="flex flex-col gap-2 sm:items-end">
-                    <span
-                      className={`inline-flex w-fit rounded-full border px-2.5 py-0.5 text-xs font-medium ${statusClass[check.status]}`}
-                    >
-                      {statusLabel[check.status]}
-                    </span>
-                    <span className="text-sm text-[var(--pf-muted-2)] sm:text-right max-w-md break-words">
-                      {check.detail}
-                    </span>
-                  </div>
+                  <span className="shrink-0 text-sm text-gray-900 dark:text-gray-100">
+                    {check.label}
+                  </span>
+                  <span className="min-w-0 flex-1 truncate text-xs text-gray-500 dark:text-gray-400">
+                    {check.detail}
+                  </span>
+                  <span
+                    className={`inline-flex shrink-0 rounded-full border px-2 py-px text-[11px] font-medium leading-4 ${statusClass[check.status]}`}
+                  >
+                    {statusLabel[check.status]}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -67,7 +64,7 @@ export function StatusPage({ status }: Props) {
         ))}
       </div>
 
-      <p className="mt-10 text-sm text-[var(--pf-muted-3)]">
+      <p className="mt-3 text-xs text-gray-400 dark:text-gray-500">
         Recarregue a página para atualizar. Nenhum segredo é exibido aqui.
       </p>
     </main>

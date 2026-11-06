@@ -42,7 +42,10 @@
     @apply text-sm text-gray-800 dark:text-gray-200 transition-all duration-200;
   }
 
-  /* Editor admin: campos sempre legíveis (html pode ter .dark do site público) */
+  .sheet {
+    @apply mx-auto w-full max-w-[1080px] px-4 sm:px-6 lg:px-8;
+  }
+
   .editor-field {
     color-scheme: light;
     color: #111827;
@@ -50,13 +53,24 @@
     caret-color: #111827;
   }
 
-  .editor-field::placeholder {
+  .dark .editor-field {
+    color-scheme: dark;
+    color: #f3f4f6;
+    -webkit-text-fill-color: #f3f4f6;
+    caret-color: #f3f4f6;
+    background-color: #111827;
+    border-color: #4b5563;
+  }
+
+  .editor-field::placeholder,
+  .dark .editor-field::placeholder {
     color: #9ca3af;
     -webkit-text-fill-color: #9ca3af;
     opacity: 1;
   }
 
-  .editor-field:disabled {
+  .editor-field:disabled,
+  .dark .editor-field:disabled {
     color: #9ca3af;
     -webkit-text-fill-color: #9ca3af;
   }
@@ -534,6 +548,23 @@
       opacity: 0.65;
     }
   }
+}
+
+/* Fora de @layer: a folha do Google também define .material-symbols-outlined
+   (font-size: 24px) sem camada, e isso ganhava de qualquer regra em @layer. */
+span.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: 500;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 20;
 }
 
 /* ── Print styles ─────────────────────────────────────────────────────────── */

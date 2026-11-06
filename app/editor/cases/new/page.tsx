@@ -1,15 +1,15 @@
 import Link from 'next/link'
 import { CaseEditor } from '@/components/editor/CaseEditor'
-import { EditorHeader } from '@/components/editor/EditorHeader'
-
 export const dynamic = 'force-dynamic'
 
 export default function NewCasePage() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <EditorHeader title="Novo case" backHref="/editor/cases" backLabel="Cases" />
-
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+    <div className="min-h-screen">
+      <main className="sheet py-8">
+        <Link href="/editor/cases" className="text-sm text-gray-500 transition hover:text-gray-800">
+          Cases
+        </Link>
+        <h1 className="mb-8 mt-2 text-xl font-semibold text-gray-900 dark:text-gray-50">Novo case</h1>
         <CaseEditor slug="new" initial={null} />
       </main>
     </div>

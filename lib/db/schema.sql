@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS profile (
   resume_id   TEXT NOT NULL UNIQUE REFERENCES resumes(id) ON DELETE CASCADE,
   name        TEXT NOT NULL DEFAULT '',
   title       TEXT NOT NULL DEFAULT '',
+  descriptor  TEXT NOT NULL DEFAULT '',
   location    TEXT NOT NULL DEFAULT '',
   email       TEXT NOT NULL DEFAULT '',
   phone       TEXT NOT NULL DEFAULT '',

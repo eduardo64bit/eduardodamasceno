@@ -112,6 +112,12 @@ function initSchema(database: Database.Database) {
   if (version < 9) {
     ensureEducationSectionColumn(database)
     database.pragma('user_version = 9')
+    version = 9
+  }
+
+  if (version < 10) {
+    ensureProfileDescriptorColumn(database)
+    database.pragma('user_version = 10')
   }
 
   ensureChatOwnerPresenceColumn(database)
@@ -200,6 +206,24 @@ function ensureEducationSectionColumn(database: Database.Database) {
         description = ''
     WHERE lower(trim(description)) = 'formação complementar'
   `)
+}
+
+function ensureProfileDescriptorColumn(database: Database.Database) {
+  const cols = database.prepare('PRAGMA table_info(profile)').all() as { name: string }[]
+  if (cols.some((c) => c.name === 'descriptor')) return
+
+  database.exec(`ALTER TABLE profile ADD COLUMN descriptor TEXT NOT NULL DEFAULT ''`)
+
+  const rows = database
+    .prepare('SELECT id, title FROM profile')
+    .all() as { id: string; title: string }[]
+  const update = database.prepare('UPDATE profile SET title = ?, descriptor = ? WHERE id = ?')
+
+  for (const row of rows) {
+    const parts = row.title.split('|').map((part) => part.trim()).filter(Boolean)
+    if (parts.length < 2) continue
+    update.run(parts[0], parts.slice(1).join(' | '), row.id)
+  }
 }
 
 function ensureProfilePortfolioColumn(database: Database.Database) {

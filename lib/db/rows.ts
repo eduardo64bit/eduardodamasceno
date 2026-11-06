@@ -30,7 +30,10 @@ export function mapSkill(row: SkillRow): Skill {
 }
 
 export function mapProfile(row: Profile): Profile {
-  return row
+  return {
+    ...row,
+    descriptor: row.descriptor ?? '',
+  }
 }
 
 export function mapEducation(row: Education): Education {

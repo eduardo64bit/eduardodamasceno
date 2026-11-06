@@ -20,6 +20,5 @@ export function portfolioLoginBackHref(from?: string): string {
   if (from === '/portfolio' || from?.startsWith('/portfolio')) {
     return PORTFOLIO_PROJECTS_HREF
   }
-  if (from === '/cv' || from?.startsWith('/cv')) return '/'
   return '/'
 }

@@ -189,7 +189,7 @@ function collectIntegrationChecks(): StatusCheck[] {
     },
     {
       id: 'portfolio-auth',
-      label: 'Senha portfólio (/portfolio, /case, /cv)',
+      label: 'Senha portfólio (/portfolio, /case)',
       status: process.env.PORTFOLIO_PASSWORD ? 'ok' : 'warn',
       detail: process.env.PORTFOLIO_PASSWORD ? 'Configurada' : 'Usando padrão do .env',
     },

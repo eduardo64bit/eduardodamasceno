@@ -22,6 +22,7 @@ interface Props {
 const defaultProfile: ProfileInput = {
   name: '',
   title: '',
+  descriptor: '',
   location: '',
   email: '',
   phone: '',
@@ -77,6 +78,7 @@ export function ResumeEditor({ id, initial }: Props) {
       ? {
           name: initial.profile.name,
           title: initial.profile.title,
+          descriptor: initial.profile.descriptor ?? '',
           location: initial.profile.location,
           email: initial.profile.email,
           phone: initial.profile.phone,
@@ -147,7 +149,7 @@ export function ResumeEditor({ id, initial }: Props) {
   }
 
   return (
-    <div className="space-y-8 max-w-3xl mx-auto">
+    <div className="space-y-8">
       {/* ── Resume Info ──────────────────────────────────────────────────── */}
       <Section title="Informações do Currículo">
         <Field label="Nome do currículo">
@@ -180,9 +182,21 @@ export function ResumeEditor({ id, initial }: Props) {
             <Input
               value={profile.title}
               onChange={(v) => setProfile((p) => ({ ...p, title: v }))}
-              placeholder="Designer de Produto"
+              placeholder="Senior Product Designer"
             />
           </Field>
+        </div>
+        <Field label="Descritivo">
+          <Input
+            value={profile.descriptor}
+            onChange={(v) => setProfile((p) => ({ ...p, descriptor: v }))}
+            placeholder="UX Strategy | UX/UI Design | Service Design"
+          />
+          <p className="mt-1 text-xs text-gray-400">
+            Separe com | para virar tags abaixo do título.
+          </p>
+        </Field>
+        <div className="grid sm:grid-cols-2 gap-4">
           <Field label="Localização">
             <Input
               value={profile.location}
@@ -239,7 +253,7 @@ export function ResumeEditor({ id, initial }: Props) {
         addLabel="+ Adicionar experiência"
       >
         {experiences.map((exp, i) => (
-          <div key={i} className="border border-gray-200 rounded-xl p-4 space-y-3">
+          <div key={i} className="rounded-xl border border-gray-200 dark:border-gray-700 p-4 space-y-3">
             <div className="flex justify-between items-center mb-2">
               <span className="text-sm font-medium text-gray-500">Experiência {i + 1}</span>
               <button
@@ -318,7 +332,7 @@ export function ResumeEditor({ id, initial }: Props) {
         addLabel="+ Adicionar projeto"
       >
         {authorProjects.map((project, i) => (
-          <div key={i} className="border border-gray-200 rounded-xl p-4 space-y-3">
+          <div key={i} className="rounded-xl border border-gray-200 dark:border-gray-700 p-4 space-y-3">
             <div className="flex justify-between items-center mb-2">
               <span className="text-sm font-medium text-gray-500">Projeto {i + 1}</span>
               <button
@@ -397,7 +411,7 @@ export function ResumeEditor({ id, initial }: Props) {
         addLabel="+ Adicionar grupo"
       >
         {skills.map((skill, i) => (
-          <div key={i} className="border border-gray-200 rounded-xl p-4 space-y-3">
+          <div key={i} className="rounded-xl border border-gray-200 dark:border-gray-700 p-4 space-y-3">
             <div className="flex justify-between items-center mb-1">
               <span className="text-sm font-medium text-gray-500">Grupo {i + 1}</span>
               <button
@@ -447,7 +461,7 @@ export function ResumeEditor({ id, initial }: Props) {
       />
 
       {/* ── Save bar ─────────────────────────────────────────────────────── */}
-      <div className="sticky bottom-0 bg-white border-t border-gray-200 px-4 py-3 flex items-center justify-between gap-4 -mx-4 sm:-mx-6 lg:-mx-10">
+      <div className="sticky bottom-0 -mx-4 flex items-center justify-between gap-4 border-t border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-gray-900 sm:-mx-6 lg:-mx-10">
         {error && <p className="text-sm text-red-500">{error}</p>}
         {saved && <p className="text-sm text-green-600">Salvo com sucesso!</p>}
         {!error && !saved && <span />}
@@ -466,7 +480,7 @@ export function ResumeEditor({ id, initial }: Props) {
 
 // Campos com fundo claro: cores explícitas para não herdar text-gray-100 do dark mode no body.
 const fieldClass =
-  'editor-field w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition disabled:bg-gray-50 disabled:text-gray-400'
+  'editor-field w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition disabled:bg-gray-50 disabled:text-gray-400 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 dark:disabled:bg-gray-800 dark:disabled:text-gray-500'
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
@@ -503,7 +517,7 @@ function EducationEditor({
       addLabel="+ Adicionar formação"
     >
       {indexed.map(({ edu, index }, position) => (
-        <div key={index} className="border border-gray-200 rounded-xl p-4 space-y-3">
+        <div key={index} className="rounded-xl border border-gray-200 dark:border-gray-700 p-4 space-y-3">
           <div className="flex justify-between items-center mb-1">
             <span className="text-sm font-medium text-gray-500">Formação {position + 1}</span>
             <button
@@ -556,7 +570,7 @@ function Section({
   return (
     <section>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-base font-semibold text-gray-800">{title}</h2>
+        <h2 className="text-base font-semibold text-gray-800 dark:text-gray-100">{title}</h2>
         {onAdd && (
           <button
             onClick={onAdd}

@@ -46,13 +46,14 @@ export function duplicateResume(id: string, newName: string): string {
     if (data.profile) {
       const { id: _pid, resume_id: _rid, ...profile } = data.profile
       db.prepare(
-        `INSERT INTO profile (id, resume_id, name, title, location, email, phone, linkedin, portfolio, summary)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+        `INSERT INTO profile (id, resume_id, name, title, descriptor, location, email, phone, linkedin, portfolio, summary)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
       ).run(
         randomUUID(),
         newId,
         profile.name,
         profile.title,
+        profile.descriptor,
         profile.location,
         profile.email,
         profile.phone,
@@ -185,11 +186,12 @@ function upsertRelations(
 
   const profileId = existing?.id ?? randomUUID()
   db.prepare(
-    `INSERT INTO profile (id, resume_id, name, title, location, email, phone, linkedin, portfolio, summary)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `INSERT INTO profile (id, resume_id, name, title, descriptor, location, email, phone, linkedin, portfolio, summary)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
      ON CONFLICT(resume_id) DO UPDATE SET
        name = excluded.name,
        title = excluded.title,
+       descriptor = excluded.descriptor,
        location = excluded.location,
        email = excluded.email,
        phone = excluded.phone,
@@ -201,6 +203,7 @@ function upsertRelations(
     resumeId,
     payload.profile.name,
     payload.profile.title,
+    payload.profile.descriptor,
     payload.profile.location,
     payload.profile.email,
     payload.profile.phone,

@@ -13,6 +13,8 @@ export interface Profile {
   resume_id: string
   name: string
   title: string
+  /** Pipe-separated tags shown under the professional title. */
+  descriptor: string
   location: string
   email: string
   phone: string

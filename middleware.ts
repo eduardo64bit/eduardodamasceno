@@ -90,9 +90,7 @@ export async function middleware(request: NextRequest) {
   if (
     pathname.startsWith('/portfolio') ||
     pathname === '/case' ||
-    pathname.startsWith('/case/') ||
-    pathname === '/cv' ||
-    pathname.startsWith('/cv/')
+    pathname.startsWith('/case/')
   ) {
     return requireAuth(request, {
       password: process.env.PORTFOLIO_PASSWORD ?? 'portfolio',
@@ -116,8 +114,6 @@ export const config = {
     '/portfolio/:path*',
     '/case',
     '/case/:path*',
-    '/cv',
-    '/cv/:path*',
     '/status',
     '/api/status',
   ],

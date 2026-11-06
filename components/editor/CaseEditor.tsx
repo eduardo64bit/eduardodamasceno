@@ -14,7 +14,7 @@ import type { CaseFull } from '@/lib/domains/cases/types'
 import { CaseMediaEditor, type CaseMediaDraft } from './CaseMediaEditor'
 
 const fieldClass =
-  'editor-field w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition'
+  'editor-field w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100'
 
 interface Props {
   slug: string
@@ -62,7 +62,7 @@ export function CaseEditor({ slug, initial, diskMediaPaths = [] }: Props) {
   return (
     <form action={action} className="space-y-8">
       <section className="space-y-4">
-        <h2 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-900 dark:text-gray-100">
           Metadados
         </h2>
 
@@ -146,7 +146,7 @@ export function CaseEditor({ slug, initial, diskMediaPaths = [] }: Props) {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-900 dark:text-gray-100">
           Segmentos
         </h2>
         <div className="flex flex-wrap gap-3">
@@ -166,7 +166,7 @@ export function CaseEditor({ slug, initial, diskMediaPaths = [] }: Props) {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-900 dark:text-gray-100">
           Mídia
         </h2>
 
@@ -203,7 +203,7 @@ export function CaseEditor({ slug, initial, diskMediaPaths = [] }: Props) {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-900 dark:text-gray-100">
           Conteúdo
         </h2>
         <div>

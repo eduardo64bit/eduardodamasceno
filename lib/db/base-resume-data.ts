@@ -9,8 +9,8 @@ export const baseResumePayload: SaveResumePayload = {
   },
   profile: {
     name: 'Eduardo Damasceno',
-    title:
-      'Senior Product Designer | Plataformas Financeiras | Produtos B2B | Sistemas Complexos',
+    title: 'Senior Product Designer',
+    descriptor: 'Plataformas Financeiras | Produtos B2B | Sistemas Complexos',
     location: 'Vila Mariana, São Paulo, SP',
     email: 'eduardo.damasceno@live.com',
     phone: '+55 11 99369-9330',

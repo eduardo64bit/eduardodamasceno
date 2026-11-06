@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { getAllCasesPublic } from '@/lib/domains/cases/queries'
-import { EditorHeader } from '@/components/editor/EditorHeader'
 
 export const dynamic = 'force-dynamic'
 
@@ -8,21 +7,13 @@ export default function CasesAdminPage() {
   const cases = getAllCasesPublic()
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <EditorHeader
-        title="Cases"
-        backHref="/editor"
-        backLabel="Editor"
-        trailing={
-          <Link href="/" className="text-sm text-gray-500 hover:text-gray-800 transition">
-            Ver site
-          </Link>
-        }
-      />
-
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-xl font-semibold text-gray-900">Cases ({cases.length})</h1>
+    <div className="min-h-screen">
+      <main className="sheet py-8">
+        <Link href="/editor" className="text-sm text-gray-500 transition hover:text-gray-800">
+          Editor
+        </Link>
+        <div className="mt-2 mb-6 flex items-center justify-between gap-4">
+          <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-50">Cases ({cases.length})</h1>
           <Link
             href="/editor/cases/new"
             className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition"
@@ -46,10 +37,10 @@ export default function CasesAdminPage() {
             {cases.map((c) => (
               <li
                 key={c.id}
-                className="bg-white border border-gray-200 rounded-xl px-4 py-3 flex items-center justify-between gap-4"
+                className="flex items-center justify-between gap-4 rounded-xl border border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-gray-800"
               >
                 <div className="min-w-0">
-                  <p className="font-medium text-gray-900 truncate">{c.title}</p>
+                  <p className="truncate font-medium text-gray-900 dark:text-gray-50">{c.title}</p>
                   <p className="text-xs text-gray-400">{c.slug}</p>
                   {c.segments.length > 0 ? (
                     <p className="mt-1 text-xs text-gray-500">{c.segments.join(', ')}</p>

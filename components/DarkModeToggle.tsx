@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { MaterialIcon } from '@/components/MaterialIcon'
 
 export function DarkModeToggle() {
   const [isDark, setIsDark] = useState(false)
@@ -16,17 +17,18 @@ export function DarkModeToggle() {
     localStorage.setItem('theme', next ? 'dark' : 'light')
   }
 
+  const label = isDark ? 'Mudar para o modo claro' : 'Mudar para o modo escuro'
+
   return (
     <button
+      type="button"
       onClick={toggle}
       aria-pressed={isDark}
-      aria-label="Alternar tema escuro/claro"
-      className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition px-3 py-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+      aria-label={label}
+      title={label}
+      className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-700 transition-colors hover:bg-gray-200 hover:text-gray-950 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-white"
     >
-      <span className="material-icons text-lg leading-none">
-        {isDark ? 'dark_mode' : 'light_mode'}
-      </span>
-      <span>{isDark ? 'Modo escuro' : 'Modo claro'}</span>
+      <MaterialIcon name={isDark ? 'light_mode' : 'dark_mode'} />
     </button>
   )
 }

@@ -46,14 +46,14 @@ export function ResumeCard({ resume }: Props) {
 
   return (
     <div
-      className={`bg-white rounded-xl border ${
-        resume.is_active ? 'border-blue-400 shadow-blue-100 shadow-md' : 'border-gray-200'
-      } p-5 flex flex-col gap-3 transition-shadow`}
+      className={`flex flex-col gap-3 rounded-xl border bg-white p-5 transition-shadow dark:bg-gray-800 ${
+        resume.is_active ? 'border-blue-400 shadow-md shadow-blue-100 dark:shadow-none' : 'border-gray-200 dark:border-gray-700'
+      }`}
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <h2 className="font-semibold text-gray-900 truncate">{resume.name}</h2>
+            <h2 className="truncate font-semibold text-gray-900 dark:text-gray-50">{resume.name}</h2>
             {resume.is_active && (
               <span className="shrink-0 text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-medium">
                 Ativo

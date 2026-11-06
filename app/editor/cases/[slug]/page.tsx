@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation'
 import { listCaseMediaPublicPathsOnDisk } from '@/lib/domains/cases/media-storage'
 import { getCaseFullBySlug } from '@/lib/domains/cases/queries'
 import { CaseEditor } from '@/components/editor/CaseEditor'
-import { EditorHeader } from '@/components/editor/EditorHeader'
 
 export const dynamic = 'force-dynamic'
 
@@ -22,24 +21,24 @@ export default async function EditCasePage({ params }: Props) {
   const diskMediaPaths = listCaseMediaPublicPathsOnDisk(slug)
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <EditorHeader
-        title={data.title}
-        backHref="/editor/cases"
-        backLabel="Cases"
-        trailing={
+    <div className="min-h-screen">
+      <main className="sheet py-8">
+        <div className="mb-8 flex items-start justify-between gap-4">
+          <div>
+            <Link href="/editor/cases" className="text-sm text-gray-500 transition hover:text-gray-800">
+              Cases
+            </Link>
+            <h1 className="mt-2 text-xl font-semibold text-gray-900 dark:text-gray-50">{data.title}</h1>
+          </div>
           <Link
             href={`/portfolio/${slug}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-gray-500 hover:text-gray-800 transition"
+            className="text-sm text-gray-500 transition hover:text-gray-800"
           >
             Preview
           </Link>
-        }
-      />
-
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+        </div>
         <CaseEditor slug={slug} initial={data} diskMediaPaths={diskMediaPaths} />
       </main>
     </div>
