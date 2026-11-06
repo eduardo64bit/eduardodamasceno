@@ -98,7 +98,7 @@ export const tokenGroups: { id: string; label: string; tokens: DesignToken[] }[]
 export const typographyScale = [
   {
     id: 'hero-name',
-    label: 'Hero — nome',
+    label: 'Hero · nome',
     sample: 'Eduardo Damasceno',
     className:
       'hero-name text-[clamp(2.75rem,12vw,7rem)] font-bold uppercase tracking-[-0.04em] leading-[0.92] text-[var(--pf-text)]',
@@ -106,42 +106,42 @@ export const typographyScale = [
   },
   {
     id: 'hero-role',
-    label: 'Hero — cargo',
+    label: 'Hero · cargo',
     sample: 'Designer de Produto',
     className: 'hero-role text-lg sm:text-xl font-light text-[var(--pf-muted-2)]',
     usage: 'HeroSection',
   },
   {
     id: 'section-heading',
-    label: 'Seção — título',
+    label: 'Seção · título',
     sample: 'Experiência em:',
     className: 'text-2xl sm:text-3xl font-medium tracking-tight text-[var(--pf-text)] leading-snug',
     usage: 'PortfolioHome, cases',
   },
   {
     id: 'section-body',
-    label: 'Seção — corpo',
+    label: 'Seção · corpo',
     sample: 'Plataformas financeiras, produtos B2B e sistemas complexos.',
     className: 'text-base sm:text-lg font-light text-[var(--pf-muted-2)] leading-relaxed',
     usage: 'PortfolioHome, about',
   },
   {
     id: 'ui-base',
-    label: 'UI — base',
+    label: 'UI · base',
     sample: 'LinkedIn · Currículo · Privacidade',
     className: 'text-base text-[var(--pf-muted-2)]',
     usage: 'Rodapé, chat launcher',
   },
   {
     id: 'ui-sm',
-    label: 'UI — sm',
+    label: 'UI · sm',
     sample: 'São Paulo, Brasil · © 2026',
     className: 'text-sm text-[var(--pf-muted-3)]',
     usage: 'Rodapé meta, chat, nav',
   },
   {
     id: 'prose',
-    label: 'Prose — case body',
+    label: 'Prose · case body',
     sample: 'Parágrafo longo com font-light e boa leitura em telas largas.',
     className: 'case-body text-base sm:text-lg',
     usage: '.case-body em CaseDetailView',
@@ -170,7 +170,7 @@ export const patterns = [
   {
     id: 'modal',
     label: 'Modal centralizado',
-    when: 'Conteúdo informacional — leitura, sem fluxo contínuo.',
+    when: 'Conteúdo informacional. Leitura, sem fluxo contínuo.',
     example: 'Privacidade (PortfolioPrivacyModal)',
     desktop: 'Centralizado, max-w-lg, overlay clicável',
     mobile: 'Fullscreen, sem overlay externo',
@@ -178,7 +178,7 @@ export const patterns = [
   {
     id: 'sheet',
     label: 'Side sheet',
-    when: 'Ações e interação — chat, formulários, fluxo.',
+    when: 'Ações e interação: chat, formulários, fluxo.',
     example: 'Chat (PortfolioSideSheet)',
     desktop: 'Direita, inset 32px, overlay',
     mobile: 'Fullscreen, slide da direita',
@@ -189,7 +189,7 @@ export const patterns = [
     when: 'Links persistentes + meta legal.',
     example: 'PortfolioSiteFooter',
     desktop: 'Faixa full-bleed surface-2',
-    mobile: 'Igual — coluna vertical',
+    mobile: 'Igual. Coluna vertical',
   },
 ] as const
 

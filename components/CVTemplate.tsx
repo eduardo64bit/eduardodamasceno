@@ -192,8 +192,8 @@ function EducationBlock({ title, items }: { title: string; items: Education[] })
               <ArrowMark />
               <span>
                 {edu.title}
-                {edu.institution && ` — ${edu.institution}`}
-                {note && <span className="text-gray-500 dark:text-gray-400"> · {note}</span>}
+                {edu.institution && ` - ${edu.institution}`}
+                {note && <span className="text-gray-500 dark:text-gray-400"> - {note}</span>}
               </span>
             </li>
           )

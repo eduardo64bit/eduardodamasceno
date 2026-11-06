@@ -87,9 +87,13 @@ export function PortfolioHome({
                 {specialties.map((item, i) => (
                   <RevealOnScroll key={item} as="li" delay={i * 0.08}>
                     <span className={`flex min-w-0 items-start gap-4 break-words ${sectionBody}`}>
-                      <span className="text-[var(--pf-muted-3)] shrink-0" aria-hidden>
-                        →
-                      </span>
+                      <svg
+                        aria-hidden
+                        viewBox="0 0 12 12"
+                        className="mt-[0.35em] h-3 w-3 shrink-0 text-[var(--pf-muted-3)]"
+                      >
+                        <path d="M3.25 2.15 9.1 6 3.25 9.85 Z" fill="currentColor" />
+                      </svg>
                       {item}
                     </span>
                   </RevealOnScroll>

@@ -254,14 +254,39 @@ export function ResumeEditor({ id, initial }: Props) {
       >
         {experiences.map((exp, i) => (
           <div key={i} className="rounded-xl border border-gray-200 dark:border-gray-700 p-4 space-y-3">
-            <div className="flex justify-between items-center mb-2">
+            <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
               <span className="text-sm font-medium text-gray-500">Experiência {i + 1}</span>
-              <button
-                onClick={() => setExperiences((prev) => prev.filter((_, j) => j !== i))}
-                className="text-sm text-red-400 hover:text-red-600 transition"
-              >
-                Remover
-              </button>
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setExperiences((prev) => moveList(prev, i, -1))
+                  }
+                  disabled={i === 0}
+                  aria-label={`Mover experiência ${i + 1} para cima`}
+                  className={orderButtonClass}
+                >
+                  Mover para cima
+                </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setExperiences((prev) => moveList(prev, i, 1))
+                  }
+                  disabled={i === experiences.length - 1}
+                  aria-label={`Mover experiência ${i + 1} para baixo`}
+                  className={orderButtonClass}
+                >
+                  Mover para baixo
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setExperiences((prev) => prev.filter((_, j) => j !== i))}
+                  className="text-sm text-red-400 transition hover:text-red-600"
+                >
+                  Remover
+                </button>
+              </div>
             </div>
             <div className="grid sm:grid-cols-2 gap-3">
               <Field label="Empresa">
@@ -483,6 +508,22 @@ const fieldClass =
   'editor-field w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition disabled:bg-gray-50 disabled:text-gray-400 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 dark:disabled:bg-gray-800 dark:disabled:text-gray-500'
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
+
+function moveList<T extends { order_index: number }>(
+  items: T[],
+  index: number,
+  direction: -1 | 1
+): T[] {
+  const target = index + direction
+  if (target < 0 || target >= items.length) return items
+  const next = items.slice()
+  const [item] = next.splice(index, 1)
+  next.splice(target, 0, item)
+  return next.map((entry, order) => ({ ...entry, order_index: order }))
+}
+
+const orderButtonClass =
+  'text-sm text-gray-500 transition hover:text-gray-800 disabled:cursor-not-allowed disabled:text-gray-300 disabled:hover:text-gray-300 dark:text-gray-400 dark:hover:text-gray-100 dark:disabled:text-gray-600 dark:disabled:hover:text-gray-600'
 
 function updateList<T>(
   setter: React.Dispatch<React.SetStateAction<T[]>>,

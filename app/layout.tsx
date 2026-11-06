@@ -10,7 +10,7 @@ const manrope = Manrope({
 })
 
 export const metadata: Metadata = {
-  title: 'Eduardo Damasceno — Designer de Produto',
+  title: 'Eduardo Damasceno · Designer de Produto',
   description:
     'Designer de Produto especializado em UX/UI, inovação e estratégia.',
 }

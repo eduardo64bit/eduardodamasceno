@@ -1,26 +1,26 @@
 /** Copy da home do portfolio */
 
 export const portfolioHero = {
-  role: 'Designer de Produto & Arquitetura de Experiência',
-  /** Quebra controlada abaixo de `sm` */
-  roleLines: ['Designer de Produto &', 'Arquitetura de Experiência'] as const,
+  role: 'Senior Product Designer',
+  /** Quebra controlada abaixo de `sm`. Uma linha só não insere a quebra. */
+  roleLines: ['Senior Product Designer'] as const,
 }
 
 export const portfolioAbout = {
   heading: 'Transformando complexidade em experiências intuitivas.',
   intro: [
-    'Com mais de 20 anos de atuação em design de produto, UX/UI e transformação digital, ajudo organizações a simplificar sistemas complexos e criar experiências que geram resultados para usuários e negócios. Ao longo da carreira, participei de projetos nos setores financeiro, previdenciário, industrial e de tecnologia, atuando em produtos utilizados por milhares de pessoas.',
-    'Meu trabalho combina visão estratégica, entendimento de negócio e execução de produto para transformar desafios complexos em soluções intuitivas, escaláveis e orientadas a impacto.',
+    'Com mais de 15 anos de experiência em Design de Produto, atuo na concepção e evolução de produtos digitais, plataformas financeiras e sistemas complexos. Ao longo da carreira, participei de projetos nos setores financeiro, previdenciário, industrial e de tecnologia, conectando experiência do usuário, processos de negócio, tecnologia e operação.',
+    'Meu trabalho envolve estruturar problemas, definir caminhos e transformar desafios complexos em soluções viáveis, simples e consistentes. Da compreensão do problema à materialização das soluções, busco equilibrar necessidades dos usuários, objetivos de negócio e viabilidade técnica.',
   ],
 }
 
 export const portfolioSpecialties = [
-  'Plataformas financeiras',
+  'Plataformas financeiras e produtos de investimento',
   'Produtos B2B e SaaS',
-  'Sistemas complexos e regulados',
-  'Interfaces industriais (HMI)',
-  'Design Systems e escalabilidade',
-  'IA aplicada ao processo de descoberta, concepção e validação de produtos',
+  'Sistemas complexos e ambientes regulados',
+  'Produtos físicos e interfaces industriais (HMI)',
+  'Arquitetura de experiência e Design Systems',
+  'IA aplicada à descoberta, concepção e validação de produtos',
 ] as const
 
 export const portfolioLabels = {
@@ -74,7 +74,7 @@ export const portfolioLabels = {
   privacyPortfolio:
     'Cases e imagens podem incluir trabalhos sob confidencialidade com clientes. Parte do portfólio exige senha justamente para proteger materiais sensíveis.',
   privacyChat:
-    'Ao usar o chat de contato, você pode enviar nome, e-mail, telefone ou mensagem. Uso essas informações apenas para retornar o contato — não vendo nem compartilho com terceiros.',
+    'Ao usar o chat de contato, você pode enviar nome, e-mail, telefone ou mensagem. Uso essas informações apenas para retornar o contato. Não vendo nem compartilho com terceiros.',
   privacyTechnical:
     'Salvo a preferência de tema claro/escuro no seu navegador (localStorage), não utilizo cookies de rastreamento ou analytics de terceiros neste site.',
   privacyContact: 'Dúvidas? Entre em contato pelo chat ou pelo LinkedIn.',

@@ -14,7 +14,7 @@ const sections = [
   {
     href: '/editor/status',
     title: 'Status',
-    description: 'Painel operacional — banco, env, Telegram.',
+    description: 'Painel operacional: banco, env, Telegram.',
   },
 ] as const
 
@@ -24,7 +24,7 @@ export default function EditorHubPage() {
       <main className="sheet py-8">
         <h1 className="mb-2 text-xl font-semibold text-gray-900 dark:text-gray-50">Editor</h1>
         <p className="text-sm text-gray-500 mb-8">
-          Conteúdo editável do site — currículo, cases e operação.
+          Conteúdo editável do site: currículo, cases e operação.
         </p>
 
         <div className="grid gap-4 sm:grid-cols-2">

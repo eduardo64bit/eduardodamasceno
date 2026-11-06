@@ -87,12 +87,7 @@ export function ResumeCard({ resume }: Props) {
           Duplicar
         </button>
 
-        <a
-          href={`/editor/cv/${resume.id}/print`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn-ghost"
-        >
+        <a href={`/editor/cv/${resume.id}/pdf`} className="btn-ghost">
           Baixar PDF
         </a>
 

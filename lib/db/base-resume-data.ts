@@ -5,7 +5,7 @@ export const BASE_RESUME_ID = '00000000-0000-0000-0000-000000000001'
 export const baseResumePayload: SaveResumePayload = {
   resumeInfo: {
     name: 'Currículo Base',
-    description: 'CV 2026 – Eduardo Damasceno',
+    description: 'CV 2026. Eduardo Damasceno',
   },
   profile: {
     name: 'Eduardo Damasceno',
@@ -47,7 +47,7 @@ Experiência na condução de iniciativas estratégicas envolvendo onboarding, a
     },
     {
       company: 'Toledo do Brasil',
-      role: 'Analista de Design – Produto & Interface',
+      role: 'Analista de Design, Produto e Interface',
       start_date: 'Jan/2004',
       end_date: 'Ago/2018',
       is_current: false,

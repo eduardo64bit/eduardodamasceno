@@ -140,7 +140,7 @@ export function CaseImageCarousel({ slides, title }: Props) {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={slide.src}
-                alt={slide.alt || `${title} — imagem ${i + 1}`}
+                alt={slide.alt || `${title}, imagem ${i + 1}`}
                 className="max-h-full max-w-full w-auto h-auto object-contain rounded-lg"
                 draggable={false}
               />

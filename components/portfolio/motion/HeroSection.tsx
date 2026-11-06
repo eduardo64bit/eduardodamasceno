@@ -185,9 +185,12 @@ export function HeroSection({ name, role }: Props) {
         <div ref={contentRef} className="w-full min-w-0 max-w-full opacity-0">
           <p className="hero-role mt-6 max-w-full text-lg sm:text-2xl font-light text-[var(--pf-muted)] tracking-wide sm:max-w-none mx-auto">
             <span className="sm:hidden">
-              {portfolioHero.roleLines[0]}
-              <br />
-              {portfolioHero.roleLines[1]}
+              {portfolioHero.roleLines.map((line, i) => (
+                <span key={line}>
+                  {i > 0 && <br />}
+                  {line}
+                </span>
+              ))}
             </span>
             <span className="hidden sm:inline pf-no-break">{role}</span>
           </p>

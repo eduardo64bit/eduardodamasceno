@@ -209,7 +209,7 @@ export function DesignSystemPage() {
           <DsSection
             id="components"
             title="Componentes"
-            description="Catálogo vivo — paths relativos à raiz do repo."
+            description="Catálogo vivo. Paths relativos à raiz do repo."
           >
             <div className="mb-8 grid gap-6 lg:grid-cols-2">
               <DemoPanel label="Botões">
@@ -376,7 +376,7 @@ export function DesignSystemPage() {
           <DsSection
             id="roadmap"
             title="Roadmap"
-            description="Próximos passos — CV e editor convergem para este sistema."
+            description="Próximos passos. CV e editor convergem para este sistema."
           >
             <ul className="space-y-3">
               {roadmapNotes.map((note) => (

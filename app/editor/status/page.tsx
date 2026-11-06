@@ -5,7 +5,7 @@ import { collectSiteStatus } from '@/lib/domains/status/collector'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Status — Eduardo Damasceno',
+  title: 'Status · Eduardo Damasceno',
   description: 'Painel operacional do site.',
   robots: { index: false, follow: false },
 }

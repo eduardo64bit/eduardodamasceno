@@ -50,14 +50,14 @@ async function checkPublicSite(origin: string): Promise<StatusCheck> {
       id: 'public-site',
       label: 'Site público',
       status: res.ok ? 'ok' : 'warn',
-      detail: res.ok ? `${origin} — HTTP ${res.status}` : `${origin} — HTTP ${res.status}`,
+      detail: res.ok ? `${origin}: HTTP ${res.status}` : `${origin}: HTTP ${res.status}`,
     }
   } catch {
     return {
       id: 'public-site',
       label: 'Site público',
       status: 'error',
-      detail: `${origin} — inacessível`,
+      detail: `${origin}: inacessível`,
     }
   }
 }

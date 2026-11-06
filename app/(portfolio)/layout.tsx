@@ -10,9 +10,9 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Eduardo Damasceno — Designer de Produto',
+  title: 'Eduardo Damasceno · Designer de Produto',
   description:
-    'Portfólio de design de produto — plataformas financeiras, produtos B2B e sistemas complexos.',
+    'Portfólio de design de produto. Plataformas financeiras, produtos B2B e sistemas complexos.',
 }
 
 export default function PortfolioLayout({ children }: { children: React.ReactNode }) {

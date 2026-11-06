@@ -30,12 +30,10 @@ export default async function CvEditPage({ params }: Props) {
           </div>
           {data ? (
             <a
-              href={`/editor/cv/${id}/print`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-gray-500 transition hover:text-gray-800"
+              href={`/editor/cv/${id}/pdf`}
+              className="text-sm text-gray-500 transition hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-100"
             >
-              Pré-visualizar PDF
+              Baixar PDF
             </a>
           ) : null}
         </div>
