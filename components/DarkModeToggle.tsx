@@ -2,19 +2,27 @@
 
 import { useEffect, useState } from 'react'
 import { MaterialIcon } from '@/components/MaterialIcon'
+import {
+  applyResolvedTheme,
+  persistManualTheme,
+  THEME_CHANGE_EVENT,
+} from '@/lib/portfolio/theme'
 
 export function DarkModeToggle() {
   const [isDark, setIsDark] = useState(false)
 
   useEffect(() => {
-    setIsDark(document.documentElement.classList.contains('dark'))
+    const sync = () => setIsDark(document.documentElement.classList.contains('dark'))
+    sync()
+    window.addEventListener(THEME_CHANGE_EVENT, sync)
+    return () => window.removeEventListener(THEME_CHANGE_EVENT, sync)
   }, [])
 
   function toggle() {
-    const next = !isDark
-    setIsDark(next)
-    document.documentElement.classList.toggle('dark', next)
-    localStorage.setItem('theme', next ? 'dark' : 'light')
+    const next = isDark ? 'light' : 'dark'
+    persistManualTheme(next)
+    applyResolvedTheme(next)
+    setIsDark(next === 'dark')
   }
 
   const label = isDark ? 'Mudar para o modo claro' : 'Mudar para o modo escuro'

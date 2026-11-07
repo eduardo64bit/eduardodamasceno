@@ -102,7 +102,7 @@ export function DesignSystemPage() {
           <DsSection
             id="overview"
             title="Visão geral"
-            description="Referência enxuta do portfólio eduardodamasceno.com.br. Tokens em CSS vars no escopo .portfolio-theme; preferência manual light/dark com fallback ao sistema."
+            description="Referência enxuta do portfólio eduardodamasceno.com.br. Tokens em CSS vars no escopo .portfolio-theme. Sem escolha salva, claro e escuro seguem o sistema. Uma escolha manual vale para o site inteiro."
           >
             <dl className="grid gap-4 sm:grid-cols-2">
               {[

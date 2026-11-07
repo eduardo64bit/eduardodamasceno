@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Manrope } from 'next/font/google'
+import { ThemeSync } from '@/components/ThemeSync'
 import { PORTFOLIO_THEME_BOOT_SCRIPT, PORTFOLIO_THEME_DARK_BG } from '@/lib/portfolio/theme'
 import './globals.css'
 
@@ -43,6 +44,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans text-gray-800 antialiased">
+        <ThemeSync />
         {children}
       </body>
     </html>

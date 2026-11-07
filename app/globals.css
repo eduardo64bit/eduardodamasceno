@@ -113,6 +113,7 @@
     --pf-chat-text: rgba(255, 255, 255, 0.92);
   }
 
+  html[data-portfolio-theme='light'] .portfolio-theme,
   .portfolio-theme[data-theme='light'] {
     --pf-bg: #f4f4f5;
     --pf-text: #111111;

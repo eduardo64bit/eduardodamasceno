@@ -8,9 +8,8 @@ import {
   useState,
 } from 'react'
 import {
-  PORTFOLIO_THEME_STORAGE_KEY,
-  PORTFOLIO_THEME_DARK_BG,
-  PORTFOLIO_THEME_LIGHT_BG,
+  applyResolvedTheme,
+  persistManualTheme,
   readStoredThemeMode,
   themeFromSystem,
   toggleManualTheme,
@@ -56,23 +55,14 @@ export function PortfolioThemeProvider({ children, className }: Props) {
   }, [])
 
   useEffect(() => {
-    const root = document.documentElement
-    root.setAttribute('data-portfolio-theme', resolved)
-    root.style.colorScheme = resolved
-
-    const themeColor = resolved === 'dark' ? PORTFOLIO_THEME_DARK_BG : PORTFOLIO_THEME_LIGHT_BG
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', themeColor)
+    applyResolvedTheme(resolved)
   }, [resolved])
 
   const toggleTheme = useCallback(() => {
     setMode((current) => {
       const currentResolved = current === 'auto' ? themeFromSystem() : current
       const next = toggleManualTheme(currentResolved)
-      try {
-        localStorage.setItem(PORTFOLIO_THEME_STORAGE_KEY, next)
-      } catch {
-        /* ignore */
-      }
+      persistManualTheme(next)
       return next
     })
   }, [])
